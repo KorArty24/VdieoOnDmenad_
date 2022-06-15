@@ -13,6 +13,7 @@ namespace VOD.Common.Entities
    public class VODUser :IdentityUser
     {
         public string Token { get; set; }
+
         public DateTime TokenExpires { get; set; }
 
         [NotMapped]
