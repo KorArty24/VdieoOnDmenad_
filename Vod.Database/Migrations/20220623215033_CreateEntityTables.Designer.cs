@@ -10,7 +10,7 @@ using Vod.Database.Contexts;
 namespace VOD.Database.Migrations
 {
     [DbContext(typeof(VODContext))]
-    [Migration("20220615153900_CreateEntityTables")]
+    [Migration("20220623215033_CreateEntityTables")]
     partial class CreateEntityTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,11 @@ namespace VOD.Database.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -188,7 +193,7 @@ namespace VOD.Database.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("VOD.Common.Entities.Download", b =>
