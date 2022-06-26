@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Common.Entities.Base;
 
 namespace VOD.Common.Entities
 {
-    public class Video
+    public class Video : EntityBase
     {
         [Key]
         public int Id { get; set; }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
 
-namespace Vod.Database.Contexts
+namespace VOD.Database.Contexts
 {
    public class VODContext : IdentityDbContext<VODUser>
     {

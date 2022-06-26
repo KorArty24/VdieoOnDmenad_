@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Common.Entities.Base;
 
 namespace VOD.Common.Entities
 {
-    public class UserCourse
+    public class UserCourse : EntityBase
     {
         public string UserId { get; set; }
 

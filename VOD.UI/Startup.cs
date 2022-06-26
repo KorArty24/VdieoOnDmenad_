@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VOD.Common.Entities;
-using Vod.Database.Contexts;
+using VOD.Database.Contexts;
 
 namespace VOD.UI
 {

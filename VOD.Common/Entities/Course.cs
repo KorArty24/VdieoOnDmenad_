@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Common.Entities.Base;
 
 namespace VOD.Common.Entities
 {
@@ -31,7 +32,5 @@ namespace VOD.Common.Entities
         public Instructor Instructor { get; set; }
 
         public List<Module> Modules { get; set; }
-
-
     }
 }

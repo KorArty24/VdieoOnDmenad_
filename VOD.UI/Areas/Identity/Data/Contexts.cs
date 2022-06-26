@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace VideoOnDemand.Vod.Database
+namespace VideoOnDemand.VOD.Database
 {
     public class Contexts : IdentityDbContext<IdentityUser>
     {

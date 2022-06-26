@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.UI", "VOD.UI\VOD.UI.csproj", "{4FDECFB7-62E3-4B20-8949-8F75452284B5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Database", "Vod.Databas
 	ProjectSection(ProjectDependencies) = postProject
 		{D7197DB4-FCFF-4801-8521-944F86766626} = {D7197DB4-FCFF-4801-8521-944F86766626}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.DAL.Tests", "VOD.DAL.Tests\VOD.DAL.Tests.csproj", "{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{D8FD76FC-EC7C-41C4-BB68-7CEF3872E5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FD76FC-EC7C-41C4-BB68-7CEF3872E5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FD76FC-EC7C-41C4-BB68-7CEF3872E5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

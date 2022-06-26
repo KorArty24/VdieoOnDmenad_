@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VideoOnDemand.Vod.Database;
+using VideoOnDemand.VOD.Database;
 
 [assembly: HostingStartup(typeof(VOD.UI.Areas.Identity.IdentityHostingStartup))]
 namespace VOD.UI.Areas.Identity
