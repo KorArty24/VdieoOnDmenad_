@@ -31,6 +31,7 @@ namespace VOD.Database.Migrations.DbInitializer
         public static void ClearData(VODContext context) 
         {
             context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
+            context.Database.ExecuteSqlRaw("Delete from VOD.Modules");
             context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Downloads");
             context.Database.ExecuteSqlRaw("Delete from VOD.Instructors");
