@@ -9,7 +9,7 @@ using VOD.Common.Entities.Base;
 
 namespace VOD.Common.Entities
 {
-    [Table ("Course")]
+    [Table ("Courses")]
     public class Course: EntityBase
     {
         [Key]

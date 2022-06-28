@@ -32,6 +32,8 @@ namespace VOD.Database.Contexts
         {
             base.OnModelCreating(builder);
 
+            builder.HasDefaultSchema("VOD");
+
             builder.Entity<UserCourse>().HasKey(uc => new { uc.UserId, uc.CourseId }); //Composite key
 
             

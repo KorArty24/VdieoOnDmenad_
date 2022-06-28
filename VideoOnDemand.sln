@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Database", "Vod.Databas
 		{D7197DB4-FCFF-4801-8521-944F86766626} = {D7197DB4-FCFF-4801-8521-944F86766626}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.DAL.Tests", "VOD.DAL.Tests\VOD.DAL.Tests.csproj", "{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Database.Tests", "VOD.DAL.Tests\VOD.Database.Tests.csproj", "{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
