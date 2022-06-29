@@ -18,8 +18,8 @@ namespace VOD.DAL.Tests.ContextTests
             _db = new VODContextFactory().CreateDbContext(new string[0]);
             CleanDatabase();
         }
-        
-        [TearDown]
+
+       [TearDown]
         public void CleanDatabase()
         {
             SampleDataInitializer.ClearData(_db);
