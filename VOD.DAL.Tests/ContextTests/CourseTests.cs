@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
+using VOD.Database.Tests.ContextTests;
 
 namespace VOD.DAL.Tests.ContextTests
 {
@@ -39,8 +41,7 @@ namespace VOD.DAL.Tests.ContextTests
         public void ShouldAddACourseWithDbSet()
         {
             //Arrange 
-            var course = new Course { Title = "Essential EF", Description = "Start building your apps with EF",
-                Instructor= new Instructor { Name = "Phil Japikse", } };
+            var course = CourseFactory.NewFirstCourse();
 
             //Act 
             _db.Courses.Add(course);
@@ -58,12 +59,7 @@ namespace VOD.DAL.Tests.ContextTests
         public void ShouldAddCourseWithContext() 
         {
             //Arrange 
-            var course = new Course
-            {
-                Title = "Essential EF",
-                Description = "Start building your apps with EF",
-                Instructor = new Instructor { Name = "Phil Japikse", }
-            };
+            var course = CourseFactory.NewFirstCourse();
 
             //Act 
             _db.Add(course);
@@ -82,27 +78,17 @@ namespace VOD.DAL.Tests.ContextTests
         public void ShouldGetAllCoursesOrderedByName() 
         {
             //Arrange
-            _db.Courses.Add(new Course
-            {
-                Title = "Essential EF Core",
-                Description = "Dive into the hidden depths of the Framework",
-                Instructor = new Instructor { Name = "Troelsen Japikse" }
-            });
-            _db.Courses.Add(new Course
-            {
-                Title = "Docker in Nutshell",
-                Description = "Learn to use the revolutionary containerization DevOps tool",
-                Instructor = new Instructor { Name = "Troelsen Japikse" }
-            });
+            _db.Courses.Add(CourseFactory.NewFirstCourse());
+            _db.Courses.Add(CourseFactory.NewSecondCourse());
 
             //Act 
             _db.SaveChanges();
             var courses = _db.Courses.OrderBy(c => c.Title).ToList();
-
+            
             //Assert
-            Assert.AreEqual(courses.Count, 2);
-            Assert.AreEqual("Docker in Nutshell", courses[0].Title);
-            Assert.AreEqual("Essential EF Core", courses[1].Title);
+            Assert.That(courses.Count, Is.EqualTo(2));
+            Assert.That(courses[0].Title, Is.EqualTo("Docker in Nutshell"));
+            Assert.That(courses[1].Title, Is.EqualTo("Essential EF Core"));
 
         }
 
@@ -110,12 +96,7 @@ namespace VOD.DAL.Tests.ContextTests
         public void ShoudUpdateCourse()
         {
             //Arrange
-            var course = new Course
-            {
-                Title = "Essential EF Core",
-                Description = "Dive into the hidden depths of the Framework",
-                Instructor = new Instructor { Name = "Troelsen Japikse" }
-            };
+            var course = CourseFactory.NewFirstCourse();
 
            //Act
             _db.Courses.Add(course);
@@ -147,12 +128,7 @@ namespace VOD.DAL.Tests.ContextTests
         public void ShouldNotUpdateNonAttachedCourse()
         {
             //Arrange
-            var course = new Course
-            {
-                Title = "Essential EF Core",
-                Description = "Dive into the hidden depths of the Framework",
-                Instructor = new Instructor { Name = "Adam Freeman" }
-            };
+            var course = CourseFactory.NewFirstCourse();
 
             //Act
             _db.Courses.Add(course);
@@ -160,6 +136,74 @@ namespace VOD.DAL.Tests.ContextTests
 
             //Assert 
             Assert.Throws<InvalidOperationException>(() => _db.Courses.Update(course));
+        }
+
+        [Test]
+        public void ShouldDeleteACourse()
+        {
+            //Arrange 
+            var course = CourseFactory.NewFirstCourse();
+
+            //Act
+            _db.Courses.Add(course);
+            _db.SaveChanges();
+
+            //Assert 
+            Assert.That(_db.Courses.Count(), Is.EqualTo(1));
+            
+            //Act
+            _db.Courses.Remove(course);
+
+            // Assert 
+            Assert.That(_db.Entry(course).State, Is.EqualTo(EntityState.Deleted));
+
+            //Act 
+            _db.SaveChanges();
+
+            // Assert
+            Assert.That(_db.Entry(course).State, Is.EqualTo(EntityState.Detached));
+            Assert.That (_db.Courses.Count(), Is.EqualTo(0));
+        }
+        [Test]
+        public void ShouldDeleteACourseWithTimestampData() 
+        {
+           //Arrange
+            var course = CourseFactory.NewFirstCourse();
+
+            //Act
+            _db.Courses.Add(course);
+            _db.SaveChanges();
+            var context = new VODContextFactory().CreateDbContext(null);
+            var courToDelete = new Course
+            {
+                Id = course.Id,
+                TimeStamp = course.TimeStamp
+            };
+            context.Entry(courToDelete).State = EntityState.Deleted;
+            var affected = context.SaveChanges();
+
+            //Assert 
+            Assert.That(affected, Is.EqualTo(1));
+            
+        }
+        [Test]
+        public void ShouldNotDeleteACourseWithoutTimeStampData()
+        {
+            //Arrange
+            var course = CourseFactory.NewFirstCourse();
+            
+            //Act
+            _db.Courses.Add(course);
+            _db.SaveChanges();
+            var context = new VODContextFactory().CreateDbContext(null);
+            var crToDelete = new Course { Id = course.Id };
+            context.Courses.Remove(crToDelete);
+            var ex = Assert.Throws<DbUpdateConcurrencyException>(() => context.SaveChanges());
+            
+            //Assert
+            Assert.That(ex.Entries.Count, Is.EqualTo(1));
+            Assert.That(((Course)ex.Entries[0].Entity).Id, Is.EqualTo(course.Id));
+
         }
     }
 }
