@@ -8,24 +8,19 @@ using VOD.Database.Migrations.DbInitializer;
 
 namespace VOD.DAL.Tests.ContextTests
 {
-    
-    public class CourseTests : IDisposable
+    [TestFixture]
+    public class CourseTests
     {
         private readonly VODContext _db;
-
+        
         public CourseTests()
         {
             _db = new VODContextFactory().CreateDbContext(new string[0]);
             CleanDatabase();
         }
-
-        public void Dispose()
-        {
-            CleanDatabase();
-            _db.Dispose();
-        }
-
-        private void CleanDatabase()
+        
+        [TearDown]
+        public void CleanDatabase()
         {
             SampleDataInitializer.ClearData(_db);
         }
