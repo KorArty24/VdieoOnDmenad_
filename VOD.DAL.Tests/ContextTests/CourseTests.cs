@@ -8,7 +8,7 @@ using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Database.Tests.ContextTests;
 
-namespace VOD.DAL.Tests.ContextTests
+namespace VOD.Database.Tests.ContextTests
 {
     /// <summary>
     /// Integration tests against a dockerized db. See justification at https://docs.microsoft.com/en-us/ef/core/testing/choosing-a-testing-strategy
