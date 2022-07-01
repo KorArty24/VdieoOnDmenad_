@@ -8,7 +8,8 @@ using VOD.Common.Entities;
 
 namespace VOD.Database.Services.QueryObjects
 {
-    public static class CourseDTOSelect
+    
+    public static class CourseDtoSelect
     {
         public static IQueryable<CourseDTO> MapCourseToDto(this IQueryable<Course> courses)
         {
@@ -19,8 +20,9 @@ namespace VOD.Database.Services.QueryObjects
                 CourseDescription = course.Description,
                 MarqueeImageUrl = course.MarqueeImageUrl,
                 CourseImageUrl = course.ImageUrl
+                
 
-            }
+            });
                
         }
     }

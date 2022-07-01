@@ -8,8 +8,6 @@ using VOD.Common.DTOModels.UI;
 
 namespace VOD.Database.CourseServices.QueryObjects
 {
-    public class CourseDtoFilter
-    {
         public enum CoursesFilterBy
         {
             [Display(Name = "All")] NoFilter = 0,
@@ -20,7 +18,7 @@ namespace VOD.Database.CourseServices.QueryObjects
 
         public static class CoursesDtoFilter
         {
-            public static IQueryable<CourseDTO> FilterCoursesBy(this IQueryable<CourseDTO> courses,
+            public static IQueryable<CourseDTOWithInstructorAndVideos> FilterCoursesBy(this IQueryable<CourseDTOWithInstructorAndVideos> courses,
                 CoursesFilterBy filterBy, string filterValue)
             {
                 if (string.IsNullOrEmpty(filterValue))
@@ -32,11 +30,15 @@ namespace VOD.Database.CourseServices.QueryObjects
                         return courses;
                     case CoursesFilterBy.ByTitle:
                         return courses.Where(c => c.CourseTitle.Contains(filterValue));
-                    //case CoursesFilterBy.ByInstructor:
-                    //    return courses.Where(c => c.);
+                    case CoursesFilterBy.ByInstructor:
+                        return courses.Where(c => c.Instructor.Contains(filterValue));
+                    case CoursesFilterBy.ByDuration:
+                        Int32.TryParse(filterValue, out int result);
+                        return courses.Where(c => c.Duration >= result);
+                    default:
+                         throw new ArgumentOutOfRangeException (nameof(filterValue), filterBy, null);
                 }
             }
-                
         }
     }
-}
+
