@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using VOD.Common.DTOModels.UI;
 using VOD.Common.Entities;
 
-namespace VOD.Database.Services.QueryObjects
+namespace VOD.Service.CourseServices.QueryObjects
 {
     
     public static class CourseDtoSelect
@@ -21,7 +21,6 @@ namespace VOD.Database.Services.QueryObjects
                 MarqueeImageUrl = course.MarqueeImageUrl,
                 CourseImageUrl = course.ImageUrl
                 
-
             });
                
         }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.DTOModels.UI;
 
-namespace VOD.Database.CourseServices.QueryObjects
+namespace VOD.Service.CourseServices.QueryObjects
 {
         public enum CoursesFilterBy
         {
@@ -18,7 +18,7 @@ namespace VOD.Database.CourseServices.QueryObjects
 
         public static class CoursesDtoFilter
         {
-            public static IQueryable<CourseDTOWithInstructorAndVideos> FilterCoursesBy(this IQueryable<CourseDTOWithInstructorAndVideos> courses,
+            public static IQueryable<CourseWithInstructorAndVideosDTO> FilterCoursesBy(this IQueryable<CourseWithInstructorAndVideosDTO> courses,
                 CoursesFilterBy filterBy, string filterValue)
             {
                 if (string.IsNullOrEmpty(filterValue))
