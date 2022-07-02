@@ -15,7 +15,7 @@ namespace VOD.Database.Tests.ContextTests
     /// </summary>
 
     [TestFixture]
-    public class CourseTests
+    public class CourseTests : CourseTestBase
     {
         private readonly VODContext _db;
         
@@ -25,11 +25,6 @@ namespace VOD.Database.Tests.ContextTests
             CleanDatabase();
         }
 
-       [TearDown]
-        public void CleanDatabase()
-        {
-            SampleDataInitializer.ClearData(_db);
-        }
 
         [Test]
         public void FirstTest() 

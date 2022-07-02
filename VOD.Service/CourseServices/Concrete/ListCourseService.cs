@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,10 @@ namespace VOD.Service.CourseServices.Concrete
             _context = context;
         }
 
-        public IQueryable<CourseDTO> Sort
+        public IQueryable<CourseWithInstructorAndVideosDTO> SortFilterPage
+            (SortFilterPageOptions options)
+        { 
+            var coursequery = _context.Courses.AsNoTracking().Map
+        }
     }
 }
