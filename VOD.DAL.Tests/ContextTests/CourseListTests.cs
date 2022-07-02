@@ -11,7 +11,7 @@ using VOD.Database.Migrations.DbInitializer;
 namespace VOD.Database.Tests.ContextTests
 {
     [TestFixture]
-    public class CourseListTests :CourseTestBase
+    public class CourseListTests : CourseTestBase
     {
         private readonly VODContext _db;
 
@@ -29,14 +29,12 @@ namespace VOD.Database.Tests.ContextTests
 
             //Act 
             string courseName = "Course 1";
-            var course = _db.Courses.Where(c => c.Title.Contains(courseName));
-            var videos = course.Include(x => x.Modules).ThenInclude(y => new
-            {
-                vid = y.Videos.Select(t => t.Duration)
-            }
-                
-            
-              
+            var course = _db.Courses.Where(c => c.Title.Contains(courseName)).
+                Include(x => x.Modules).ThenInclude(y => y.Videos).ThenInclude(v => v.Duration).ToList();
 
+            //Assert 
+            Assert.That(1, Is.EqualTo(1));
+
+        }
     }
 }

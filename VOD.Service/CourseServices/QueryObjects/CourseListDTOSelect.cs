@@ -19,16 +19,16 @@ namespace VOD.Service.CourseServices.QueryObjects
                 CourseTitle=course.Title,
                 CourseDescription=course.Description,
                 Instructor=course.Instructor.Name,
-                Duration= course.Modules.Select(x => new { Videos = x.Videos.Select(vid => vid.Duration) })
+                //Duration= course.Modules.Select(x => new { Videos = x.Videos.Select(vid => vid.Duration) })
             });
         }
 
-        private static int GetCourseDuration (Course course)
-        {
-            List<int> query = (course.Modules.Select(x => new { Videos = x.Videos.Select(vid => vid.Duration) })).ToList();
-            var sum = query.Sum();
+        //private static int GetCourseDuration (Course course)
+        //{
+        //    List<int> query = (course.Modules.Select(x => new { Videos = x.Videos.Select(vid => vid.Duration) })).ToList();
+        //    var sum = query.Sum();
 
             
-        }
+        //}
     }
 }

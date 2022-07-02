@@ -52,8 +52,7 @@ namespace VOD.Database.Migrations.DbInitializer
             {
                 new Course
                 {
-                    Id = 1,
-                    InstructorId=listOfInstructors[1],
+                    InstructorId=listOfInstructors[0],
                     Title="Course 1. Foundations of C#",
                     Description= "master the powerful programming language for only 100$ a month",
                     ImageUrl = "images/course2.jpg",
@@ -109,7 +108,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 },
                 new Course
                 {
-                    InstructorId=listOfInstructors[2],
+                    InstructorId=listOfInstructors[1],
                     Title="Course 1. Foundations of C#",
                     Description= "master the powerful programming language for only 100$ a month",
                     ImageUrl = "images/course2.jpg",
@@ -144,7 +143,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 },
                 new Course
                 {
-                    InstructorId=listOfInstructors[3],
+                    InstructorId=listOfInstructors[2],
                     Title="Course 3. C# in depth",
                     Description= "master hidden depths of C#",
                     ImageUrl = "images/course3.jpg",

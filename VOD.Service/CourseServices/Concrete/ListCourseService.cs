@@ -18,10 +18,10 @@ namespace VOD.Service.CourseServices.Concrete
             _context = context;
         }
 
-        public IQueryable<CourseWithInstructorAndVideosDTO> SortFilterPage
-            (SortFilterPageOptions options)
-        { 
-            var coursequery = _context.Courses.AsNoTracking().Map
-        }
+        //public IQueryable<CourseWithInstructorAndVideosDTO> SortFilterPage
+        //    (SortFilterPageOptions options)
+        //{ 
+        //    var coursequery = _context.Courses.AsNoTracking().Map
+        //}
     }
 }
