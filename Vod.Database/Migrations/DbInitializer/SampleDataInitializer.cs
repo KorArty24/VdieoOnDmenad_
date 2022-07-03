@@ -30,11 +30,13 @@ namespace VOD.Database.Migrations.DbInitializer
 
         public static void ClearData(VODContext context) 
         {
-            context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
-            context.Database.ExecuteSqlRaw("Delete from VOD.Modules");
-            context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
+           
             context.Database.ExecuteSqlRaw("Delete from VOD.Downloads");
+            context.Database.ExecuteSqlRaw("Delete from VOD.Videos");
+            context.Database.ExecuteSqlRaw("Delete from VOD.Modules");
+            context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Instructors");
+            context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
         }
 
         internal static void SeedData(VODContext context)
@@ -49,6 +51,11 @@ namespace VOD.Database.Migrations.DbInitializer
                 if (!context.Courses.Any())
                 {
                     context.Courses.AddRange(SampleData.GetCourses(context));
+                    context.SaveChanges();
+                }
+                if (!context.Modules.Any())
+                {
+                    context.Modules.AddRange(SampleData.GetModules(context));
                     context.SaveChanges();
                 }
                 if (!context.Downloads.Any()) 

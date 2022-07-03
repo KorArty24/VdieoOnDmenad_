@@ -7,24 +7,17 @@ using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 
-namespace VOD.Database.Tests.ContextTests
+namespace VOD.Database.Tests.Base
 {
+    [TestFixture]
     public class CourseTestBase
     {
-        private readonly VODContext _db;
-
-        public CourseTestBase()
-        {
-            _db = new VODContextFactory().CreateDbContext(new string[0]);
-            CleanDatabase();
-        }
+        protected VODContext context;
 
         [TearDown]
         public void CleanDatabase()
         {
-            SampleDataInitializer.ClearData(_db);
+            SampleDataInitializer.ClearData(context);
         }
-
-        
     }
 }

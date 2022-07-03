@@ -6,7 +6,7 @@ using NUnit.Framework;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
-using VOD.Database.Tests.ContextTests;
+using VOD.Database.Tests.Base;
 
 namespace VOD.Database.Tests.ContextTests
 {
@@ -18,7 +18,7 @@ namespace VOD.Database.Tests.ContextTests
     public class CourseTests : CourseTestBase
     {
         private readonly VODContext _db;
-        
+
         public CourseTests()
         {
             _db = new VODContextFactory().CreateDbContext(new string[0]);
