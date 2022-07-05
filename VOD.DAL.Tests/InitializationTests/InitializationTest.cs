@@ -9,7 +9,7 @@ using VOD.Database.Tests.Base;
 
 namespace VOD.Database.Tests.InitializationTests
 {
-    public class InitializationTest: CourseTestBase
+    public class InitializationTest: TestBase
     {
         [Test]
         public void ShouldDropAndCreateDatabase()

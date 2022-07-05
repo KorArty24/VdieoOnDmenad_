@@ -13,9 +13,9 @@ namespace VOD.Database.Tests.ContextTests
         {
             return new Course
             {
-                Title = "Essential EF Core",
+                Title = "Course 1. Essential EF Core",
                 Description = "Dive into the hidden depths of the Framework",
-                Instructor = new Instructor { Name = "Troelsen Japikse" }
+                Instructor = new Instructor { Name = "John Doe" }
             };
         }
 

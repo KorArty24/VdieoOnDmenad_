@@ -15,15 +15,19 @@ namespace VOD.Database.Tests.ContextTests
     /// </summary>
 
     [TestFixture]
-    public class CourseTests : CourseTestBase
+    public class CourseTests : TestBase
     {
-        private readonly VODContext _db;
-
-        public CourseTests()
+        //private readonly VODContext _db;
+        protected VODContext _db
         {
-            _db = new VODContextFactory().CreateDbContext(new string[0]);
-            CleanDatabase();
+            get { return this.context; }
         }
+
+        //public CourseTests()
+        //{
+        //    _db = new VODContextFactory().CreateDbContext(new string[0]);
+        //    CleanDatabase();
+        //}
 
 
         [Test]
@@ -33,6 +37,7 @@ namespace VOD.Database.Tests.ContextTests
         }
 
         [Test]
+
         public void ShouldAddACourseWithDbSet()
         {
             //Arrange 
@@ -82,8 +87,8 @@ namespace VOD.Database.Tests.ContextTests
             
             //Assert
             Assert.That(courses.Count, Is.EqualTo(2));
-            Assert.That(courses[0].Title, Is.EqualTo("Docker in Nutshell"));
-            Assert.That(courses[1].Title, Is.EqualTo("Essential EF Core"));
+            Assert.That(courses[0].Title, Is.EqualTo("Course 1. Essential EF Core"));
+            Assert.That(courses[1].Title, Is.EqualTo("Docker in Nutshell"));
 
         }
 

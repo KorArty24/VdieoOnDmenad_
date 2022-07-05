@@ -11,6 +11,7 @@ namespace VOD.Database.Migrations.DbInitializer
 {
     public static partial class SampleData
     {
+       
         #region Seeding Modules and Videos
         public static IEnumerable<Module> GetModules(VODContext context)
         {
