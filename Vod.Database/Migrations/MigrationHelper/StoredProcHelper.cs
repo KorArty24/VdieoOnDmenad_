@@ -11,127 +11,113 @@ namespace VOD.Database.Migrations.MigrationHelper
         public static void AddOnCascadeDelete(MigrationBuilder migrationBuilder) 
         {
             var sql = @"
-            CREATE PROCEDURE [VOD].[DropCourseInstructorFK] AS
-            BEGIN 
-            SET NOCOUNT ON;
+            
             ALTER TABLE [VOD].[VOD].[Courses]
-            DROP CONSTRAINT [FK_Courses_Instructors_InstructorId]
-            END
-        GO
-            CREATE PROCEDURE [VOD].[ADDCourseInstructorFK] AS
-			BEGIN
+            DROP CONSTRAINT [FK_Courses_Instructors_InstructorId];
+      
+            
 			ALTER TABLE [VOD].[VOD].[Courses] WITH CHECK
             ADD CONSTRAINT [FK_Courses_Instructors_InstructorId] FOREIGN KEY ([InstructorId])
-            REFERENCES [VOD].[Instructors] ([Id])
-            ON DELETE CASCADE
-			END
-        GO
-            CREATE PROCEDURE [VOD].[DropModulesCoursesFK] AS 
-            BEGIN 
-            SET NOCOUNT ON   
-            ALTER TABLE [VOD].[VOD].[Modules] DROP CONSTRAINT [FK_Modules_Courses_CourseId]  
-            END
-        GO
-            CREATE PROCEDURE [VOD].[AddModulesCoursesFK] AS 
-            BEGIN 
+            REFERENCES [VOD].[VOD].[Instructors] ([Id])
+            ON DELETE CASCADE;
+			
+            
+            ALTER TABLE [VOD].[VOD].[Modules] DROP CONSTRAINT [FK_Modules_Courses_CourseId] ; 
+           
+            
             ALTER TABLE [VOD].[VOD].[Modules]  WITH CHECK
             ADD  CONSTRAINT [FK_Modules_Courses_CourseId] FOREIGN KEY([CourseId])
             REFERENCES [VOD].[VOD].[Courses] ([Id])
-            ON DELETE CASCADE
-            END
-        GO
-            CREATE PROCEDURE [VOD].[DropDownloadsFK] AS 
-            BEGIN 
-            SET NOCOUNT ON   
+            ON DELETE CASCADE;
+           
+           
             ALTER TABLE [VOD].[VOD].[Downloads]
-            DROP CONSTRAINT [FK_Modules_Courses_CourseId]  
-            END
-        GO
-            CREATE PROCEDURE [VOD].[AlterDownloadsFK] AS 
-            BEGIN
-            ALTER TABLE [VOD].[Downloads]  WITH CHECK
+            DROP CONSTRAINT [FK_Downloads_Courses_CourseId]  
+           ;
+           
+            ALTER TABLE [VOD].[VOD].[Downloads]  WITH CHECK
             ADD  CONSTRAINT [FK_Downloads_Courses_CourseId] FOREIGN KEY([CourseId])
-            REFERENCES [VOD].[VOD].[Courses] ([Id])
-            ON DELETE CASCADE
-            END
-        GO
-            CREATE PROCEDURE [VOD].[DropDownloadsFKModule] AS 
-            BEGIN
-            SET NOCOUNT ON
+            REFERENCES [VOD].[Courses] ([Id])
+            ;
+           
             ALTER TABLE [VOD].[VOD].[Downloads] 
             DROP CONSTRAINT [FK_Downloads_Modules_ModuleId]
-            END
-        GO
-            CREATE PROCEDURE [VOD].[AlterDownloadsFKModule] AS 
-            BEGIN
+          ;
+            
             ALTER TABLE [VOD].[VOD].[Downloads] 
             WITH CHECK
             ADD CONSTRAINT [FK_Downloads_Modules_ModuleId]
             FOREIGN KEY([ModuleId])
-            REFERENCES [VOD].[Modules] ([Id])
-            END
-        GO
+            REFERENCES [VOD].[VOD].[Modules] ([Id])
+           ;
 
-
-
+            ALTER TABLE [VOD].[VOD].[UserCourses] 
+            DROP CONSTRAINT [FK_UserCourses_Courses_CourseId]
+           ;
+            
+            ALTER TABLE [VOD].[VOD].[UserCourses] 
+            ADD CONSTRAINT [FK_UserCourses_Courses_CourseId] 
+            FOREIGN KEY([CourseId])
+            REFERENCES [VOD].[VOD].[Courses] ([Id])
+            ON DELETE CASCADE
+            ;
             ";  
             migrationBuilder.Sql(sql); 
         }
 
-        public static void AddOnCascadeDeleteModulesSproc(MigrationBuilder migrationBuilder)
+        public static void RemoveOnCascadeDelete(MigrationBuilder migrationBuilder)
         {
-            var sql = @"
-            CREATE PROCEDURE [VOD].[AlterModulesTableCascade] AS
-            BEGIN 
-            SET NOCOUNT ON;
-            ALTER TABLE VOD.VOD.Modules
-            DROP CONSTRAINT [FK_Modules_Courses_CourseId]
+            var _sql = @"ALTER TABLE [VOD].[Courses]
+            DROP CONSTRAINT [FK_Courses_Instructors_InstructorId];
+      
+            
+			ALTER TABLE [VOD].[VOD].[Courses] WITH CHECK
+            ADD CONSTRAINT [FK_Courses_Instructors_InstructorId] FOREIGN KEY ([InstructorId])
+            REFERENCES [VOD].[VOD].[Instructors] ([Id])
+            ON DELETE CASCADE;
+			
+            
+            ALTER TABLE [VOD].[VOD].[Modules] DROP CONSTRAINT [FK_Modules_Courses_CourseId] ; 
+           
+            
+            ALTER TABLE [VOD].[VOD].[Modules]  WITH CHECK
             ADD  CONSTRAINT [FK_Modules_Courses_CourseId] FOREIGN KEY([CourseId])
-            REFERENCES [VOD].[Courses] ([Id])
-            ON DELETE CASCADE
-            END
-        GO;
-            ";
-            migrationBuilder.Sql(sql);
-        }
-
-        public static void AddOnCascadeDeleteDownloadSproc(MigrationBuilder migrationBuilder)
-        {
-            var sql = @"
-            CREATE PROCEDURE [VOD].[AlterDownloadTableCascade] AS
-            BEGIN 
-            SET NOCOUNT ON;
-            ALTER TABLE VOD.VOD.Download
-            DROP CONSTRAINT [FK_Downloads_Courses_CourseId]
-            DROP CONSTRAINT [FK_Downloads_Modules_ModuleId]
+            REFERENCES [VOD].[VOD].[Courses] ([Id])
+            ON DELETE CASCADE;
+           
+           
+            ALTER TABLE [VOD].[VOD].[Downloads]
+            DROP CONSTRAINT [FK_Downloads_Courses_CourseId]  
+           ;
+           
+            ALTER TABLE [VOD].[VOD].[Downloads]  WITH CHECK
             ADD  CONSTRAINT [FK_Downloads_Courses_CourseId] FOREIGN KEY([CourseId])
-            REFERENCES [VOD].[Courses] ([Id])
-            ON DELETE CASCADE
-            ADD  CONSTRAINT [FK_Downloads_Modules_ModuleId] FOREIGN KEY([ModuleId])
-            REFERENCES [VOD].[Modules] ([Id])
-            ON DELETE CASCADE
-            END
-        GO;
-            ";
-            migrationBuilder.Sql(sql);
-        }
+            REFERENCES [VOD].[VOD].[Courses] ([Id])
+            ;
+           
+            ALTER TABLE [VOD].[VOD].[Downloads] 
+            DROP CONSTRAINT [FK_Downloads_Modules_ModuleId]
+          ;
+            
+            ALTER TABLE [VOD].[VOD].[Downloads] 
+            WITH CHECK
+            ADD CONSTRAINT [FK_Downloads_Modules_ModuleId]
+            FOREIGN KEY([ModuleId])
+            REFERENCES[VOD].[VOD].[Modules] ([Id])
+           ;
 
-        public static void AddOnCascadeDeleteDownloadSproc(MigrationBuilder migrationBuilder)
-        {
-            var sql = @"
-            CREATE PROCEDURE [VOD].[AlterModulesTableCascade] AS
-            BEGIN 
-            SET NOCOUNT ON;
-            ALTER TABLE VOD.VOD.Modules
-            DROP CONSTRAINT [FK_Modules_Courses_CourseId]
-            ADD  CONSTRAINT [FK_Modules_Courses_CourseId] FOREIGN KEY([CourseId])
-            REFERENCES [VOD].[Courses] ([Id])
+           
+            ALTER TABLE [VOD].[VOD].[UserCourses] 
+            DROP CONSTRAINT [FK_UserCourses_Courses_CourseId]
+           ;
+            
+            ALTER TABLE [VOD].[VOD].[UserCourses] 
+            ADD CONSTRAINT [FK_UserCourses_Courses_CourseId] 
+            FOREIGN KEY([CourseId])
+            REFERENCES [VOD].[VOD].[Courses] ([Id])
             ON DELETE CASCADE
-            END
-        GO;
-            ";
-            migrationBuilder.Sql(sql);
+            ;";
+             migrationBuilder.Sql(_sql); 
         }
-        
     }
 }

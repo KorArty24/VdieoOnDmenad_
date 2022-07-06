@@ -21,5 +21,7 @@ namespace VOD.Common.Entities
 
         [MaxLength(1024)]
         public string Thumbnail { get; set; }
+
+        public List<Course> Courses { get; set; }
     }
 }
