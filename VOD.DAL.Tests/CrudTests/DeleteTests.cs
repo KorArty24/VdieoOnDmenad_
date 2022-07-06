@@ -26,7 +26,7 @@ namespace VOD.Database.Tests.CrudTests
                 var data = TestDataUnits.NewCourseWithInstructorAndModule();
                 context.Courses.Add(data);
                 context.SaveChanges();
-                var datatodelete = context.Courses.Include(i => i.Instructor).Include(m => m.Modules).
+                var datatodelete = context.Courses.Include(m => m.Modules).
                     First();
                 context.Courses.Remove(data);
 
