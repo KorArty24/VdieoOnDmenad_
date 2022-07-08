@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Database.Tests.Base;
+using VOD.Database.Tests.ContextTests.PartrialSeeders;
 
 namespace VOD.Database.Tests.ContextTests
 {

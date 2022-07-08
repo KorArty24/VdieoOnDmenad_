@@ -13,7 +13,5 @@ namespace VOD.Common.DTOModels.UI
         public string CourseDescription { get; set; }
         public string MarqueeImageUrl { get; set; }
         public string CourseImageUrl { get; set; }
-        
-        
     }
 }

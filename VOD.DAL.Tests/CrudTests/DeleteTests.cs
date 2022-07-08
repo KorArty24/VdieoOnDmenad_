@@ -16,7 +16,7 @@ namespace VOD.Database.Tests.CrudTests
 
 
         [Test]
-        public void ShouldREeadThenDeleteRecordsGraph()
+        public void ShouldFailToCascadeDelete()
         {
             ExecuteInATransaction(RunTheTest);
 
@@ -28,14 +28,18 @@ namespace VOD.Database.Tests.CrudTests
                 context.SaveChanges();
                 var datatodelete = context.Courses.Include(m => m.Modules).
                     First();
-                context.Courses.Remove(data);
 
+                void catchCascadeDeleteException() 
+                {
+                    try { context.Courses.Remove(datatodelete); }
+                    catch (InvalidOperationException ex)
+                    //catch IOEx and rethrow as method output to check below.
+                    { throw; }
+                    
+                }
                 //Assert
-                Assert.That(context.Entry(data).State, Is.EqualTo(EntityState.Deleted));
-                context.SaveChangesAsync();
-                Assert.AreEqual(EntityState.Detached, context.Entry(data).State);
+                Assert.Throws<System.InvalidOperationException>(catchCascadeDeleteException);
             }
-
         }
     }
 }

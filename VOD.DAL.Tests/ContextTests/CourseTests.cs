@@ -7,6 +7,7 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Database.Tests.Base;
+using VOD.Database.Tests.ContextTests.PartrialSeeders;
 
 namespace VOD.Database.Tests.ContextTests
 {
@@ -186,6 +187,7 @@ namespace VOD.Database.Tests.ContextTests
             Assert.That(affected, Is.EqualTo(1));
             
         }
+
         [Test]
         public void ShouldNotDeleteACourseWithoutTimeStampData()
         {
@@ -194,6 +196,7 @@ namespace VOD.Database.Tests.ContextTests
             
             //Act
             _db.Courses.Add(course);
+
             _db.SaveChanges();
             var context = new VODContextFactory().CreateDbContext(null);
             var crToDelete = new Course { Id = course.Id };
@@ -203,6 +206,34 @@ namespace VOD.Database.Tests.ContextTests
             //Assert
             Assert.That(ex.Entries.Count, Is.EqualTo(1));
             Assert.That(((Course)ex.Entries[0].Entity).Id, Is.EqualTo(course.Id));
+
+        }
+
+        [Test]
+        public void ShouldReturnTotalDurationForCourse() 
+        {
+            //Arrange 
+            var course = CourseFactory.NewFirstCourse();
+            _db.Courses.Add(course);
+            _db.SaveChanges();
+            int courseid = _db.Courses.First().Id;
+            var modules = CourseFactory.ReturnNewModuleandVideoForCourse(courseid);
+            _db.Modules.AddRange(modules);
+            _db.SaveChanges();
+            var context = new VODContextFactory().CreateDbContext(null);
+
+            //Act 
+            //int duration =
+            //    (from vid in context.Videos
+            //     where vid.CourseId == courseid
+            //     select vid.Duration).Sum();
+            int duration = _db.Courses.AsNoTracking().Where(c => c.Id == courseid).SelectMany(c => c.Modules)
+                .SelectMany(m => m.Videos).Select(v => v.Duration).Sum();
+
+            //Assert
+            Assert.That(duration, Is.EqualTo(45));   
+
+                
 
         }
     }

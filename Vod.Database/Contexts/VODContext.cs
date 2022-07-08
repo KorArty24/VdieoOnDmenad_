@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
-using VOD.Database.Contexts.EntitiesConfig;
+
 
 namespace VOD.Database.Contexts
 {
@@ -35,19 +35,10 @@ namespace VOD.Database.Contexts
 
             builder.Entity<UserCourse>().HasKey(uc => new { uc.UserId, uc.CourseId }); //Composite key
 
-            
-            builder.ApplyConfiguration(new InstructorConfig());
-            builder.ApplyConfiguration(new CourseConfig());
-            builder.ApplyConfiguration(new DownloadConfig());
-            builder.ApplyConfiguration(new ModuleConfig());
-            builder.ApplyConfiguration(new VideoConfig());
-            
-            //foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) // Restrict cascade deletes
-            //{
-            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-
-            
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) // Restrict cascade deletes
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
 }
