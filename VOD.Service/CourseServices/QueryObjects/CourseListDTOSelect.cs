@@ -20,14 +20,9 @@ namespace VOD.Service.CourseServices.QueryObjects
                 CourseTitle = course.Title,
                 CourseDescription = course.Description,
                 Instructor = course.Instructor.Name,
-                Duration = course.Modules.SelectMany(m => m.Videos).Select(v => v.Duration).Count()
-                //Duration =
-                //(from v in videos
-                // let id = course.Id
-                // where (v.CourseId == id)
-                // select v.Duration).Sum()
+                Duration = course.Modules.Where(m=>m.CourseId==course.Id)
+                .SelectMany(m => m.Videos).Select(v => v.Duration).Count()
             });
         }
-
     }
 }

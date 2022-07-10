@@ -19,8 +19,8 @@ namespace VOD.UI.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("ContextsConnection")));
 
-                //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                //    .AddEntityFrameworkStores<Contexts>();
+               // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                 //   .AddEntityFrameworkStores<Contexts>();
             });
         }
     }

@@ -287,6 +287,7 @@ namespace VOD.Database.Migrations
             modelBuilder.Entity("VOD.Common.Entities.UserCourse", b =>
                 {
                     b.Property<string>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CourseId")

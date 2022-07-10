@@ -14,7 +14,7 @@ namespace VOD.Database.Contexts
         public VODContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<VODContext>();
-            var connectionString = @"Server=.,6433;Database=VOD;User ID=sa;Password=<MyPassw0rd>;MultipleActiveResultSets=true;";
+            var connectionString = @"Server=.,6433;Database=VOD;User ID=sa;Password=<MyPassw0rd>;MultipleActiveResultSets=true";
             optionsBuilder.UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
             Console.WriteLine(connectionString);
             return new VODContext(optionsBuilder.Options);

@@ -25,7 +25,7 @@ namespace VOD.Service.CourseServices.Concrete
             (SortFilterPageOptions options)
         {
             var courseQuery = _context.Courses
-                .AsNoTracking().MapCourseToDTO()
+                .AsNoTracking().MapCourseToDTO().OrderCoursesBy(options.OrderByOptions)
                 .FilterCoursesBy(options.FilterBy, options.FilterValue);
 
             return courseQuery.Page(options.PageNum-1, options.PageSize);

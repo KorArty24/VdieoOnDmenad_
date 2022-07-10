@@ -29,7 +29,7 @@ namespace VOD.Database.Tests.InitializationTests
             SampleDataInitializer.DropAndCreateDatabase(context);
             SampleDataInitializer.InitializeData(context);
             Assert.That(context.Courses.Count(), Is.EqualTo(3));
-            Assert.That(context.Modules.Count(), Is.EqualTo(3));
+            Assert.That(context.Modules.Count(), Is.EqualTo(4));
             Assert.That(context.Instructors.Count(), Is.EqualTo(3));
             SampleDataInitializer.DropAndCreateDatabase(context);
         }

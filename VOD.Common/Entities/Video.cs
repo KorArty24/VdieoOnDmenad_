@@ -38,7 +38,5 @@ namespace VOD.Common.Entities
 
         public Module Module { get; set; }
 
-
-
     }
 }

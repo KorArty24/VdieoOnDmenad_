@@ -15,13 +15,10 @@ namespace VOD.Database.Tests.ContextTests
 
     public class CourseListTests : TestBase
     {
-        //private readonly VODContext _db;
-
-        //public CourseListTests()
-        //{
-        //    _db= new VODContextFactory().CreateDbContext(new string[0]);
-        //    CleanDatabase();
-        //}
+         protected VODContext _db
+        {
+            get { return this.context; }
+        }
 
         [Test]
         public void ShouldReturnInstructorForCourse()

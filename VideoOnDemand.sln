@@ -18,9 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Database", "Vod.Databas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Database.Tests", "VOD.DAL.Tests\VOD.Database.Tests.csproj", "{6DAEAECA-33BB-42CC-9DD7-418EA387DC0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.API", "VOD.API\VOD.API.csproj", "{A10C3FEF-F4E4-49E3-84B8-05D59812C405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.API", "VOD.API\VOD.API.csproj", "{A10C3FEF-F4E4-49E3-84B8-05D59812C405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.Service", "VOD.Service\VOD.Service.csproj", "{4AC17247-CD0C-4FA7-A7CE-2DD4DAB12599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Service", "VOD.Service\VOD.Service.csproj", "{4AC17247-CD0C-4FA7-A7CE-2DD4DAB12599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

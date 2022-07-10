@@ -10,7 +10,7 @@ using VOD.Database.Contexts;
 namespace VOD.Database.Migrations
 {
     [DbContext(typeof(VODContext))]
-    [Migration("20220706202359_Initial")]
+    [Migration("20220709203044_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -289,6 +289,7 @@ namespace VOD.Database.Migrations
             modelBuilder.Entity("VOD.Common.Entities.UserCourse", b =>
                 {
                     b.Property<string>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CourseId")

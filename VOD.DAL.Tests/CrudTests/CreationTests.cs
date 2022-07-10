@@ -13,6 +13,7 @@ namespace VOD.Database.Tests.CrudTests
 {
     public class CreationTests : TestBase
     {
+        
         [Test]
         public void ShouldAddNewCourseRecord()
         {

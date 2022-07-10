@@ -11,7 +11,6 @@ namespace VOD.Database.Migrations.DbInitializer
 {
     public static partial class SampleData
     {
-       
         #region Seeding Modules and Videos
         public static IEnumerable<Module> GetModules(VODContext context)
         {
@@ -28,7 +27,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 new Module
                 //1st module
                 {
-                    CourseId=listOfCourseIds[0],
+                    CourseId=listOfCourseIds[0], // Course 1
                     Title = "Module 1. Warm Up",
                     Videos = new List<Video>
                     {
@@ -52,7 +51,7 @@ namespace VOD.Database.Migrations.DbInitializer
                         }
                     }
                 },
-                //2d Module
+                //Module 2.1 
                 new Module
                 {
                     CourseId=listOfCourseIds[1],
@@ -79,7 +78,35 @@ namespace VOD.Database.Migrations.DbInitializer
                         }
                     }
                 },
-                //3d module
+                // Module 2.2
+                 new Module
+                {
+                    CourseId=listOfCourseIds[1],
+                    Title = "Module 3. Roasted on Linqs",
+                    Videos = new List<Video>
+                    {
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[1],
+                            Title="Video6. Linq in Action",
+                            Description="Lesson 6",
+                            Duration=100,
+                            Thumbnail="/images/video6.jpg",
+                            Url="https://www.youtube.com/watch?v=yClSNQdVD7g"
+                        },
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[1],
+                            Title="Video7. Linq in depth",
+                            Description="Dive into expression trees, fluent syntax, joining and set specific queries",
+                            Duration=35,
+                            Thumbnail="/images/video7.jpg",
+                            Url="https://www.youtube.com/watch?v=sIXKpyhxHR8"
+                        }
+                    }
+                },
+
+                //3.1 module
                 new Module
                 {
                     CourseId=listOfCourseIds[2],

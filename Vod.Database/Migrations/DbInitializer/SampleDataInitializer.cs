@@ -15,13 +15,14 @@ namespace VOD.Database.Migrations.DbInitializer
             context.Database.EnsureDeleted();
             context.Database.Migrate();
         }
+
         internal static void ResetIdentity(VODContext context)
         {
-            var tables = new[] { "Courses", "Instructors", "Modules", "UserCourses", "Videos", "Downloads" };
+            var tables = new[] {"Instructors", "Courses", "Modules", "Videos", "Downloads" };
 
             foreach (var table in tables)
             {
-                var rawSqlString = $"DBCC CHECKIDENT (\"VOD.{table}\", RESEED, 0);";
+                var rawSqlString = $"DBCC CHECKIDENT (\"VOD.{table}\", RESEED, 1);";
 #pragma warning disable EF1000 // Possible SQL injection vulnerability.
                 context.Database.ExecuteSqlRaw(rawSqlString);
 #pragma warning restore EF1000 // Possible SQL injection vulnerability.
@@ -37,6 +38,7 @@ namespace VOD.Database.Migrations.DbInitializer
             context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Instructors");
             context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
+            ResetIdentity(context);
         }
 
         internal static void SeedData(VODContext context)

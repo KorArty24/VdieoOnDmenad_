@@ -33,7 +33,7 @@ namespace VOD.Database.Contexts
 
             builder.HasDefaultSchema("VOD");
 
-            builder.Entity<UserCourse>().HasKey(uc => new { uc.UserId, uc.CourseId }); //Composite key
+            builder.Entity<UserCourse>().HasKey(uc => new {uc.UserId, uc.CourseId }); //Composite key
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) // Restrict cascade deletes
             {

@@ -18,6 +18,7 @@ namespace VOD.Service.CourseServices
         /// </summary>
         public int[] PageSizes = new[] { 5, DefaultPageSize, 20, 50, 100, 500, 1000 };
 
+        public OrderByOptions OrderByOptions { get; set; }
 
         public CoursesFilterBy FilterBy { get; set; }
 
@@ -53,7 +54,12 @@ namespace VOD.Service.CourseServices
 
             PrevCheckState = newCheckState;
         }
-
+        //private methods
+        /// <summary>
+        /// This returns a string containing the state of the SortFilterPage data
+        /// that, if the change, should cause PageNum to be set back to 0
+        /// </summary>
+        /// <returns></returns>
         private string GenerateCheckState()
         {
             return $"{(int)FilterBy},{FilterValue},{PageSize},{NumPages}";
