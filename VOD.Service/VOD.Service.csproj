@@ -9,4 +9,9 @@
     <ProjectReference Include="..\Vod.Database\VOD.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AdminServices\" />
+    <Folder Include="DatabaseServices\" />
+  </ItemGroup>
+
 </Project>
