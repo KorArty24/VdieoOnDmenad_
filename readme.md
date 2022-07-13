@@ -1,3 +1,6 @@
-Kind of a test project, utilizing Net Core, Entity Framework, 
-NUnit, Razor pages, docker. Testing was performed against localDB, conternized in Docker.
-Credit to Jonas Fagerberg (C# school) and Phillip Japikse from whose works borrowed.
+Refactoring of the project from Jonas Fagerberg's book
+Repo pattern substituted for Query object pattern.
+Initial seeding has been completely rewriten to allow for the use of the object graph. 
+Added integrated tests (NUnit framework) to test DAL. 
+
+

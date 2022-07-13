@@ -5,6 +5,6 @@ namespace VOD.UI.Models.MembershipViewModels
 {
     public class DashboardViewModel
     {
-        public List<List<CourseDTO>> Courses { get; set; }
+        public List<List<CourseWithInstructorAndVideosDTO>> Courses { get; set; }
     }
 }
