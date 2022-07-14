@@ -11,6 +11,10 @@
 
   <ItemGroup>
     <Folder Include="DatabaseServices\" />
+    
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NetCore.AutoRegisterDi" Version="2.1.0" />
+  </ItemGroup>
 </Project>

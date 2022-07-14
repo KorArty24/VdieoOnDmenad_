@@ -16,11 +16,13 @@ namespace VOD.UI.Controllers
         private readonly string _userId;
         private readonly VODContext _context;
 
+
         public MembershipController(IHttpContextAccessor httpContextAccessor,
-            UserManager<VODUser> userManager)
+            UserManager<VODUser> userManager, VODContext context)
         {
             var user = httpContextAccessor.HttpContext.User;
             _userId = userManager.GetUserId(user);
+            _context = context;
         }
 
         [HttpGet]
