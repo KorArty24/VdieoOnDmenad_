@@ -20,11 +20,16 @@ namespace VOD.Service.AdminServices.Concrete
 
         public Course AddCourse(Course course)
         {
-            int Id = 
-            return new Course
-            {
-
-            }
+            throw new NotImplementedException();
         }
+
+        //public Course AddCourse(Course course)
+        //{
+        //    int Id = 
+        //    return new Course
+        //    {
+
+        //    }
+        //}
     }
 }

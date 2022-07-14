@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
+using VOD.Database.Migrations.DbInitializer;
 
 namespace VOD.UI
 {
@@ -21,14 +22,13 @@ namespace VOD.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<VODContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<VODContext>();
             services.AddControllersWithViews();
+            services.AddDbContext<VODContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +38,12 @@ namespace VOD.UI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().
+                    CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<VODContext>();
+                    SampleDataInitializer.InitializeData(context);
+                }
             }
             else
             {
