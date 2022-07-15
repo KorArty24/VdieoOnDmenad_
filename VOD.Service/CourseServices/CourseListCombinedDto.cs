@@ -9,14 +9,14 @@ namespace VOD.Service.CourseServices
 {
     public class CourseListCombinedDto
     {
-        public CourseListCombinedDto(SortFilterPageOptions sortFilterPagedData,
+        public CourseListCombinedDto(SortFilterPageOptions sortFilterPageData,
             IEnumerable<CourseWithInstructorAndVideosDTO> courseList)
         {
-            SortFilterPagedData = sortFilterPagedData;
+            SortFilterPageData = sortFilterPageData;
             CourseList = courseList;
         }
 
-        public SortFilterPageOptions SortFilterPagedData { get; private set; }
+        public SortFilterPageOptions SortFilterPageData { get; private set; }
         public IEnumerable<CourseWithInstructorAndVideosDTO> CourseList { get; private set; }
     }
 }

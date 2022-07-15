@@ -1,5 +1,91 @@
-﻿@model CourseListCombinedDto
+﻿@using VOD.Service.CourseServices
+@using VOD.UI.HelperExtensions
+@model CourseListCombinedDto
 @{
     ViewData["Title"] = "Dashboard";
 }
-<h1>Dashboard</h1>
+<from id="sort-filter-form" fole = "form">
+    <div class="row">
+        <div class="col-sm-3">
+            <label>Sort By</label>
+            <select asp-for="SortFilterPageData.OrderByOptions" name="OrderByOptions"
+                    asp-items="Html.GetEnumSelectList<VOD.Service.CourseServices.QueryObjects.OrderByOptions>()"
+                    class="form-control sort-filter-width"
+                    onchange="CourseList.sendForm(this)"></select>
+        </div>
+        <div class="col-sm-3">
+            <label>Filter Type</label>
+            <select asp-for="SortFilterPageData.FilterBy" name="FilterBy"
+                    asp-items="Html.GetEnumSelectList<VOD.Service.CourseServices.QueryObjects.CoursesFilterBy>()"
+                    class="form-control sort-filter-width"
+                    onchange="CourseList.filterByHasChanged(this)"></select>
+        </div>
+        <div class="col-sm-3 dim-filter-value" id="filter-value-group">
+            <label>Filter By</label>
+            <select asp-for="SortFilterPageData.FilterValue" name="FilterValue"
+                    id="filter-value-dropdown"
+                    class="form-control sort-filter-width"
+                    disabled
+                    onchange="CourseList.sendForm(this)">
+                <option>Select filter type...</option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <label>Page</label>
+            <div>
+                <input asp-for="SortFilterPageData.PageNum" name="PageNum"
+                       class="form-control page-control-width page-num-input"
+                       onchange="CourseList.sendForm(this)">
+                <span class="num-pages-text">of @Model.SortFilterPageData.NumPages</span>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <label>Page&nbsp;Size</label>
+            <select asp-for="SortFilterPageData.PageSize" name="PageSize"
+                    asp-items="Model.SortFilterPageData.PageSizes.Select(x => new SelectListItem {Text = x.ToString(), Value = x.ToString()})"
+                    class="form-control page-control-width"
+                    onchange="CourseList.sendForm(this)"></select>
+        </div>
+    </div>
+
+</from>
+
+<table class="table">
+    @foreach (var item in Model.CourseList)
+    {
+        <tr>
+            <td>
+                <h3>@Html.DisplayFor(modelItem => item.CourseTitle)</h3>
+                <div>
+                    <small>Course</small>&nbsp;@Html.DisplayFor(m => item.CourseTitle)
+                </div>
+                <div>
+                    Instructor @item.Instructor
+                </div>
+                <div>
+                    Desctiption: @item.CourseDescription
+                </div>
+                
+            </td>
+            <td class="vert-align">
+                @if (Context.Request.IsLocal())
+                {
+                    
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts{
+
+    <script type='text/javascript'>
+        document.addEventListener("DOMContentLoaded",
+            function(event) {
+                CourseList.initialise('@Model.SortFilterPageData.FilterBy', '@Model.SortFilterPageData.FilterValue',
+                    '@Url.Action("GetFilterSearchContent")');
+            });
+    </script>
+}
+
+

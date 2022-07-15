@@ -23,7 +23,7 @@ namespace VOD.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<VODContext>();
             services.AddControllersWithViews();
             services.AddDbContext<VODContext>(options =>
