@@ -32,6 +32,13 @@ namespace VOD.Database.Migrations.DbInitializer
                     Name = "Cercei Lannister",
                     Description = "Cercei choose violence",
                     Thumbnail = "images/Ice-Age-Scrat-icon.png"
+                },
+                new Instructor
+                { 
+                    Name = "Phillip Japikse",
+                    Description = "Dotnet guru",
+                    Thumbnail = "images/Ice-Age-Scrat-icon.png"
+
                 }
             };
         #endregion
@@ -45,7 +52,8 @@ namespace VOD.Database.Migrations.DbInitializer
             {
                 context.Instructors.First().Id,
                 context.Instructors.Skip(1).FirstOrDefault().Id,
-                context.Instructors.Skip(2).FirstOrDefault().Id
+                context.Instructors.Skip(2).FirstOrDefault().Id,
+                context.Instructors.Skip(3).FirstOrDefault().Id
             };
 
             var courses = new List<Course>

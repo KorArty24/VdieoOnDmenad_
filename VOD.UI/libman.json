@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "provider": "jsdelivr",
+      "library": "js@0.1.0",
+      "destination": "wwwroot/js/"
+    },
+    {
+      "library": "js@0.1.0",
+      "destination": "wwwroot/js/",
+      "files": [
+        "bin/js",
+        ".npmignore",
+        "History.md",
+        "LICENSE",
+        "package.json",
+        "README.md"
+      ]
+    }
+  ]
+}

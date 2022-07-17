@@ -11,8 +11,8 @@ namespace VOD.Service.CourseServices.QueryObjects
      public enum OrderByOptions
     {
         [Display(Name = "sort by...")] SimpleOrder = 0,
-        [Display(Name = "Votes ↑")] ByDuration,
-        [Display(Name = "Publication Date ↑")] ByPublicationDate,
+        [Display(Name = "Duration ↑")] ByDuration,
+        [Display(Name = "Title ↑")] ByTitle
     }
 
     public static class CourseListDtoSort
@@ -27,6 +27,8 @@ namespace VOD.Service.CourseServices.QueryObjects
                     return courses.OrderByDescending(x => x.CourseId);
                 case OrderByOptions.ByDuration:
                     return courses.OrderByDescending(x=> x.Duration);
+                case OrderByOptions.ByTitle:
+                    return courses.OrderByDescending(x=> x.CourseTitle);
                 default:
                     throw new ArgumentOutOfRangeException
                         (nameof(orderByOptions), orderByOptions, null);

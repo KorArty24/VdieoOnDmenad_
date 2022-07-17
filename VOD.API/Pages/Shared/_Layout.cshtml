@@ -40,11 +40,13 @@
             &copy; 2022 - VOD.API - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
-
+    <environment names="Development">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+   
+    <script src="~/js/courseList.js" asp-append-version="true"></script>
+    </environment>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace VOD.Service.AppStart
 {
-    public static class NetCoreDiSetupExtensions //#A
+    public static class NetCoreDiSetupExtensions 
     {
-        //public static void RegisterServiceLayerDi //#B
-        //    (this IServiceCollection services)    //#C
-        //{
-        //    services.RegisterAssemblyPublicNonGenericClasses() //#D
-        //        .AsPublicImplementedInterfaces(); //#E
+        public static void RegisterServiceLayerDi 
+            (this IServiceCollection services)    
+        {
+            services.RegisterAssemblyPublicNonGenericClasses() 
+                .AsPublicImplementedInterfaces(); 
 
-        //    //#F
-        //}
+        }
     }
 }

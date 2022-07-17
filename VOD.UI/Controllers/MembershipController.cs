@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
@@ -34,6 +35,17 @@ namespace VOD.UI.Controllers
             return View(new CourseListCombinedDto(options, courselist));
         }
 
+        [HttpGet]
+        public JsonResult GetFilterSearchContent 
+            (SortFilterPageOptions options) 
+        {
+            var service = new 
+               CourseFilterDropdownService(_context); 
+
+            var traceIdent = HttpContext.TraceIdentifier; 
+
+            return null; //#E
+        }
         [HttpGet]
         public IActionResult Course (int id)
         {

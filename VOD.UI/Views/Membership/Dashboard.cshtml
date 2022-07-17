@@ -1,10 +1,14 @@
 ﻿@using VOD.Service.CourseServices
 @using VOD.UI.HelperExtensions
+@using Microsoft.EntityFrameworkCore.Metadata.Conventions
 @model CourseListCombinedDto
 @{
     ViewData["Title"] = "Dashboard";
 }
-<from id="sort-filter-form" fole = "form">
+
+<h1>Dashboard</h1>
+
+<form id="sort-filter-form" role="form">
     <div class="row">
         <div class="col-sm-3">
             <label>Sort By</label>
@@ -47,9 +51,10 @@
                     onchange="CourseList.sendForm(this)"></select>
         </div>
     </div>
+    <input id="PrevCheckState" name="PrevCheckState" type="hidden" value=@Model.SortFilterPageData.PrevCheckState>
 
-</from>
-
+</form>
+<br />
 <table class="table">
     @foreach (var item in Model.CourseList)
     {
@@ -65,6 +70,9 @@
                 <div>
                     Desctiption: @item.CourseDescription
                 </div>
+                 <div>
+                    Duration: @item.Duration
+                </div>
                 
             </td>
             <td class="vert-align">
@@ -76,9 +84,7 @@
         </tr>
     }
 </table>
-
-@section Scripts{
-
+@section Scripts {
     <script type='text/javascript'>
         document.addEventListener("DOMContentLoaded",
             function(event) {
@@ -87,5 +93,4 @@
             });
     </script>
 }
-
 
