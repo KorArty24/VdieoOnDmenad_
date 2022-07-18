@@ -7,7 +7,7 @@ using VOD.Common.DTOModels.UI;
 using VOD.Common.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace VOD.Service.CourseServices.QueryObjects
+namespace VOD.Service.VideosServices.QueryObjects
 {
     public static class VideoDTOSelect
     {

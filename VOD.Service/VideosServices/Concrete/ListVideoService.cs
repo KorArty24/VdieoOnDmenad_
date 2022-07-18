@@ -8,9 +8,11 @@ using VOD.Common.DTOModels.UI;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.QueryObjects;
-using VOD.Service.CourseServices.QueryObjects;
+using VOD.Service.VideosServices.QueryObjects;
+using
+using VOD.Service.CommonOptions;
 
-namespace VOD.Service.CourseServices.Concrete
+namespace VOD.Service.VideosServices.Concrete
 {
     public class ListVideoService
     {
@@ -21,7 +23,7 @@ namespace VOD.Service.CourseServices.Concrete
             _context = context;
         }
         public IQueryable<VideoDTO> GetVideoPage 
-            (SortFilterPageOptions options)
+            (PageOptions options)
         {
             var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO();
 

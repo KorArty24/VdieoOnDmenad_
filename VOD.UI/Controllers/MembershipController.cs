@@ -27,7 +27,7 @@ namespace VOD.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Dashboard(SortFilterPageOptions options)
+        public async Task<IActionResult> List(SortFilterPageOptions options)
         {
             var listService = new ListCourseService(_context);
             var courselist = await listService.SortCoursePage(options).ToListAsync();
@@ -46,9 +46,12 @@ namespace VOD.UI.Controllers
 
             return null; //#E
         }
+
         [HttpGet]
-        public IActionResult Course (int id)
+        public async Task <IActionResult> GetSingleCourse (int id)
         {
+            var courseservice = new CourseSelectedService(_context);
+            var course = await courseservice.SelectedCoursePage(id);
             return View();
         }
 

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Service.AppStart;
+using VOD.UI.HelperExtensions;
 
 namespace VOD.UI
 {
@@ -33,6 +35,10 @@ namespace VOD.UI
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.RegisterServiceLayerDi();
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperConfigProfile());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
