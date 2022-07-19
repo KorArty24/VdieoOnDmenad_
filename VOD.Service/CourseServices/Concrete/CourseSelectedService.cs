@@ -13,6 +13,10 @@ using VOD.Service.CourseServices.QueryObjects;
 
 namespace VOD.Service.CourseServices.Concrete
 {
+    /// <summary>
+    /// Provides a service for selection one particular course from the list of all
+    /// the courses availible in /List (for any registered user). !Not UserCourses
+    /// </summary>
     public class CourseSelectedService
     {
         private readonly VODContext _context;

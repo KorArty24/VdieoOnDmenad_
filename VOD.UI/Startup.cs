@@ -11,6 +11,7 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Service.AppStart;
+using VOD.Service.ModulesServices.QueryObjects;
 using VOD.UI.HelperExtensions;
 
 namespace VOD.UI
@@ -44,7 +45,9 @@ namespace VOD.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
         {
-           // loggerFactory.AddProvider(new RequestTransientLogger(() => httpContextAccessor));
+            // loggerFactory.AddProvider(new RequestTransientLogger(() => httpContextAccessor));
+
+            ModuleListDTOSelect.Configure(app.ApplicationServices.GetService<IMapper>());
 
             if (env.IsDevelopment())
             {

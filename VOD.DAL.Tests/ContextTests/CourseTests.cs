@@ -38,7 +38,6 @@ namespace VOD.Database.Tests.ContextTests
         }
 
         [Test]
-
         public void ShouldAddACourseWithDbSet()
         {
             //Arrange 
