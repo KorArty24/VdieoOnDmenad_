@@ -8,6 +8,7 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Service.CourseServices;
 using VOD.Service.CourseServices.Concrete;
+using VOD.Service.UserCoursesService.Concrete;
 using VOD.UI.Models.MembershipViewModels;
 
 namespace VOD.UI.Controllers
@@ -48,10 +49,10 @@ namespace VOD.UI.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> GetSingleCourse (int id)
+        public async Task <IActionResult> Course (string userId,int id)
         {
-            var courseservice = new CourseSelectedService(_context);
-            var course = await courseservice.SelectedCoursePage(id);
+            var courseservice = new UserCourseSelectedService(_context);
+            var course = await courseservice.SelectedCoursePageAsync(userId ,id);
             return View();
         }
 
