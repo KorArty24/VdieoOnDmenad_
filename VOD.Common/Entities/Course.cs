@@ -33,5 +33,6 @@ namespace VOD.Common.Entities
         public Instructor Instructor { get; set; }
 
         public List<Module> Modules { get; set; }
+
     }
 }
