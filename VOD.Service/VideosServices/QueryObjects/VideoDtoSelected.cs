@@ -5,22 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.DTOModels.UI;
 using VOD.Common.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace VOD.Service.VideosServices.QueryObjects
 {
-    public static class VideoListDTOSelect
+    public static class VideoDtoSelected
     {
-         public static IQueryable<VideoDTO> MapVideoToDTO 
-            (this IQueryable<Video> videos)
+        public static VideoDTO CreateVideoCard(Video video)
         {
-            return videos.Select(video => new VideoDTO
+            return new VideoDTO
             {
                 Id = video.Id,
+                Title = video.Title,
                 Description = video.Description,
-                Duration = video.Duration,
                 Thumbnail = video.Thumbnail,
-                Url = video.Url
-            });
+                Url = video.Url,
+                Duration = video.Duration
+            };
+
         }
     }
 }

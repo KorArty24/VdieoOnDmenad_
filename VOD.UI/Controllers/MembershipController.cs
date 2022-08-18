@@ -8,7 +8,11 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Service.CourseServices;
 using VOD.Service.CourseServices.Concrete;
+using VOD.Service.CourseServices.Interfaces;
+using VOD.Service.InstructorServices.QueryObjects;
 using VOD.Service.UserCoursesService.Concrete;
+using VOD.Service.VideosServices.Concrete;
+using VOD.Service.VideosServices.Interfaces;
 using VOD.UI.Models.MembershipViewModels;
 
 namespace VOD.UI.Controllers
@@ -17,14 +21,19 @@ namespace VOD.UI.Controllers
     {
         private readonly string _userId;
         private readonly VODContext _context;
+        private readonly IVideoSelectedService _videoSelectedService;
+        private readonly IUserCourseSelectedService _userCourseSelectedService;
 
 
         public MembershipController(IHttpContextAccessor httpContextAccessor,
-            UserManager<VODUser> userManager, VODContext context)
+            UserManager<VODUser> userManager, VODContext context,
+            IVideoSelectedService videoSelectedService, IUserCourseSelectedService userCourseSelectedService)
         {
             var user = httpContextAccessor.HttpContext.User;
             _userId = userManager.GetUserId(user);
             _context = context;
+            _videoSelectedService = videoSelectedService;
+            _userCourseSelectedService = userCourseSelectedService;
         }
 
         [HttpGet]
@@ -53,13 +62,18 @@ namespace VOD.UI.Controllers
         {
             var courseservice = new UserCourseSelectedService(_context);
             var course = await courseservice.SelectedCoursePageAsync(userId ,id);
-            return View();
+            return View(course);
         }
 
         [HttpGet]
-        public IActionResult Video(int id)
+        public async IActionResult Video(int id)
         {
-            return View();
+            var videoDto = _videoSelectedService.SelectedVideoAsync(_userId,id);
+            var courseDto = _userCourseSelectedService.SelectedCoursePageAsync(_userId,id);
+            var usercourse = _userCourseSelectedService.GetUserCourseSelected(_userId, id).Result;
+            var instructorDto = InstructorDTOSelect.CreateInstructorCard(usercourse.Instructor);
+            var course = await _userCourseSelectedService.SelectedCoursePageAsync(userId, videoServic)
+
         }
     }
 }

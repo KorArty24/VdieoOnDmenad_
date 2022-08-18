@@ -34,5 +34,13 @@ namespace VOD.Service.UserCoursesService.Concrete
             if (courseQuery == null) return default;
             return UserCourseDtoSelect.CreateCourseCard(courseQuery);
         }
+
+        public async Task<Course> GetUserCourseSelected(string userId, int courseId)
+        {
+            var courseQuery = await _context.UserCourses
+                .AsNoTracking().SingleAsync(k => k.UserId.Equals(userId) && k.CourseId.Equals(courseId));
+            if (courseQuery == null) return default;
+            return courseQuery.Course;
+        }
     }
 }
