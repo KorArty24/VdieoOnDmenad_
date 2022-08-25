@@ -10,10 +10,11 @@ using VOD.Database.Contexts;
 using VOD.Database.QueryObjects;
 using VOD.Service.VideosServices.QueryObjects;
 using VOD.Service.CommonOptions;
+using VOD.Service.VideosServices.Interfaces;
 
 namespace VOD.Service.VideosServices.Concrete
 {
-    public class ListVideoService
+    public class ListVideoService : IListVideoService
     {
         private readonly VODContext _context;
 
@@ -21,10 +22,10 @@ namespace VOD.Service.VideosServices.Concrete
         {
             _context = context;
         }
-        public IQueryable<VideoDTO> GetVideoPage 
+        public async Task<IQueryable<VideoDTO>> GetVideoPage 
             (PageOptions options)
         {
-            var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO();
+            var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO().;
             return videoQuery.Page(options.PageNum-1, options.PageSize);
         }
     }

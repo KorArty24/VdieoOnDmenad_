@@ -40,7 +40,8 @@ namespace VOD.Service.UserCoursesService.Concrete
             var courseQuery = await _context.UserCourses
                 .AsNoTracking().SingleAsync(k => k.UserId.Equals(userId) && k.CourseId.Equals(courseId));
             if (courseQuery == null) return default;
-            return courseQuery.Course;
+            var course = courseQuery.Course;
+            return course;
         }
     }
 }

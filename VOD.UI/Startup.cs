@@ -14,6 +14,8 @@ using VOD.Service.AppStart;
 using VOD.Service.CourseServices.Interfaces;
 using VOD.Service.ModulesServices.QueryObjects;
 using VOD.Service.UserCoursesService.Concrete;
+using VOD.Service.VideosServices.Concrete;
+using VOD.Service.VideosServices.Interfaces;
 using VOD.UI.HelperExtensions;
 
 namespace VOD.UI
@@ -31,6 +33,7 @@ namespace VOD.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserCourseSelectedService, UserCourseSelectedService>();
+            services.AddScoped<IListVideoService, ListVideoService>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<VODContext>();
@@ -38,7 +41,7 @@ namespace VOD.UI
             services.AddDbContext<VODContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.RegisterServiceLayerDi();
+            //services.RegisterServiceLayerDi();
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperConfigProfile());
