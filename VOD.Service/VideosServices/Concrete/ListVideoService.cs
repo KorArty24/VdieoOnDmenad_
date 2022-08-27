@@ -25,7 +25,7 @@ namespace VOD.Service.VideosServices.Concrete
         public async Task<IQueryable<VideoDTO>> GetVideoPage 
             (PageOptions options)
         {
-            var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO().;
+            var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO();
             return videoQuery.Page(options.PageNum-1, options.PageSize);
         }
     }

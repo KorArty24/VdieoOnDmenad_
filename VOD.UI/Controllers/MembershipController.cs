@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using VOD.Common.DTOModels.UI;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Service.CommonOptions;
@@ -69,7 +71,7 @@ namespace VOD.UI.Controllers
         }
 
         [HttpGet]
-        public async IActionResult Video(int id, PageOptions options)
+        public async Task<IActionResult> Video(int id, PageOptions options)
         {
             var videoDto = _videoSelectedService.SelectedVideoAsync(_userId,id).Result;
             var courseDto = _userCourseSelectedService.SelectedCoursePageAsync(_userId,id).Result;
@@ -77,9 +79,31 @@ namespace VOD.UI.Controllers
             var instructorDto = InstructorDTOSelect.CreateInstructorCard(usercourse.Instructor);
             var course = await _userCourseSelectedService.GetUserCourseSelected(_userId, id);
             var videos = await _listVideoService.GetVideoPage(options).Result.ToListAsync();  
+            var count = videos.Count();
+            var index = videos.FindIndex(v => v.Id.Equals(id));
+            var previous = videos.ElementAtOrDefault(index - 1);
+            var previousId = previous == null? 0: previous.Id;
+            var next = videos.ElementAtOrDefault(index +1);
+            var nextId = next == null? 0: next.Id;
+            var nextTitle = next == null ? string.Empty : next.Title;
+            var nextThumb = next == null ? string.Empty : next.Thumbnail;
 
-
-
+            var VideoModel = new VideoViewModel
+            {
+                Video = videoDto,
+                Instructor = instructorDto,
+                Course = courseDto,
+                LessonInfo = new LessonInfoDTO
+                {
+                    LessonNumber = index + 1,
+                    NumberOfLessons = count,
+                    NextVideoId = nextId,
+                    PreviousVideoId = previousId,
+                    NextVideoTitle = nextTitle,
+                    NextVideoThumbNail = nextThumb,
+                }
+            };
+            return View(VideoModel);
         }
     }
 }
