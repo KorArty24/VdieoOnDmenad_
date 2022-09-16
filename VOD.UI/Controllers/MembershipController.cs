@@ -63,7 +63,7 @@ namespace VOD.UI.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> Course (string userId,int id)
+        public async Task <IActionResult> Course (string userId, int id)
         {
             var courseservice = new UserCourseSelectedService(_context);
             var course = await courseservice.SelectedCoursePageAsync(userId ,id);
@@ -73,12 +73,14 @@ namespace VOD.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Video(int id, PageOptions options)
         {
-            var videoDto = _videoSelectedService.SelectedVideoAsync(_userId,id).Result;
+            var videoDto = _videoSelectedService.SelectVideoAsync(_userId,id).Result;
             var courseDto = _userCourseSelectedService.SelectedCoursePageAsync(_userId,id).Result;
             var usercourse = _userCourseSelectedService.GetUserCourseSelected(_userId, id).Result;
             var instructorDto = InstructorDTOSelect.CreateInstructorCard(usercourse.Instructor);
             var course = await _userCourseSelectedService.GetUserCourseSelected(_userId, id);
-            var videos = await _listVideoService.GetVideoPage(options).Result.ToListAsync();  
+            var video = _videoSelectedService.SelectVideoEntityAsync(_userId, id).Result;
+            var videos = await _listVideoService.GetVideosForUser(_userId, options, video.ModuleId)
+                .Result.ToListAsync();  
             var count = videos.Count();
             var index = videos.FindIndex(v => v.Id.Equals(id));
             var previous = videos.ElementAtOrDefault(index - 1);
@@ -87,7 +89,6 @@ namespace VOD.UI.Controllers
             var nextId = next == null? 0: next.Id;
             var nextTitle = next == null ? string.Empty : next.Title;
             var nextThumb = next == null ? string.Empty : next.Thumbnail;
-
             var VideoModel = new VideoViewModel
             {
                 Video = videoDto,

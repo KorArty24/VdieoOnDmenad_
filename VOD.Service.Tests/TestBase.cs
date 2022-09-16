@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 
-namespace VOD.Database.Tests.Base
+namespace VOD.Service.Tests
 {
     [TestFixture]
     public class TestBase
@@ -19,7 +18,7 @@ namespace VOD.Database.Tests.Base
         public void SetUp()
         {
             context = new VODContextFactory().CreateDbContext(new string[0]);
-            CleanDatabase();
+            SampleDataInitializer.InitializeData(context);
         }
 
         [TearDown]
@@ -56,7 +55,8 @@ namespace VOD.Database.Tests.Base
             context.SaveChanges();
             context.AddRange(SampleData.GetDownloads(context));
             context.SaveChanges();
-            
+            context.AddRange(SampleData.GetUserCourses(context));
+
         }
     }
 }

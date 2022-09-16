@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Database.Contexts;
 
+
 namespace VOD.Database.Migrations.DbInitializer
 {
     public static class SampleDataInitializer
@@ -31,13 +32,13 @@ namespace VOD.Database.Migrations.DbInitializer
 
         public static void ClearData(VODContext context) 
         {
-           
+            context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Downloads");
             context.Database.ExecuteSqlRaw("Delete from VOD.Videos");
             context.Database.ExecuteSqlRaw("Delete from VOD.Modules");
             context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Instructors");
-            context.Database.ExecuteSqlRaw("Delete from VOD.UserCourses");
+            context.Database.ExecuteSqlRaw("Delete from VOD.AspNetUsers");
             ResetIdentity(context);
         }
 
@@ -65,9 +66,14 @@ namespace VOD.Database.Migrations.DbInitializer
                     context.AddRange(SampleData.GetDownloads(context));
                     context.SaveChanges();
                 }
+                if (!context.Users.Any()) 
+                {
+                    context.Users.AddRange(SampleUserData.GetUsers());
+                    context.SaveChanges();
+                }
                 if (!context.UserCourses.Any()) 
                 {
-                    context.AddRange(SampleData.GetUserCourses(context));
+                    context.UserCourses.AddRange(SampleData.GetUserCourses(context));
                     context.SaveChanges();
                 }
             }

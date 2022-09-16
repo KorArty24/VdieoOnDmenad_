@@ -51,18 +51,45 @@ namespace VOD.Database.Migrations.DbInitializer
                         }
                     }
                 },
+                 new Module
+                //Module 1.2
+                {
+                    CourseId=listOfCourseIds[0], // Course 1
+                    Title = "Module 1.2. Continue",
+                    Videos = new List<Video>
+                    {
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[0],
+                            Title="Video3",
+                            Description="Working with VS panels",
+                            Duration=10,
+                            Thumbnail="/images/video1.jpg",
+                            Url="https://www.youtube.com/watch?v=BJFyzpBcaCY"
+                        },
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[0],
+                            Title="Video4",
+                            Description="Adding extensions to VS",
+                            Duration=15,
+                            Thumbnail="/images/video2.jpg",
+                            Url="https://www.youtube.com/watch?v=stQ1IZEB2xk"
+                        }
+                    }
+                },
                 //Module 2.1 
                 new Module
                 {
                     CourseId=listOfCourseIds[1],
-                    Title = "Module2. Fun begins.",
+                    Title = "Module1. Fun begins.",
                     Videos= new List<Video>
                     {
                         new Video
                         {
                             CourseId=listOfCourseIds[1],
-                            Title ="Video3",
-                            Description="Lesson 3",
+                            Title ="Video 1",
+                            Description="Lesson 1",
                             Duration = 20,
                             Thumbnail="/images/video3.jpg",
                             Url="https://www.youtube.com/watch?v=GZvSYJDk-us"
@@ -70,8 +97,8 @@ namespace VOD.Database.Migrations.DbInitializer
                         new Video
                         {
                             CourseId=listOfCourseIds[1],
-                            Title = "Video4. Learn the basics of http",
-                            Description="Lesson 4",
+                            Title = "Video 2. Learn the basics of http",
+                            Description="Lesson 2",
                             Duration = 30,
                             Thumbnail="/images/video4.jpg",
                             Url = "https://www.youtube.com/watch?v=XU5pw3QRYjQ"
@@ -82,14 +109,14 @@ namespace VOD.Database.Migrations.DbInitializer
                  new Module
                 {
                     CourseId=listOfCourseIds[1],
-                    Title = "Module 3. Roasted on Linqs",
+                    Title = "Module 2. Roasted on Linqs",
                     Videos = new List<Video>
                     {
                         new Video
                         {
                             CourseId=listOfCourseIds[1],
-                            Title="Video6. Linq in Action",
-                            Description="Lesson 6",
+                            Title="Video 3. Linq in Action",
+                            Description="Lesson 3",
                             Duration=100,
                             Thumbnail="/images/video6.jpg",
                             Url="https://www.youtube.com/watch?v=yClSNQdVD7g"
@@ -97,8 +124,35 @@ namespace VOD.Database.Migrations.DbInitializer
                         new Video
                         {
                             CourseId=listOfCourseIds[1],
-                            Title="Video7. Linq in depth",
+                            Title="Video 4. Linq in depth",
                             Description="Dive into expression trees, fluent syntax, joining and set specific queries",
+                            Duration=35,
+                            Thumbnail="/images/video7.jpg",
+                            Url="https://www.youtube.com/watch?v=sIXKpyhxHR8"
+                        }
+                    }
+                },
+                //Module 2.3 
+                new Module
+                {
+                    CourseId=listOfCourseIds[1],
+                    Title = "Module 3. More Effective C#",
+                    Videos = new List<Video>
+                    {
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[1],
+                            Title="Video 5. Ensure That 0 Is a Valid State for Value Types",
+                            Description="Lesson 5",
+                            Duration=100,
+                            Thumbnail="/images/video6.jpg",
+                            Url="https://www.youtube.com/watch?v=yClSNQdVD7g"
+                        },
+                        new Video
+                        {
+                            CourseId=listOfCourseIds[1],
+                            Title="Video 6. Ensure That Properties Behave Like Data",
+                            Description="When properties correctly model data members, they live up to client developers’ expectations. ",
                             Duration=35,
                             Thumbnail="/images/video7.jpg",
                             Url="https://www.youtube.com/watch?v=sIXKpyhxHR8"
@@ -110,14 +164,14 @@ namespace VOD.Database.Migrations.DbInitializer
                 new Module
                 {
                     CourseId=listOfCourseIds[2],
-                    Title = "Module 3. No time for caution.",
+                    Title = "Module 1. No time for caution.",
                     Videos = new List<Video>
                     {
                         new Video
                         {
                             CourseId=listOfCourseIds[2],
-                            Title="Video5. Saving and loading",
-                            Description="Lesson 5",
+                            Title="Video 1. Saving and loading",
+                            Description="Lesson 1",
                             Duration=100,
                             Thumbnail="/images/video5.jpg",
                             Url="https://www.youtube.com/watch?v=BJFyzpBcaCY"
@@ -125,7 +179,7 @@ namespace VOD.Database.Migrations.DbInitializer
                         new Video
                         {
                             CourseId=listOfCourseIds[2],
-                            Title="Video6. Version Control",
+                            Title="Video 2. Version Control",
                             Description="Version control essentials",
                             Duration=45,
                             Thumbnail="/images/video6.jpg",

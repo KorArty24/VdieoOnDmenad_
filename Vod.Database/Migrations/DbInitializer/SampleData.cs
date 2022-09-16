@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Common.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity;
 
 namespace VOD.Database.Migrations.DbInitializer
 {
@@ -42,6 +44,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 }
             };
         #endregion
+
 
         #region Seeding courses, modules, Videos.
 
@@ -124,38 +127,42 @@ namespace VOD.Database.Migrations.DbInitializer
         #region Seed UserCourses
         public static IEnumerable<UserCourse> GetUserCourses(VODContext context)
         {
-            var email = "bobbySinger@yahoo.com";
-            var adminRoleId = string.Empty;
-            var userId = string.Empty;
-            if (context.Users.Any(r => r.Email.Equals(email))) 
+            const int NumUsers = 3; // Number of test users see class SampleUserData
+            const int NumSampleUserCourses = 3;
+            var emails = new Stack<string>();
+            for (int i = 0; i < NumUsers; i++)
             {
-                userId = context.Users.First(r => r.Email.Equals(email)).Id;
-
+                emails.Push(context.Users.Skip(i).FirstOrDefault().Email);
+            }
+            string email = null;
+            var adminRoleId = string.Empty;
+            string userId = null;
+            var userIds = new Stack<string>();
+            while(emails.Count() > 0) 
+            {
+                if (context.Users.Count().Equals(NumSampleUserCourses))
+                {
+                    userIds.Push(context.Users.First(r => r.Email.Equals(emails.Pop())).Id);
+                }
+                else
+                {
+                    throw new System.NotImplementedException("dfs");
+                };
             }
             var usercourses = new List<UserCourse>();
-            if (!userId.Equals(string.Empty))
-            {
-                if (!context.UserCourses.Any())
+            for (int i = 0; i < NumSampleUserCourses; i++)
+            { 
+                if (!userIds.TryPop(out userId).Equals(string.Empty))
                 {
-                    usercourses.AddRange(
-                    new List<UserCourse> 
+                    if (!context.UserCourses.Any())
                     {
-                        new UserCourse 
-                        {
-                            UserId=userId,
-                            CourseId=context.Courses.First().Id
-                        },
-                        new UserCourse
-                        {
-                            UserId=userId,
-                            CourseId=context.Courses.Skip(1).FirstOrDefault().Id
-                        },                          
-                        new UserCourse
-                        {
-                            UserId=userId,
-                            CourseId= context.Courses.Skip(2).FirstOrDefault().Id
-                        }
-                    });
+                        usercourses.Add(
+                            new UserCourse 
+                            {
+                                UserId=userId,
+                                CourseId=context.Courses.Skip(i).FirstOrDefault().Id
+                            });
+                    }
                 }
             }
             return usercourses;

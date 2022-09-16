@@ -27,7 +27,6 @@ namespace VOD.Service.CourseServices.Concrete
             var courseQuery = _context.Courses
                 .AsNoTracking().MapCourseToDTO().OrderCoursesBy(options.OrderByOptions)
                 .FilterCoursesBy(options.FilterBy, options.FilterValue);
-
             return courseQuery.Page(options.PageNum-1, options.PageSize);
         }
     }

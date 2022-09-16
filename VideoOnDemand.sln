@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.API", "VOD.API\VOD.API.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Service", "VOD.Service\VOD.Service.csproj", "{4AC17247-CD0C-4FA7-A7CE-2DD4DAB12599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.Service.Tests", "VOD.Service.Tests\VOD.Service.Tests.csproj", "{080DF1C5-BCB5-4F3D-83E1-27E9284BCB3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Service.Tests", "VOD.Service.Tests\VOD.Service.Tests.csproj", "{080DF1C5-BCB5-4F3D-83E1-27E9284BCB3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.ControllerTest", "VOD.ControllerTest\VOD.ControllerTest.csproj", "{6988938A-206F-4CBA-A1C1-2958F9EAC1BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{080DF1C5-BCB5-4F3D-83E1-27E9284BCB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080DF1C5-BCB5-4F3D-83E1-27E9284BCB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080DF1C5-BCB5-4F3D-83E1-27E9284BCB3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6988938A-206F-4CBA-A1C1-2958F9EAC1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6988938A-206F-4CBA-A1C1-2958F9EAC1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6988938A-206F-4CBA-A1C1-2958F9EAC1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6988938A-206F-4CBA-A1C1-2958F9EAC1BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

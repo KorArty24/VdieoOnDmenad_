@@ -22,10 +22,15 @@ namespace VOD.Service.VideosServices.Concrete
         {
             _context = context;
         }
-        public async Task<IQueryable<VideoDTO>> GetVideoPage 
-            (PageOptions options)
+        public async Task<IQueryable<VideoDTO>> GetVideosForUser 
+             (string userId, PageOptions options, int moduleId=0)
         {
-            var videoQuery = _context.Videos.AsNoTracking().MapVideoToDTO();
+            var module = await _context.Modules.SingleAsync(m => m.Id.Equals(moduleId));
+            if (module == null) return default(IQueryable<VideoDTO>);
+            var userCourse = await _context.UserCourses.
+                SingleAsync(uc => uc.UserId.Equals(userId) && (uc.CourseId.Equals(module.CourseId)));
+            if (userCourse == null) return default(IQueryable<VideoDTO>);
+            var videoQuery = module.Videos.AsQueryable().MapVideoToDTO();
             return videoQuery.Page(options.PageNum-1, options.PageSize);
         }
     }

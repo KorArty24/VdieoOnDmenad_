@@ -10,6 +10,6 @@ namespace VOD.Service.VideosServices.Interfaces
 {
     public interface IListVideoService
     {
-        public Task<IQueryable<VideoDTO>> GetVideoPage(PageOptions options);
+        public Task<IQueryable<VideoDTO>> GetVideosForUser (string userId, PageOptions options, int moduleId = 0);
     }
 }
