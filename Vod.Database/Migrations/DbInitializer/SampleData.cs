@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Common.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNet.Identity;
+
 
 namespace VOD.Database.Migrations.DbInitializer
 {

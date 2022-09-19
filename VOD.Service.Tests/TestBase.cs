@@ -56,7 +56,6 @@ namespace VOD.Service.Tests
             context.AddRange(SampleData.GetDownloads(context));
             context.SaveChanges();
             context.AddRange(SampleData.GetUserCourses(context));
-
         }
     }
 }

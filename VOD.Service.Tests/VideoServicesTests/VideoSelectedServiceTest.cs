@@ -18,7 +18,7 @@ namespace VOD.Service.Tests.VideoServicesTests
     {
         
         [Test]
-        [TestCaseSource(nameof(UserCourseCases))]
+        [TestCaseSource(typeof(TestValuesClass), nameof(TestValuesClass.UserCourseCases))]
         public void ShouldReturnSelectedVideoDTOForUser(string userId, int videoId)
         {
             //Arrange
@@ -31,9 +31,28 @@ namespace VOD.Service.Tests.VideoServicesTests
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<VideoDTO>(result);
         }
-        static object[] UserCourseCases =
-        {
-            new object[] { SampleUserData.UserConsts.userOneId, 2}
-        };
+        
+        [Test]
+        [TestCaseSource(typeof(TestValuesClass), nameof(TestValuesClass.CaseThatReturnsDefault))]
+        public void ShouldReturnDefaultIfCourseNull(string userId, int videoId)
+        { 
+            //Arrange
+            var service = new VideoSelectedService(context);
+
+            //Act
+            var result = service.SelectVideoAsync(userId, videoId).Result;
+        }
     }
+
+    public class TestValuesClass
+        {
+           public static object[] UserCourseCases =
+            {
+                new object[] { SampleUserData.UserConsts.userOneId, 2}
+            };
+           public static object[] CaseThatReturnsDefault =
+            {
+                new object[]{SampleUserData.UserConsts.userOneId, 6},
+            };
+        }
 }

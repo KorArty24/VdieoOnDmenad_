@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+﻿
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,11 @@ namespace VOD.Database.Migrations.DbInitializer
 
         public static IEnumerable<VODUser> GetUsers()
             {
+            string[] passwords =
+            {
+                "pik0puTrikapu", "Ross-LemmingLC2001", "Bagauilir-LemmingLC2001"
+            };
+            
             var listOfUsers = new List<VODUser>
             {
                 new VODUser
@@ -34,7 +39,7 @@ namespace VOD.Database.Migrations.DbInitializer
                     Id = UserConsts.userOneId,
                     Email = "bobo_berens@example.com",
                     EmailConfirmed= true,
-                    PasswordHash = HashPassword("pik0puTrikapu"),
+                   // PasswordHash = HashPassword("pik0puTrikapu"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
@@ -45,7 +50,7 @@ namespace VOD.Database.Migrations.DbInitializer
                     Id = UserConsts.userTwoId,
                     Email = "brad_buckner@example.com",
                     EmailConfirmed= true,
-                    PasswordHash = HashPassword("Ross-LemmingLC2001"),
+                    //PasswordHash = HashPassword("Ross-LemmingLC2001"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
@@ -56,20 +61,24 @@ namespace VOD.Database.Migrations.DbInitializer
                     Id = UserConsts.userThreeId,
                     Email = "bengamin_lainus@example.com",
                     EmailConfirmed= true,
-                    PasswordHash = HashPassword("Bagauilir-LemmingLC2001"),
+                    //PasswordHash = HashPassword("Bagauilir-LemmingLC2001"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
                     PhoneNumberConfirmed=false
                 }
             };
+            for (int i=0; i<listOfUsers.Count(); i++)  
+            {
+                listOfUsers[i].PasswordHash = HashPassword(listOfUsers[i], passwords[i]);
+            }
             return listOfUsers;
             }
 
-        private static string HashPassword(string pass) 
+        private static string HashPassword(VODUser user,string pass) 
         {
-            PasswordHasher hasher = new PasswordHasher();
-            var hashedpass = hasher.HashPassword(pass);
+            PasswordHasher<VODUser> hasher = new PasswordHasher<VODUser>();
+            var hashedpass = hasher.HashPassword(user , pass);
             return hashedpass;
         }
         #endregion

@@ -23,10 +23,10 @@ namespace VOD.Service.VideosServices.Concrete
 
         public async Task<VideoDTO> SelectVideoAsync(string userId, int videoId)
         {
-            var videoQuery = await _context.Videos.AsNoTracking().SingleAsync(v => v.Id.Equals(videoId));
+            var videoQuery = await _context.Videos.AsNoTracking().SingleOrDefaultAsync(v => v.Id.Equals(videoId));
             if (videoQuery == null) return default;
-            var userCourse = await _context.UserCourses.AsNoTracking().SingleAsync(c=> c.UserId.Equals(userId) 
-            && c.CourseId.Equals(videoQuery.CourseId));
+            var userCourse = await _context.UserCourses.AsNoTracking().SingleOrDefaultAsync(c=> c.UserId.Equals(userId) 
+                    && c.CourseId.Equals(videoQuery.CourseId));
             if (userCourse == null) return default;
             return VideoDtoSelected.CreateVideoCard(videoQuery);
         }
