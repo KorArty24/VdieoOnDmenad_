@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DatabaseServices\" />
     <Folder Include="VideoModelService\" />
     
   </ItemGroup>

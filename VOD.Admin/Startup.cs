@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
+using VOD.Service.DatabaseServices;
+using VOD.Service.DatabaseServices.Concrete;
 
 namespace VOD.Admin
 {
@@ -28,13 +30,13 @@ namespace VOD.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<VODContext >(options =>
+            services.AddDbContext<VODContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI()
-                .AddEntityFrameworkStores<VODContext >();
+            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages();
+            services.AddScoped<IdbReadService, DbReadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
