@@ -76,6 +76,10 @@ namespace VOD.Database.Migrations.DbInitializer
                     context.UserCourses.AddRange(SampleData.GetUserCourses(context));
                     context.SaveChanges();
                 }
+                if (!context.UserClaims.Any())
+                {
+                    context.UserClaims.AddRange(SampleUserData.GetUserClaims());
+                }
             }
             catch (Exception ex) 
             {

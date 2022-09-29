@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
@@ -11,27 +12,26 @@ namespace VOD.Database.Migrations.DbInitializer
 {
     public class SampleUserData
     {
+        #region Seeding Users
         public static class UserConsts
         {
             public const string userOneId = "82ec065c-0d21-47f9-a0a6-5c941950a294";
             public const string userTwoId = "8b7e3679-e289-496b-a685-1308b0ccbbab";
             public const string userThreeId = "9bfc9c84-c029-4922-afa5-5fc842ccc7b6";
         }
-
         private readonly Microsoft.AspNetCore.Identity.UserManager<VODUser> _userManager;
         public SampleUserData(Microsoft.AspNetCore.Identity.UserManager<VODUser> userManager)
         {
             _userManager = userManager;
         }
-                 #region Seeding Users
-
+          
         public static IEnumerable<VODUser> GetUsers()
             {
             string[] passwords =
             {
                 "pik0puTrikapu", "Ross-LemmingLC2001", "Bagauilir-LemmingLC2001"
             };
-            
+
             var listOfUsers = new List<VODUser>
             {
                 new VODUser
@@ -39,18 +39,20 @@ namespace VOD.Database.Migrations.DbInitializer
                     Id = UserConsts.userOneId,
                     Email = "bobo_berens@example.com",
                     EmailConfirmed= true,
-                   // PasswordHash = HashPassword("pik0puTrikapu"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
-                    PhoneNumberConfirmed=false
+                    PhoneNumberConfirmed=false,
+                    Claims = new List<Claim>
+                    {
+                        new Claim("Role", "Admins")
+                    }
                 },
                 new VODUser
                 {
                     Id = UserConsts.userTwoId,
                     Email = "brad_buckner@example.com",
                     EmailConfirmed= true,
-                    //PasswordHash = HashPassword("Ross-LemmingLC2001"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
@@ -61,7 +63,6 @@ namespace VOD.Database.Migrations.DbInitializer
                     Id = UserConsts.userThreeId,
                     Email = "bengamin_lainus@example.com",
                     EmailConfirmed= true,
-                    //PasswordHash = HashPassword("Bagauilir-LemmingLC2001"),
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
@@ -82,6 +83,18 @@ namespace VOD.Database.Migrations.DbInitializer
             return hashedpass;
         }
         #endregion
-
+        public static IEnumerable<IdentityUserClaim<string>> GetUserClaims()
+        {
+            var Claims = new List<IdentityUserClaim<string>>
+           {
+               new IdentityUserClaim<string>
+               {
+                   UserId = UserConsts.userOneId,
+                   ClaimType = ClaimTypes.Role,
+                   ClaimValue = "Admin"
+               }
+           };
+           return Claims;
+        }
     }
 }

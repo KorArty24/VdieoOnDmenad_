@@ -4,6 +4,6 @@ namespace VOD.Admin.Admin
 {
     public class CardViewModel
     {
-        CountdownEvent 
+        //CountdownEvent 
     }
 }
