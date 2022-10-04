@@ -36,7 +36,7 @@ namespace VOD.Admin
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages();
-            services.AddScoped<IdbReadService, DbReadService>();
+            services.AddScoped<IDbReadService, DbReadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

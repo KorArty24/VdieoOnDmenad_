@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VOD.Service.DatabaseServices
 {
-    public interface IdbReadService
+    public interface IDbReadService
     {
         (int courses, int downloads, int instructors, int modules, int videos, int users) Count();
     }

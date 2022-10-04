@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.Entities;
@@ -34,6 +36,13 @@ namespace VOD.Database.Contexts
             builder.HasDefaultSchema("VOD");
 
             builder.Entity<UserCourse>().HasKey(uc => new {uc.UserId, uc.CourseId }); //Composite key
+
+            builder.Entity<IdentityUserClaim<string>>().HasData(new IdentityUserClaim<string>
+            {
+                UserId = "82ec065c-0d21-47f9-a0a6-5c941950a294",
+                ClaimType = ClaimTypes.Role,
+                ClaimValue = "Admin"
+            });
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) // Restrict cascade deletes
             {

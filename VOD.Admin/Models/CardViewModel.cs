@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace VOD.Admin.Admin
+﻿namespace VOD.Admin.Models
 {
     public class CardViewModel
     {

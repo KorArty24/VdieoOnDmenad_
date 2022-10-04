@@ -7,7 +7,7 @@ using VOD.Database.Contexts;
 
 namespace VOD.Service.DatabaseServices.Concrete
 {
-    public class DbReadService : IdbReadService
+    public class DbReadService : IDbReadService
     {
         private VODContext context;
         public (int courses, int downloads, int instructors, int modules, int videos, int users) Count()
