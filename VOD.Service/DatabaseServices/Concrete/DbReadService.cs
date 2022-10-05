@@ -9,7 +9,11 @@ namespace VOD.Service.DatabaseServices.Concrete
 {
     public class DbReadService : IDbReadService
     {
-        private VODContext context;
+        private readonly VODContext context;
+        public DbReadService(VODContext context)
+        {
+            this.context = context;
+        }
         public (int courses, int downloads, int instructors, int modules, int videos, int users) Count()
         {
             return(

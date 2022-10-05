@@ -37,6 +37,8 @@ namespace VOD.Admin
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages();
             services.AddScoped<IDbReadService, DbReadService>();
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<VODContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +60,6 @@ namespace VOD.Admin
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

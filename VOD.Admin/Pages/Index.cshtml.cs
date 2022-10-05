@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using VOD.Admin.Admin;
+using VOD.Admin.Models;
 using VOD.Common.Entities;
 using VOD.Service.DatabaseServices;
 
