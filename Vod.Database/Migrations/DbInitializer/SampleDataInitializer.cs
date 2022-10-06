@@ -38,6 +38,7 @@ namespace VOD.Database.Migrations.DbInitializer
             context.Database.ExecuteSqlRaw("Delete from VOD.Modules");
             context.Database.ExecuteSqlRaw("Delete from VOD.Courses");
             context.Database.ExecuteSqlRaw("Delete from VOD.Instructors");
+            context.Database.ExecuteSqlRaw("Delete from VOD.AspNetUserClaims");
             context.Database.ExecuteSqlRaw("Delete from VOD.AspNetUsers");
             ResetIdentity(context);
         }
