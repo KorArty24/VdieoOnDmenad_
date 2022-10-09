@@ -29,7 +29,7 @@ namespace VOD.Database.Migrations.DbInitializer
             {
             string[] passwords =
             {
-                "pik0puTrikapu", "Ross-LemmingLC2001", "Bagauilir-LemmingLC2001"
+                "pik0pu-Trikapu", "Ross-LemmingLC2001", "Bagauilir-LemmingLC2001"
             };
 
             var listOfUsers = new List<VODUser>
@@ -38,11 +38,15 @@ namespace VOD.Database.Migrations.DbInitializer
                 {
                     Id = UserConsts.userOneId,
                     Email = "bobo_berens@example.com",
+                    UserName="bobo_berens@example.com",
+                    NormalizedUserName="bobo_berens@example.com".ToUpper(),
                     EmailConfirmed= true,
                     TwoFactorEnabled=false,
                     AccessFailedCount=0,
                     LockoutEnabled=false,
                     PhoneNumberConfirmed=false,
+                    NormalizedEmail = "BOBO_BERENS@EXAMPLE.COM",
+                    SecurityStamp=Guid.NewGuid().ToString(),
                     Claims = new List<Claim>
                     {
                         new Claim("Role", "Admins")
