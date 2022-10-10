@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.Entities.Base;
 using StatusGeneric;
+using GenericEventRunner.DomainParts;
+using VOD.Common.DomainEvents;
 
 namespace VOD.Common.Entities
 {
@@ -65,7 +67,13 @@ namespace VOD.Common.Entities
                 throw new ArgumentNullException(nameof(title));
             if (modules == null)
                 throw new ArgumentNullException(nameof(modules));
-            course._modules = new IList<Module>(modules.Select(m=> new Module()))
+            course._modules = new HashSet<Module>(modules.Select(m => new Module(course, m.Title, id)));
+            if (!course._modules.Any())                             
+                status.AddError(                                      
+                    "You must have at least one Module for a course."); 
+            if (status.IsValid)
+                course.AddEvent(new CourseChangeEvent(CourseChangeTypes.Added), EventToSend.DuringSave);
+             return status.SetResult
         };
             
     }
