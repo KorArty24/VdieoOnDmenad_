@@ -11,20 +11,17 @@ namespace VOD.Common.Entities
     public class Instructor: EntityBase
     {
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         [MaxLength(80), Required]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [MaxLength(1024)]
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         [MaxLength(1024)]
-        public string Thumbnail { get; private set; }
+        public string Thumbnail { get; set; }
 
-        // public List<Course> Courses { get; private set; }
-        private HashSet<Course> _courses;
-
-        public IReadOnlyCollection<Course> Courses => _courses?.ToList();
+        public List<Course> Courses { get; set; }
     }
 }

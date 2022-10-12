@@ -10,8 +10,6 @@ namespace VOD.Common.Entities
 {
     public class Module: EntityBase
     {
-        private Module() { }
-
         [Key]
         public int Id { get; set; }
 
@@ -22,12 +20,8 @@ namespace VOD.Common.Entities
 
         public Course Course { get; set; }
 
-        //public List<Video> Videos { get; set; }
-        private HashSet<Course> _courses = new HashSet<Course>();
-        public IReadOnlyCollection<Course> Courses => _courses?.ToList();
+        public List<Video> Videos { get; set; }
 
-        //public List<Download> Downloads { get; set; }
-        private HashSet<Download> _downloads = new HashSet<Download>();
-        public IReadOnlyCollection<Download> Downloads => _downloads?.ToList();
+        public List<Download> Downloads { get; set; }
     }
 }
