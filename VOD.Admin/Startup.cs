@@ -15,6 +15,9 @@ using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Service.DatabaseServices;
 using VOD.Service.DatabaseServices.Concrete;
+using VOD.Service.UserService.Interfaces;
+using VOD.Service.UserService;
+using VOD.Service.UserService.Interfaces;
 
 namespace VOD.Admin
 {
@@ -37,6 +40,7 @@ namespace VOD.Admin
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages();
             services.AddScoped<IDbReadService, DbReadService>();
+            services.AddScoped<IUserService, UserService>();
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<VODContext>(options => options.UseSqlServer(connection));
         }

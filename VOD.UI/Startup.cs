@@ -12,6 +12,7 @@ using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Service.AppStart;
 using VOD.Service.CourseServices.Interfaces;
+using VOD.Service.DatabaseServices.Concrete;
 using VOD.Service.ModulesServices.QueryObjects;
 using VOD.Service.UserCoursesService.Concrete;
 using VOD.Service.VideosServices.Concrete;
@@ -38,6 +39,7 @@ namespace VOD.UI
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<VODContext>();
             services.AddControllersWithViews();
+            services.AddScoped<IDbWriteService, DbWriteService>();
             services.AddDbContext<VODContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

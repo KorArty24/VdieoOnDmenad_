@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="NewFolder\" />
+    <Folder Include="UserService\QueryObjects\" />
     <Folder Include="VideoModelService\" />
     
   </ItemGroup>
