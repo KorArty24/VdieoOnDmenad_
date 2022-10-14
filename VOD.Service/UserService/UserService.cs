@@ -23,27 +23,8 @@ namespace VOD.Service.UserService
             _db = db;
             _userManager = userManager;
         }
-        public async Task<UserDTO> GetUsersAsync(string userId) 
-        {
-            return await _db.Users.Select(user => new UserDTO
-            {
-                Id = user.Id,
-                Email = user.Email,
-                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
-            }).FirstOrDefaultAsync(u => u.Id.Equals(userId));
-        }
 
-        public async Task <IEnumerable<UserDTO>> GetUsersAsync() 
-        {
-            return await _db.Users.OrderBy(u => u.Email).Select(user => new UserDTO
-            {
-                Id = user.Id,
-                Email = user.Email,
-                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
-            }).ToListAsync();
-        }
-       
-        public async Task <UserDTO> GetUserByEmailAsync(string email)
+        public async Task<UserDTO> GetUserByEmailAsync(string email)
         {
             return await _db.Users.Where(ur => ur.Email == email).Select(user => new UserDTO
             {
@@ -51,6 +32,39 @@ namespace VOD.Service.UserService
                 Email = user.Email,
                 IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
             }).FirstOrDefaultAsync();
+        }
+
+        public async Task<IdentityResult> AddUserAsync(RegisterUserDTO user)
+        {
+            var dbUser = new VODUser
+            {
+                UserName = user.Email,
+                Email = user.Email,
+                EmailConfirmed = true,
+            };
+            var result = await _userManager.CreateAsync(dbUser, user.Password);
+            return result;
+        }
+
+        public async Task<UserDTO> GetUserAsync(string userId)
+        {
+            return await _db.Users.Select(user => new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
+            }).FirstOrDefaultAsync(u => u.Id.Equals(userId));
+
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetUsersAsync()
+        {
+            return await  _db.Users.OrderBy(u => u.Email).Select(user => new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
+            }).ToListAsync();
         }
     }
 }

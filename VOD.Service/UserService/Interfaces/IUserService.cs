@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,9 @@ namespace VOD.Service.UserService.Interfaces
 {
     public interface IUserService
     {
+        Task<UserDTO> GetUserAsync(string userId);
         Task<IEnumerable<UserDTO>> GetUsersAsync();
-        public Task<UserDTO> GetUsersAsync(string userId);
+        Task<UserDTO> GetUserByEmailAsync(string email);
+        Task<IdentityResult> AddUserAsync(RegisterUserDTO user);
     }
 }
