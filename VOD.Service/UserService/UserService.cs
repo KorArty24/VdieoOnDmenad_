@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.DTOModels.Admin;
@@ -65,6 +66,25 @@ namespace VOD.Service.UserService
                 Email = user.Email,
                 IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
             }).ToListAsync();
+        }
+
+        public async Task<bool> UpdateUserAsync(UserDTO user)
+        {
+            //get user 
+            var dbuser = await _db.Users.FirstOrDefaultAsync(user => user.Id.Equals(user.Id));
+            //corner case
+            if (dbuser == null) return false;
+            if (string.IsNullOrEmpty(user.Email)) return false;
+            dbuser.Email = user.Email;
+            var admin = "Admin";
+            var isAdmin = await _userManager.IsInRoleAsync(dbuser, admin);
+            IdentityRoleClaim<string> adminclaim = new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = "Admin" };
+            if (isAdmin && !user.IsAdmin )
+                await _userManager.RemoveClaimAsync(dbuser, new Claim(ClaimTypes.Role, "Admin")); 
+            else if (isAdmin && user.IsAdmin)
+                await _userManager.AddClaimAsync(dbuser, new Claim(ClaimTypes.Role,"Admin"));
+            var result = await _db.SaveChangesAsync(); //Check out about that SaveChangesAsync staff
+            return result >=0;
         }
     }
 }

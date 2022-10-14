@@ -14,5 +14,6 @@ namespace VOD.Service.UserService.Interfaces
         Task<IEnumerable<UserDTO>> GetUsersAsync();
         Task<UserDTO> GetUserByEmailAsync(string email);
         Task<IdentityResult> AddUserAsync(RegisterUserDTO user);
+        Task<bool> UpdateUserAsync(RegisterUserDTO user);
     }
 }
