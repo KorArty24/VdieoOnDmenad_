@@ -1,6 +1,8 @@
 Refactoring of the project from Jonas Fagerberg's book
-Repo pattern substituted for Query object pattern.
-Initial seeding has been completely rewriten to allow for the use of the object graph. 
-Added integrated tests (NUnit framework) to test DAL. 
-
+The entire project structure has been overhauled to get rid of Repo / Unit of Work Pattern.
+Using the ideas from Jon Smith's book the Read part now implements Query Object pattern, 
+the Admin database write service is being refactored to implement direct use of Entity Framework, thus 
+violating the DRY principle. 
+The second branch is being written to rebuild the app according to DDD principles. 
+In progress... 
 
