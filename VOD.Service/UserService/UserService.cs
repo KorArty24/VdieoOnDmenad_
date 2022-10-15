@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
+using VOD.Common.Extensions;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Service.UserService.Interfaces;
@@ -100,6 +101,32 @@ namespace VOD.Service.UserService
             } catch
             {
                 return false;
+            }
+        }
+        
+        public async Task<VODUser> GetUserAsync(LoginUserDTO loginUser, bool includeClaims = false)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(loginUser.Email);
+                if (user == null) return null;
+                if (loginUser.Password.IsNullOrEmptyOrWhiteSpace() && loginUser.PasswordHash.IsNullOrEmptyOrWhiteSpace())
+                return null;
+
+                if (loginUser.Password.Length >0)
+                {
+                    var password = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, loginUser.Password);
+                    if (password == PasswordVerificationResult.Failed) return null;
+                } else
+                {
+                    if (!user.PasswordHash.Equals(loginUser.PasswordHash)) return null;
+                }
+                if (includeClaims) user.Claims = await _userManager.GetClaimsAsync(user);
+                return user;
+            }
+            catch
+            {
+                throw;
             }
         }
     }

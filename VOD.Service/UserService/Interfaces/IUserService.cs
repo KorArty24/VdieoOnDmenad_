@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VOD.Common.DTOModels.Admin;
+using VOD.Common.Entities;
 
 namespace VOD.Service.UserService.Interfaces
 {
@@ -16,5 +17,6 @@ namespace VOD.Service.UserService.Interfaces
         Task<IdentityResult> AddUserAsync(RegisterUserDTO user);
         Task<bool> UpdateUserAsync(UserDTO user);
         Task<bool> DeleteUserAsync(string userId);
+        Task<VODUser> GetUserAsync(LoginUserDTO loginUser, bool includeClaims = false);
     }
 }
