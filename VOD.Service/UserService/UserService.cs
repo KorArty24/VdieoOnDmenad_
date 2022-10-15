@@ -80,11 +80,27 @@ namespace VOD.Service.UserService
             var isAdmin = await _userManager.IsInRoleAsync(dbuser, admin);
             IdentityRoleClaim<string> adminclaim = new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = "Admin" };
             if (isAdmin && !user.IsAdmin )
+                //modified to utilize claims, instead of Roles
                 await _userManager.RemoveClaimAsync(dbuser, new Claim(ClaimTypes.Role, "Admin")); 
             else if (isAdmin && user.IsAdmin)
                 await _userManager.AddClaimAsync(dbuser, new Claim(ClaimTypes.Role,"Admin"));
             var result = await _db.SaveChangesAsync(); //Check out about that SaveChangesAsync staff
             return result >=0;
+        }
+        public async Task<bool> DeleteUserAsync (string userId)
+        {
+            try
+            {
+                var dbuser = await _db.Users.FirstOrDefaultAsync (user => user.Id.Equals(userId));
+                if (dbuser == null) return false;
+                var usrClaims = await _userManager.GetClaimsAsync(dbuser);
+                var claimsRemoved = _userManager.RemoveClaimsAsync(dbuser, usrClaims);
+                var deleted = await _userManager.DeleteAsync(dbuser);
+                return deleted.Succeeded;
+            } catch
+            {
+                return false;
+            }
         }
     }
 }
