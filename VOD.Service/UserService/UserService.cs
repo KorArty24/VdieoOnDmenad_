@@ -87,6 +87,7 @@ namespace VOD.Service.UserService
             var result = await _db.SaveChangesAsync(); //Check out about that SaveChangesAsync staff
             return result >=0;
         }
+
         public async Task<bool> DeleteUserAsync (string userId)
         {
             try
