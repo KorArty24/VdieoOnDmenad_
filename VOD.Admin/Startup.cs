@@ -39,6 +39,7 @@ namespace VOD.Admin
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages();
+            services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin")));
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
             var connection = Configuration.GetConnectionString("DefaultConnection");

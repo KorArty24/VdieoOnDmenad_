@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.ControllerTest", "VOD.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Admin", "VOD.Admin\VOD.Admin.csproj", "{91D85A2C-6BEE-45A6-9F02-F0F5D2E29A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.Admin.Service", "VOD.Admin.Service\VOD.Admin.Service.csproj", "{C48E2A12-6F10-4D46-8005-2E5741DB4547}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Admin.Service", "VOD.Admin.Service\VOD.Admin.Service.csproj", "{C48E2A12-6F10-4D46-8005-2E5741DB4547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
