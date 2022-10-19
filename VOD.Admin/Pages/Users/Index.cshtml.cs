@@ -9,13 +9,14 @@ using VOD.Service.UserService.Interfaces;
 
 namespace VOD.Admin.Pages.Users
 {
-    [Authorize(Policy = "AminOnly")]
+    [Authorize(Policy = "AdminOnly")]
     public class IndexModel : PageModel
     {
         #region Properties
         private readonly IUserService _userService;
         public IEnumerable<UserDTO> Users = new List<UserDTO>();
         [TempData] public string Alert { get; set; }
+
         #endregion
 
         #region Constructor 
@@ -33,4 +34,5 @@ namespace VOD.Admin.Pages.Users
             Users = await _userService.GetUsersAsync();
         }
     }
+
 }
