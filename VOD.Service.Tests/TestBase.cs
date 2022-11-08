@@ -39,23 +39,6 @@ namespace VOD.Service.Tests
                 }
             });
         }
-        protected void CreateCourseGraph()
-        {
-            CreateCourseGraph(context);
-        }
 
-        protected void CreateCourseGraph(VODContext context)
-        {
-            SampleDataInitializer.ClearData(context);
-            context.AddRange(SampleData.GetInstructors());
-            context.SaveChanges();
-            context.AddRange(SampleData.GetCourses(context));
-            context.SaveChanges();
-            context.AddRange(SampleData.GetModules(context));
-            context.SaveChanges();
-            context.AddRange(SampleData.GetDownloads(context));
-            context.SaveChanges();
-            context.AddRange(SampleData.GetUserCourses(context));
-        }
     }
 }

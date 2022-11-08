@@ -30,6 +30,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Admin", "VOD.Admin\VOD.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Admin.Service", "VOD.Admin.Service\VOD.Admin.Service.csproj", "{C48E2A12-6F10-4D46-8005-2E5741DB4547}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Admin.Tests", "VOD.Admin.Test\VOD.Admin.Tests.csproj", "{4D0FEA7B-7CF8-4571-93A0-A8FA06C9B9BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D7197DB4-FCFF-4801-8521-944F86766626} = {D7197DB4-FCFF-4801-8521-944F86766626}
+		{D8FD76FC-EC7C-41C4-BB68-7CEF3872E5D4} = {D8FD76FC-EC7C-41C4-BB68-7CEF3872E5D4}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +82,10 @@ Global
 		{C48E2A12-6F10-4D46-8005-2E5741DB4547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C48E2A12-6F10-4D46-8005-2E5741DB4547}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C48E2A12-6F10-4D46-8005-2E5741DB4547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D0FEA7B-7CF8-4571-93A0-A8FA06C9B9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D0FEA7B-7CF8-4571-93A0-A8FA06C9B9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D0FEA7B-7CF8-4571-93A0-A8FA06C9B9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D0FEA7B-7CF8-4571-93A0-A8FA06C9B9BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
