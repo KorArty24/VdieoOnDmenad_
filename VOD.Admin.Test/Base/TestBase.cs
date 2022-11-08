@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,14 @@ using System.Threading.Tasks;
 using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 
-namespace VOD.Database.Tests.Base
+namespace VOD.Admin.Tests.Base
 {
     [TestFixture]
-    public class TestBase
+    public class TestBase : WebApplicationFactory<VOD.Admin.Startup>
     {
         protected VODContext context;
+        protected  WebApplicationFactory<VOD.Admin.Startup> _factory;
+        protected HttpClient _client;
 
         [SetUp]
         public void SetUp()
@@ -55,8 +58,6 @@ namespace VOD.Database.Tests.Base
             context.AddRange(SampleData.GetModules(context));
             context.SaveChanges();
             context.AddRange(SampleData.GetDownloads(context));
-            context.SaveChanges();
-            context.AddRange(SampleData.GetUserCourses(context));
             context.SaveChanges();
             
         }

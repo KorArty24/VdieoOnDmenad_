@@ -39,7 +39,8 @@ namespace VOD.UI
             services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<VODContext>();
             services.AddControllersWithViews();
-            services.AddScoped<IDbWriteService, DbWriteService>();
+            // Delete this after ensuring everything works without the service.
+            // services.AddScoped<IDbWriteService, DbWriteService>();
             services.AddDbContext<VODContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
