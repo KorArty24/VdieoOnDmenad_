@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using VOD.Admin.Filters;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
 
 namespace VOD.Admin.Pages.Users
 {
-    [Authorize(Policy = "AdminOnly")]
+    [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class CreateModel : PageModel
     {
         private readonly IUserService _userService;
@@ -25,10 +26,9 @@ namespace VOD.Admin.Pages.Users
         public async Task OnGetAsync()
         {
         }
+        
         public async Task<IActionResult> OnPostAsync() 
         {
-            if (ModelState.IsValid)
-            {
                 var result = await _userService.AddUserAsync(Input);
                 if (result.Succeeded)
                 {
@@ -39,7 +39,7 @@ namespace VOD.Admin.Pages.Users
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
+           
             return Page();
         }
     }
