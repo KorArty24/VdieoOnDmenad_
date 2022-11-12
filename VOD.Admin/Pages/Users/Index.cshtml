@@ -4,7 +4,8 @@
 @{
     ViewData["Title"] = "Users";
 }
-@if (SignInManager.IsSignedIn(User)&& User.IsInRole("Admin")){
+@if (SignInManager.IsSignedIn(User) && User.HasClaim("Role", "Admin"))
+{
     <div class = "row">
         <div class="col-md-8-offcet-md-2">
             <h1>@ViewData["Title"]</h1>
@@ -25,12 +26,12 @@
                             <td>@Html.DisplayFor(modelItem => user.IsAdmin)</td>
                             <td>@Html.DisplayFor(modelItem => user.Id)</td>
                             <td style="min-width: 150px;">
-                                <partial name="TableRowButtonsPartial"
+                                <partial name="_TableRowButtonsPartial"
                                     model="@user.ButtonDTO"/>
                                     <btn class="float-right"
                                     style="margin-right:5px;"
                                     asp-page ="Details" icon = "edit"
-                                    asp-route = "@user.Id">
+                                    asp-route-id = "@user.Id">
                                     </btn>
                             </td>
                         </tr>

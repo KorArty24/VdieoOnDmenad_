@@ -18,6 +18,7 @@ using VOD.Service.DatabaseServices.Concrete;
 using VOD.Service.UserService.Interfaces;
 using VOD.Service.UserService;
 using VOD.Service.UserService.Interfaces;
+using System.Security.Claims;
 
 namespace VOD.Admin
 {
@@ -37,9 +38,12 @@ namespace VOD.Admin
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<VODContext>();
-            services.AddRazorPages();
-            services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin")));
+            services.AddDefaultIdentity<VODUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().
+                AddDefaultUI().AddEntityFrameworkStores<VODContext>();
+            services.AddRazorPages(options => { options.Conventions.AuthorizePage("/SecurePage");
+            });
+            
+            services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Role","Admin"))); //Adds admin policy with Claim="Admin"
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
             var connection = Configuration.GetConnectionString("DefaultConnection");

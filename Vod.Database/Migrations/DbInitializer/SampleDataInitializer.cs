@@ -19,7 +19,7 @@ namespace VOD.Database.Migrations.DbInitializer
 
         internal static void ResetIdentity(VODContext context)
         {
-            var tables = new[] {"Instructors", "Courses", "Modules", "Videos", "Downloads" };
+            var tables = new[] {"Instructors", "Courses", "Modules", "Videos", "Downloads"};
 
             foreach (var table in tables)
             {

@@ -15,6 +15,7 @@ namespace VOD.Admin.TagHelpers
     [HtmlTargetElement("btn")]
     public class BtnTagHelper : AnchorTagHelper
     {
+        #region properties
         public string Icon { get; set; } = string.Empty;
         const string btnPrimary = "btn-primary";
         const string btnDanger = "btn-danger";
@@ -22,15 +23,16 @@ namespace VOD.Admin.TagHelpers
         const string btnInfo = "btn-info";
         const string btnSucess = "btn-success";
         const string btnWarning = "btn-warning";
-
         // Google's Material Icons provider name
         const string iconProvider = "material-icons";
-        
+        #endregion
+
+        #region This constructor is needed for AnchorTagHelper inheritance
         public BtnTagHelper(IHtmlGenerator generator) : base(generator)
         {
 
         }
-        
+        #endregion
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -38,9 +40,11 @@ namespace VOD.Admin.TagHelpers
                 throw new ArgumentNullException(nameof(context));
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
+            // Change <btn> tag to <a> tag
             output.TagName = "a";
-            
+
             #region Bootstrap Button
+            
             var aspPageAttribute = context.AllAttributes.SingleOrDefault(p =>p.Name.ToLower().Equals("asp-page"));
             var classAttribute = context.AllAttributes.SingleOrDefault(p =>p.Name.ToLower().Equals("class"));
             var buttonStyle = btnDefault;
@@ -57,14 +61,14 @@ namespace VOD.Admin.TagHelpers
                 btnDefault;
             }
             var bootstrapClasses = $"btn-sm {buttonStyle}";
+
             if (classAttribute != null)
             {
                 var css = classAttribute.Value.ToString();
                 if (!css.ToLower().Contains("btn-"))
                 {
                     output.Attributes.Remove(classAttribute);
-                    classAttribute = new TagHelperAttribute("class",
-                    $"{css} {bootstrapClasses}");
+                    classAttribute = new TagHelperAttribute("class", $"{css} {bootstrapClasses}");
                     output.Attributes.Add(classAttribute);
                 }
             }
@@ -73,13 +77,15 @@ namespace VOD.Admin.TagHelpers
                 output.Attributes.Add("class", bootstrapClasses);
             }
             #endregion
+
             #region Icon
-            if (!Icon.Equals(string.Empty)) {
+            if (!Icon.Equals(string.Empty))
+            {
                 var childContext = output.GetChildContentAsync().Result;
                 var content = childContext.GetContent().Trim();
                 if (content.Length > 0) content = $"&nbsp{content}";
-               output.Content.SetHtmlContent($"<i class='{iconProvider}'style='display: inline-flex; vertical-align: top; line-height: inherit;font-size: medium;'>{Icon}</i> <span style='font-size:"
-                   + $"medium;'>{content}</span>");
+                output.Content.SetHtmlContent($"<i class='{iconProvider}'style='display: inline-flex; vertical-align: top; line-height: inherit;font-size: medium;'>{Icon}</i> " +
+                    $"<span style='font-size:"+ $"medium;'>{content}</span>");
             }
             #endregion
             #region Style Attribute
@@ -88,8 +94,10 @@ namespace VOD.Admin.TagHelpers
             var newStyle = new TagHelperAttribute("style", $"{styleValue} display:inline-flex;border-radius:0px;text-decoration: none;");
             if (style != null) output.Attributes.Remove(style);
             output.Attributes.Add(newStyle);
+           
             #endregion
             base.Process(context, output);
+            
         }
     }
 }

@@ -9,7 +9,7 @@ using VOD.Service.UserService.Interfaces;
 
 namespace VOD.Admin.Pages.Users
 {
-    [Authorize(Policy = "AdminOnly")]
+    [Authorize("AdminOnly")]
     public class IndexModel : PageModel
     {
         #region Properties
