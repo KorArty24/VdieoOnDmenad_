@@ -49,7 +49,7 @@ namespace VOD.Database.Migrations.DbInitializer
                     SecurityStamp=Guid.NewGuid().ToString(),
                     Claims = new List<Claim>
                     {
-                        new Claim("Role", "Admins")
+                        new Claim("Role", "Admin")
                     }
                 },
                 new VODUser
@@ -94,7 +94,7 @@ namespace VOD.Database.Migrations.DbInitializer
                new IdentityUserClaim<string>
                {
                    UserId = UserConsts.userOneId,
-                   ClaimType = ClaimTypes.Role,
+                   ClaimType = "Role",
                    ClaimValue = "Admin"
                }
            };

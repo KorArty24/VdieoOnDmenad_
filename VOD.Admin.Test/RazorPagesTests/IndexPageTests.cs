@@ -12,14 +12,13 @@ namespace VOD.Admin.Tests.RazorPagesTests
     [TestFixture]
     public class IndexPageTests : TestBase
     {
-        
         [OneTimeSetUp]
         public void IndexPageControllerTests()
         {
             _factory = new WebApplicationFactory<Startup>();
             _client = _factory.CreateClient();
         }
-
+        //Base test
         [TestCase("/Index")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
