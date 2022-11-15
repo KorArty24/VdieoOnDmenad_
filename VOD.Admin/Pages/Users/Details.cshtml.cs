@@ -71,6 +71,7 @@ namespace VOD.Admin.Pages.Users
             }
             catch
             {
+                throw;
             }
             await FillViewData(userId);
             return Page();
