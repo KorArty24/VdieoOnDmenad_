@@ -16,7 +16,7 @@ namespace VOD.Admin.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDbReadService _dbReadService;
-
+        [TempData] public string Alert { get; set; }
         public IndexModel(IDbReadService dbreadService)
         {
             _dbReadService = dbreadService;

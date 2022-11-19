@@ -42,8 +42,9 @@ namespace VOD.Admin
                 AddDefaultUI().AddEntityFrameworkStores<VODContext>();
             services.AddRazorPages(options => { options.Conventions.AuthorizePage("/SecurePage");
             });
-            
-            services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Role","Admin"))); //Adds admin policy with Claim="Admin"
+            services.AddAutoMapper(typeof(Startup), typeof(Instructor),typeof(Course), typeof(Module), typeof(Video), typeof(Download));            
+            //Adds admin policy with Claim="Admin"
+            services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Role","Admin"))); 
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
             var connection = Configuration.GetConnectionString("DefaultConnection");
@@ -67,11 +68,9 @@ namespace VOD.Admin
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

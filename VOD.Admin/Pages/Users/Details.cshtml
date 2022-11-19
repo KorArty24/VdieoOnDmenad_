@@ -3,7 +3,6 @@
 @inject SignInManager<VODUser> SignInManager
 @{
     ViewData["Title"] = "Details";
-
 }
 @if (SignInManager.IsSignedIn(User) && User.HasClaim(c => c.Value == "Admin")) { 
     <div class="row">
