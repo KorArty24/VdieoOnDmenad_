@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
 
-namespace VOD.Admin.Pages.Users
+namespace VOD.Admin.Pages.Instructors
 {
     [Authorize("AdminOnly")]
     public class IndexModel : PageModel
     {
         #region Properties
         private readonly IUserService _userService;
-        public IEnumerable<UserDTO> Users = new List<UserDTO>();
+        public IEnumerable<InstructorDTO> Users = new List<InstructorDTO>();
         [TempData] public string Alert { get; set; }
+
         #endregion
 
         #region Constructor 
@@ -30,7 +31,7 @@ namespace VOD.Admin.Pages.Users
         #endregion
         public async Task OnGetAsync()
         {
-            Users = await _userService.GetUsersAsync();
+           // Users = await _userService.GetUsersAsync();
         }
     }
 
