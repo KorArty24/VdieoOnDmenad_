@@ -26,4 +26,11 @@
     <ProjectReference Include="..\VOD.Service\VOD.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\Shared\_DeletePageButton.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
