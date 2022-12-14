@@ -11,7 +11,8 @@ namespace VOD.Admin.Service.Services.Instructors
     public interface IInstructorService
     {
         public Task<List<InstructorDTO>> GetInstructorsAsync();
-        public Task<Instructor> GetInstructorAsync(int id);
-        public Task<InstructorDTO> DeleteAsync(int instructorId);
+        public Task<InstructorDTO> GetInstructorAsync(int instructorId);
+        public Task<int> DeleteInstructorAsync(int instructorId);
+        public Task<Instructor> UpdateInstructorsInfoAsync(int instructorId, InstructorDTO dto);
     }
 }

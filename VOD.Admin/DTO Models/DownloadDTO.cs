@@ -16,7 +16,8 @@ namespace VOD.Admin.DTO_Models
         public int CourseId { get; set; }
         public string Course { get; set; }
         public string Module { get; set; }
-        public ButtonDTO ButtonDTO { get { return new ButtonDTO(
-        CourseId, ModuleId, Id); } }
+        public ButtonDTO ButtonDTO { get { return new ButtonDTO(CourseId, ModuleId, Id); 
+            }
+        }
         }
 }
