@@ -9,6 +9,6 @@ namespace VOD.Service.DownloadsService.Interfaces
 {
     public interface IListDownloadsService
     {
-        public Task<IQueryable<DownloadDTO>> GetDownloadsForCourse(string courseId, );
+        //public Task<IQueryable<DownloadDTO>> GetDownloadsForCourse(string courseId, );
     }
 }

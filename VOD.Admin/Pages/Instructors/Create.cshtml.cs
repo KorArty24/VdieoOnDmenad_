@@ -7,7 +7,7 @@ using VOD.Admin.Filters;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
 
-namespace VOD.Admin.Pages.Users
+namespace VOD.Admin.Pages.Instructors
 {
     [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class CreateModel : PageModel

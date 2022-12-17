@@ -15,14 +15,14 @@ namespace VOD.Admin.Tests.Base
     public class TestBase : WebApplicationFactory<VOD.Admin.Startup>
     {
         protected VODContext context;
-        protected  WebApplicationFactory<VOD.Admin.Startup> _factory;
+        protected WebApplicationFactory<VOD.Admin.Startup> _factory;
         protected HttpClient _client;
 
         [SetUp]
         public void SetUp()
         {
             context = new VODContextFactory().CreateDbContext(new string[0]);
-            CleanDatabase();
+            SampleDataInitializer.InitializeData(context);
         }
 
         [TearDown]
@@ -59,7 +59,6 @@ namespace VOD.Admin.Tests.Base
             context.SaveChanges();
             context.AddRange(SampleData.GetDownloads(context));
             context.SaveChanges();
-            
         }
     }
 }
