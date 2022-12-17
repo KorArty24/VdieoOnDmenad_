@@ -27,7 +27,7 @@ namespace VOD.Admin.Service.Services.Instructors
 
         public async Task<int> DeleteInstructorAsync(int instructorId)
         {
-                if (!_context.Courses.Where(c => c.InstructorId == instructorId).Any())
+                if (!_context.Courses.Any(c=>c.InstructorId == instructorId))
                 {
                     Instructor instructor = await _context.Instructors.SingleAsync(x => x.Id == instructorId);
                     _context.Remove(instructor);
@@ -65,7 +65,6 @@ namespace VOD.Admin.Service.Services.Instructors
             }
             Instructor modified = _mapper.Map<Instructor>(dto);
             await _context.SaveChangesAsync();
-
             return modified;
         }
 
@@ -73,6 +72,11 @@ namespace VOD.Admin.Service.Services.Instructors
         {
             Instructor instr = await _context.Instructors.SingleOrDefaultAsync(x => x.Id == instructorid);
             return _mapper.Map<InstructorDTO>(instr);
+        }
+
+        public Task<int> AddInstructorsInfoAsync(InstructorDTO instructor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

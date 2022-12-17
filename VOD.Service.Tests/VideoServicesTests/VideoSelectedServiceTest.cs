@@ -16,7 +16,6 @@ namespace VOD.Service.Tests.VideoServicesTests
 {
     public class VideoSelectedServiceTest : TestBase
     {
-        
         [Test]
         [TestCaseSource(typeof(TestValuesClass), nameof(TestValuesClass.UserCourseCases))]
         public void ShouldReturnSelectedVideoDTOForUser(string userId, int videoId)

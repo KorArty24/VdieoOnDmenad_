@@ -19,28 +19,39 @@ namespace VOD.Database.Migrations.DbInitializer
             {
                 new Instructor
                 {
+                    Id = 102,
                     Name = "John Doe",
                     Description = "Stole all books With Gang of Four",
                     Thumbnail = "/images/Ice-Age-Scrat-icon.png"
                 },
                 new Instructor
                 {
+                    Id = 103,
                     Name ="Bob Martin",
                     Description = "Learn all datastructures in one hour!",
                     Thumbnail= "/images/Ice-Age-Scrat-icon.png"
                 },
                 new Instructor
                 {
+                    Id = 104,
                     Name = "Cercei Lannister",
                     Description = "Cercei choose violence",
                     Thumbnail = "images/Ice-Age-Scrat-icon.png"
                 },
                 new Instructor
                 { 
+                    Id = 105,
                     Name = "Phillip Japikse",
                     Description = "Dotnet guru",
                     Thumbnail = "images/Ice-Age-Scrat-icon.png"
 
+                }, 
+                new Instructor 
+                {
+                    Id = 1001,
+                    Name = "Adam Freeman",
+                    Description = "Author of the bestselling Pro ASP Net Core book series",
+                    Thumbnail = "images/Ice-Age-Scrat-icon.png"
                 }
             };
         #endregion

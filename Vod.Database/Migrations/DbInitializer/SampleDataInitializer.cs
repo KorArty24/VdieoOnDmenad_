@@ -49,8 +49,12 @@ namespace VOD.Database.Migrations.DbInitializer
             {
                 if (!context.Instructors.Any())
                 {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [VOD].[INSTRUCTORS] ON");
                     context.Instructors.AddRange(SampleData.GetInstructors());
                     context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [VOD].[INSTRUCTORS] OFF");
+                    context.Database.CloseConnection();
                 }
                 if (!context.Courses.Any())
                 {
