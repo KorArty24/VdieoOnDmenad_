@@ -31,6 +31,7 @@ namespace VOD.Admin.Tests.ServiceTests
             //Assert 
             Assert.That(result.Result, Is.Zero);
         }
+
         [Test]
         [TestCase(Instru_to_Delete)]
         public void ShouldDeleteInstructorWithID(int id)
