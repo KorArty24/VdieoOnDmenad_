@@ -41,14 +41,24 @@ namespace VOD.Admin.Service.Services.Instructors
 
         public async Task<InstructorDTO> GetInstructorAsync(int instructorId)
         {
-                var instructor = await _context.Instructors.SingleAsync(ins => ins.Id == instructorId);
-                return instructorDto;
+                var instructor = await _context.Instructors.Select(
+                    ins => new InstructorDTO {
+                    Id = ins.Id,
+                    Name= ins.Name,
+                    Description = ins.Description,
+                    Thumbnail = ins.Thumbnail }).SingleAsync(ins => ins.Id == instructorId);
+            return instructor;
         }
 
         public async Task<List<InstructorDTO>> GetInstructorsAsync()
         {
-           
-            var Instructors = await _context.Instructors.ToListAsync();
+            var instructors = await _context.Instructors.Select(t=> new InstructorDTO
+            {Id=t.Id,
+            Description= t.Description,
+            Name = t.Name,
+            Thumbnail = t.Thumbnail}).ToListAsync();
+
+            return instructors;
         }
         /// <summary>
         /// Update Instructor's info

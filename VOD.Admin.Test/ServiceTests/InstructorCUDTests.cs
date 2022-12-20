@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using VOD.Admin.DTO_Models;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Admin.Tests.Base;
 using VOD.Database.Contexts;
@@ -41,6 +42,38 @@ namespace VOD.Admin.Tests.ServiceTests
 
             //Assert 
             Assert.That(result.Result, Is.EqualTo(1));
+        }
+
+        [Test]
+        [TestCase(1001)]
+        public void ShouldUpdateInstructorWithId(int instructorID)
+        {
+            //Arrange
+          
+            _instructorService = new InstructorService(context);
+
+            InstructorDTO instructor = new InstructorDTO
+            {
+                Description = "Author of the bestselling book on Dotnet MVC",
+                Name = "Adam_ Freeman",
+                Id = instructorID,
+                Thumbnail="images/Ice-Age-Scrat-icon.png"
+            };
+
+            //Act
+            var result = _instructorService.UpdateInstructorsInfoAsync(instructorID, instructor);
+            var expectedstring = "Author of the bestselling book on Dotnet MVC";
+            
+            //Assert 
+            Assert.That(result.Result.Description, Is.EqualTo(expectedstring));
+        }
+
+        [Test]
+        [TestCase(104)]
+        public void ShouldGet(int id)
+        {
+            var result = _instructorService.GetInstructorAsync(id);
+
         }
     }
 }
