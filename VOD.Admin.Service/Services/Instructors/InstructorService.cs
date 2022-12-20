@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,11 @@ namespace VOD.Admin.Service.Services.Instructors
     public class InstructorService : IInstructorService
     {
         private readonly VODContext _context;
-        private readonly IMapper _mapper;
 
         [TempData] public string Alert { get; set; }
-        public InstructorService(VODContext context, IMapper mapper)
+        public InstructorService(VODContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<int> DeleteInstructorAsync(int instructorId)
@@ -43,7 +42,6 @@ namespace VOD.Admin.Service.Services.Instructors
         public async Task<InstructorDTO> GetInstructorAsync(int instructorId)
         {
                 var instructor = await _context.Instructors.SingleAsync(ins => ins.Id == instructorId);
-                InstructorDTO instructorDto = _mapper.Map<InstructorDTO>(instructor);
                 return instructorDto;
         }
 
@@ -51,27 +49,46 @@ namespace VOD.Admin.Service.Services.Instructors
         {
            
             var Instructors = await _context.Instructors.ToListAsync();
-            return _mapper.Map<List<InstructorDTO>>(Instructors);
         }
-
+        /// <summary>
+        /// Update Instructor's info
+        /// </summary>
+        /// <param name="instructorId"></param>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<Instructor> UpdateInstructorsInfoAsync(int instructorId, InstructorDTO dto)
         {
-           InstructorDTO loadedInstructor = GetOriginal(instructorId).Result;
            var instructor = await _context.Instructors.SingleOrDefaultAsync(
                 x=>x.Id== dto.Id);
             if (instructor == null)
             {
                 throw new ArgumentException("Instructor not found");
             }
-            Instructor modified = _mapper.Map<Instructor>(dto);
+            UpdateInstructorFields(ref instructor, ref dto);
             await _context.SaveChangesAsync();
-            return modified;
+
+           
+            void UpdateInstructorFields(ref Instructor inst, ref InstructorDTO dto)
+            {
+                inst.Description = dto.Description;
+                inst.Name = dto.Name;
+                inst.Thumbnail = dto.Thumbnail;
+            }
+            return instructor;
         }
 
-        private async Task<InstructorDTO> GetOriginal(int instructorid)
+        public async Task<InstructorDTO> GetOriginal(int instructorid)
         {
-            Instructor instr = await _context.Instructors.SingleOrDefaultAsync(x => x.Id == instructorid);
-            return _mapper.Map<InstructorDTO>(instr);
+            InstructorDTO instr = await _context.Instructors.Select(item => new InstructorDTO
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Thumbnail = item.Thumbnail,
+            }).SingleAsync(k=>k.Id == instructorid);
+
+            return instr;
         }
 
         public Task<int> AddInstructorsInfoAsync(InstructorDTO instructor)

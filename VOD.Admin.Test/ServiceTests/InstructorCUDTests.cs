@@ -16,7 +16,7 @@ namespace VOD.Admin.Tests.ServiceTests
         [SetUp]
         public void Init()
         {
-            _instructorService = new InstructorService(context, mapper);
+            _instructorService = new InstructorService(context);
         }
 
         [Test]
