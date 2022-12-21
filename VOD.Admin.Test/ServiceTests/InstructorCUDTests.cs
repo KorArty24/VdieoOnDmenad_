@@ -94,5 +94,49 @@ namespace VOD.Admin.Tests.ServiceTests
 
             Assert.That(result.Result.GetType, Is.EqualTo(typeof(List<InstructorDTO>)));
         }
+
+        [Test]
+        public void ShouldAddInstructorWithData()
+        {
+            InstructorDTO instructor = new InstructorDTO
+            {
+                Description = "Author of the bestselling book on Dotnet MVC",
+                Name = "Adam_ Freeman",
+                Thumbnail="images/Ice-Age-Scrat-icon.png"
+            };
+            //Act
+            var result = _instructorService.AddInstructorsInfoAsync(instructor);
+            //Assert
+            Assert.That(result.Result.Equals(1));
+        }
+        //Idempotency test
+        [Test]
+        public void ShouldIgnoreAlreadyExisting() 
+        {
+            InstructorDTO instructor = new InstructorDTO
+            {
+                Description = "Author of the bestselling book on Dotnet MVC",
+                Name = "Adam_ Freeman",
+                Thumbnail="images/Ice-Age-Scrat-icon.png"
+            };
+
+            InstructorDTO _instructor = new InstructorDTO
+            {
+                Description = "Author of the bestselling book on Dotnet MVC",
+                Name = "Adam_ Freeman",
+                Thumbnail = "images/Ice-Age-Scrat-icon.png"
+            };
+            //Act
+           
+            var result = _instructorService.AddInstructorsInfoAsync(instructor).Result;
+            var _result = _instructorService.AddInstructorsInfoAsync(_instructor).Result;
+
+           
+            
+            //Assert
+            Assert.That(_result.Equals(0));
+
+
+        }
     }
 }
