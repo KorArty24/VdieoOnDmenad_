@@ -9,7 +9,6 @@ namespace VOD.Admin.Tests.ServiceTests
 {
     public class InstructorCUDTests : TestBase
     {
-        private readonly IMapper mapper;
         private const int INSTRID = 102;
         private const int Instru_to_Delete = 1001; // See Sample Data. This is the instructor without courses
         private InstructorService _instructorService;
@@ -72,8 +71,28 @@ namespace VOD.Admin.Tests.ServiceTests
         [TestCase(104)]
         public void ShouldGet(int id)
         {
+            //Arrange
+            var instructor = new InstructorDTO
+            {
+                Id = 104,
+                Name = "Cercei Lannister",
+            };
+            //Act 
             var result = _instructorService.GetInstructorAsync(id);
+            //Assert 
+            Assert.That(result.Result.GetType, Is.EqualTo(typeof(InstructorDTO)));
+            Assert.That(result.Result.Id == 104 && 
+                result.Result.Name.Contains("Cercei"));
+        }
 
+        [Test]
+        public void ShouldGetInstructorsList()
+        {
+            //Act 
+            var result = _instructorService.GetInstructorsAsync();
+            //Assert 
+
+            Assert.That(result.Result.GetType, Is.EqualTo(typeof(List<InstructorDTO>)));
         }
     }
 }
