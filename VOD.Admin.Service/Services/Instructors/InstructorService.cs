@@ -101,9 +101,29 @@ namespace VOD.Admin.Service.Services.Instructors
             return instr;
         }
 
-        public Task<int> AddInstructorsInfoAsync(InstructorDTO instructor)
+        public async Task<int> AddInstructorsInfoAsync(InstructorDTO instructor)
         {
-            throw new NotImplementedException();
+            if(! _context.Instructors.AnyAsync(x=>x.Name == instructor.Name &&
+            x.Description == instructor.Description).Result)
+            {
+                try
+                {
+                _context.Add(new Instructor
+                {
+                    Name = instructor.Name,
+                    Thumbnail = instructor.Thumbnail,
+                    Description = instructor.Description,
+
+                });
+                return await _context.SaveChangesAsync();
+                } catch
+                {
+                    throw new DbUpdateException("Error while saving the data");
+                }
+            } else 
+            {
+                return 0;
+            }
         }
     }
 }
