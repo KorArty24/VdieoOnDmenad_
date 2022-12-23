@@ -14,12 +14,12 @@ using VOD.Database.Contexts;
 
 namespace VOD.Admin.Service.Services.Instructors
 {
-    public class InstructorService : IInstructorService
+    public class CoursesService : ICoursesService
     {
         private readonly VODContext _context;
 
         [TempData] public string Alert { get; set; }
-        public InstructorService(VODContext context)
+        public CoursesService(VODContext context)
         {
             _context = context;
         }
@@ -85,6 +85,7 @@ namespace VOD.Admin.Service.Services.Instructors
                 inst.Name = dto.Name;
                 inst.Thumbnail = dto.Thumbnail;
             }
+
             return instructor;
         }
 

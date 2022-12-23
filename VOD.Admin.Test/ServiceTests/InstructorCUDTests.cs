@@ -11,7 +11,7 @@ namespace VOD.Admin.Tests.ServiceTests
     {
         private const int INSTRID = 102;
         private const int Instru_to_Delete = 1001; // See Sample Data. This is the instructor without courses
-        private InstructorService _instructorService;
+        private CoursesService _instructorService;
 
         [SetUp]
         public void Init()
@@ -131,8 +131,6 @@ namespace VOD.Admin.Tests.ServiceTests
             var result = _instructorService.AddInstructorsInfoAsync(instructor).Result;
             var _result = _instructorService.AddInstructorsInfoAsync(_instructor).Result;
 
-           
-            
             //Assert
             Assert.That(_result.Equals(0));
 
