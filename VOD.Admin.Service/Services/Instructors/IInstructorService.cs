@@ -8,7 +8,7 @@ using VOD.Common.Entities;
 
 namespace VOD.Admin.Service.Services.Instructors
 {
-    public interface IInstructorService
+    public interface ICoursesService
     {
         public Task<List<InstructorDTO>> GetInstructorsAsync();
         public Task<InstructorDTO> GetInstructorAsync(int instructorId);
