@@ -43,26 +43,26 @@ namespace VOD.Admin.Service.Services.Courses
         public async Task<CourseDTO> GetCourseAsync(int courseId)
         {
                 var course = await _context.Courses.Select(
-                    cour => new CourseDTO {
-                    Id = cour.Id,
-                    Title= cour.Title,
-                    Description = cour.Description,
-                    Instructor= cour.Instructor.Name,
-                    ImageUrl= cour.ImageUrl,
-                    }).SingleAsync(cour => cour.Id == courseId);
+                cour => new CourseDTO {
+                Id = cour.Id,
+                Title= cour.Title,
+                Description = cour.Description,
+                Instructor= cour.Instructor.Name,
+                ImageUrl= cour.ImageUrl,
+                }).SingleAsync(cour => cour.Id == courseId); 
             return course;
         }
 
         public async Task<List<CourseDTO>> GetCoursesAsync()
         {
-            var instructors = await _context.Courses.Select(t=> new CourseDTO
+            var courses = await _context.Courses.Select(t=> new CourseDTO
             {Id=t.Id,
             Description= t.Description,
             Title = t.Title,
             Instructor = t.Instructor.Name,
             }).ToListAsync();
 
-            return instructors;
+            return courses;
         }
         /// <summary>
         /// Update Instructor's info
