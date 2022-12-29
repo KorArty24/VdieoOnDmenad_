@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VOD.Admin\VOD.Admin.csproj" />
+    <ProjectReference Include="..\VOD.Common\VOD.Common.csproj" />
+    <ProjectReference Include="..\Vod.Database\VOD.Database.csproj" />
   </ItemGroup>
 
 </Project>

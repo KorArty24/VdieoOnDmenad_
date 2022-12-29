@@ -8,18 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VOD.Admin.DTO_Models;
+using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 
 namespace VOD.Admin.Service.Services.Instructors
 {
-    public class CoursesService : ICoursesService
+    public class InstructorService : IInstructorService
     {
         private readonly VODContext _context;
 
         [TempData] public string Alert { get; set; }
-        public CoursesService(VODContext context)
+        public InstructorService(VODContext context)
         {
             _context = context;
         }
