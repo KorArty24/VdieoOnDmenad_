@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VOD.Admin.DTO_Models;
+using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
 
 namespace VOD.Admin.Service.Services.Courses

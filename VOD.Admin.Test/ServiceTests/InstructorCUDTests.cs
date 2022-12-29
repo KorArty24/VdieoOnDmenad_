@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using VOD.Admin.DTO_Models;
+using VOD.Common.DTOModels.Admin;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Admin.Tests.Base;
 using VOD.Database.Contexts;
@@ -11,7 +11,7 @@ namespace VOD.Admin.Tests.ServiceTests
     {
         private const int INSTRID = 102;
         private const int Instru_to_Delete = 1001; // See Sample Data. This is the instructor without courses
-        private CoursesService _instructorService;
+        private IInstructorService _instructorService;
 
         [SetUp]
         public void Init()

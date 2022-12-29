@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VOD.Admin.Service\VOD.Admin.Service.csproj" />
     <ProjectReference Include="..\VOD.Common\VOD.Common.csproj" />
     <ProjectReference Include="..\Vod.Database\VOD.Database.csproj" />
     <ProjectReference Include="..\VOD.Service\VOD.Service.csproj" />
