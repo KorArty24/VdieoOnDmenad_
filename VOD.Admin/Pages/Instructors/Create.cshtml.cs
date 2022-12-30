@@ -17,15 +17,23 @@ namespace VOD.Admin.Pages.Instructors
         [BindProperty] public InstructorDTO Input { get; set; } =  new InstructorDTO();
         [TempData] public string Alert { get; set; }
         /// <summary>
-        /// Create an instance of a  <see cref = CreateModel/>
+        /// Create an instance of a  <see cref = EditModel/>
         /// </summary>
         /// <param name="userService"></param>
         public CreateModel(IInstructorService instructorService)
         {
            _instructorService = instructorService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int instructorId)
         {
+            try {
+                Input = await _instructorService.GetInstructorAsync(instructorId);
+                return Page();
+                }  catch
+            {
+                return RedirectToPage("/Index", new { alert = "You do not have access to this page." });
+            }         
+            
         }
         
         public async Task<IActionResult> OnPostAsync() 
