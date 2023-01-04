@@ -4,4 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VOD.Admin.Service\VOD.Admin.Service.csproj" />
+    <ProjectReference Include="..\VOD.Common\VOD.Common.csproj" />
+    <ProjectReference Include="..\Vod.Database\VOD.Database.csproj" />
+    <ProjectReference Include="..\VOD.Service\VOD.Service.csproj" />
+  </ItemGroup>
+
 </Project>
