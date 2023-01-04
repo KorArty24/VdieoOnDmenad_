@@ -67,7 +67,7 @@ namespace VOD.Admin.Service.Services.Instructors
         /// <param name="dto"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<Instructor> UpdateInstructorsInfoAsync(int instructorId, InstructorDTO dto)
+        public async Task<int> UpdateInstructorsInfoAsync(InstructorDTO dto)
         {
            var instructor = await _context.Instructors.SingleOrDefaultAsync(
                 x=>x.Id== dto.Id);
@@ -77,16 +77,14 @@ namespace VOD.Admin.Service.Services.Instructors
             }
             UpdateInstructorFields(ref instructor, ref dto);
             await _context.SaveChangesAsync();
+            return 1;
 
-           
             void UpdateInstructorFields(ref Instructor inst, ref InstructorDTO dto)
             {
                 inst.Description = dto.Description;
                 inst.Name = dto.Name;
                 inst.Thumbnail = dto.Thumbnail;
             }
-
-            return instructor;
         }
 
         public async Task<InstructorDTO> GetOriginal(int instructorid)
