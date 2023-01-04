@@ -13,7 +13,7 @@ namespace VOD.Admin.Service.Services.Instructors
         public Task<List<InstructorDTO>> GetInstructorsAsync();
         public Task<InstructorDTO> GetInstructorAsync(int instructorId);
         public Task<int> DeleteInstructorAsync(int instructorId);
-        public Task<Instructor> UpdateInstructorsInfoAsync(int instructorId, InstructorDTO dto);
+        public Task<int> UpdateInstructorsInfoAsync(InstructorDTO dto);
         public Task<int> AddInstructorsInfoAsync(InstructorDTO instructor);
     }
 }

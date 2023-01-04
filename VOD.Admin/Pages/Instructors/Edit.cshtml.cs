@@ -5,39 +5,50 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using VOD.Admin.Filters;
+using VOD.Admin.Service.Services.Instructors;
 using VOD.Common.DTOModels.Admin;
+using VOD.Service.UserService;
 using VOD.Service.UserService.Interfaces;
 
-namespace VOD.Admin.Pages.Users
+namespace VOD.Admin.Pages.Instructors
 {
     [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class EditModel : PageModel
     {
-        private readonly IUserService _userService;
-        [BindProperty] public UserDTO Input { get; set; } =  new UserDTO();
+        private readonly IInstructorService _instructorService;
+        [BindProperty] public InstructorDTO Input { get; set; } =  new InstructorDTO();
         [TempData] public string Alert { get; set; }
         /// <summary>
         /// Create an instance of a  <see cref = CreateModel/>
         /// </summary>
         /// <param name="userService"></param>
-        public EditModel(IUserService userService)
+        public EditModel(IInstructorService instructorService)
         {
-            _userService = userService;
+            _instructorService = instructorService;
         }
-        public async Task OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Alert = string.Empty;
-            Input = await _userService.GetUserAsync(id);
+            try 
+            {
+                Alert = string.Empty;
+                Input = await _instructorService.GetInstructorAsync(id);
+                return Page();
+            } catch 
+            {
+                return RedirectToPage("/Index", new { alert = "You do not have access to this page" });
+            }
+            
         }
 
         public async Task<IActionResult> OnPostAsync() 
         {
-                var result = await _userService.UpdateUserAsync(Input);
-                if (result)
+                var succeeded = await _instructorService.UpdateInstructorsInfoAsync(Input);
+                if (succeeded == 1)
                 {
-                    Alert = $"User {Input.Email} was updated.";
+                    Alert = $"Updated Instructor {Input.Name} was updated.";
                     return RedirectToPage("Index");
                 }
+            // redisplay the form if something failed.
             return Page();
         }
     }
