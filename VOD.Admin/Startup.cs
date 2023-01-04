@@ -19,6 +19,9 @@ using VOD.Service.UserService.Interfaces;
 using VOD.Service.UserService;
 using VOD.Service.UserService.Interfaces;
 using System.Security.Claims;
+using VOD.Admin.Service.Services.Instructors;
+using VOD.Admin.Service.Services.Courses;
+using VOD.Admin.Service.Services.Videos;
 
 namespace VOD.Admin
 {
@@ -49,6 +52,9 @@ namespace VOD.Admin
             services.AddScoped<IUserService, UserService>();
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<VODContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<ICoursesService, CoursesService>();
+            services.AddScoped<IVideoService, VideoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
