@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
 
-namespace VOD.Admin.Pages.Instructors
+namespace VOD.Admin.Pages.Courses
 {
     [Authorize("AdminOnly")]
     public class IndexModel : PageModel

@@ -5,8 +5,10 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using VOD.Admin.Filters;
+using VOD.Admin.Service.Services.Courses;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Common.DTOModels.Admin;
+using VOD.Common.Extensions;
 using VOD.Service.UserService;
 using VOD.Service.UserService.Interfaces;
 
@@ -15,23 +17,26 @@ namespace VOD.Admin.Pages.Courses
     [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class EditModel : PageModel
     {
+        private readonly ICoursesService _courseService;
         private readonly IInstructorService _instructorService;
-        [BindProperty] public InstructorDTO Input { get; set; } =  new InstructorDTO();
+        [BindProperty] public CourseDTO Input { get; set; } =  new CourseDTO();
         [TempData] public string Alert { get; set; }
         /// <summary>
         /// Create an instance of a  <see cref = CreateModel/>
         /// </summary>
         /// <param name="userService"></param>
-        public EditModel(IInstructorService instructorService)
+        public EditModel(ICoursesService courseService, IInstructorService instructorService)
         {
             _instructorService = instructorService;
+            _courseService = courseService;
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
             try 
             {
                 Alert = string.Empty;
-                Input = await _instructorService.GetInstructorAsync(id);
+                ViewData["Instructors"] = (await _instructorService.GetInstructorsAsync()).ToSelectList("Id", "Name");
+                Input = await _courseService.GetCourseAsync(id);
                 return Page();
             } catch 
             {
@@ -42,10 +47,10 @@ namespace VOD.Admin.Pages.Courses
 
         public async Task<IActionResult> OnPostAsync() 
         {
-                var succeeded = await _instructorService.UpdateInstructorsInfoAsync(Input);
+                var succeeded = await _courseService.UpdateCourseInfoAsync(Input);
                 if (succeeded == 1)
                 {
-                    Alert = $"Updated Instructor {Input.Name} was updated.";
+                    Alert = $"Updated Course {Input.Title}.";
                     return RedirectToPage("Index");
                 }
             // redisplay the form if something failed.
