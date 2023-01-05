@@ -60,11 +60,10 @@ namespace VOD.Admin.Tests.ServiceTests
             };
 
             //Act
-            var result = _instructorService.UpdateInstructorsInfoAsync(instructorID, instructor);
-            var expectedstring = "Author of the bestselling book on Dotnet MVC";
+            var result = _instructorService.UpdateInstructorsInfoAsync(instructor);
             
             //Assert 
-            Assert.That(result.Result.Description, Is.EqualTo(expectedstring));
+            Assert.That(result.Result, Is.EqualTo(1));
         }
 
         [Test]
