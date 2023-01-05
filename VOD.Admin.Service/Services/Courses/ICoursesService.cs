@@ -13,7 +13,7 @@ namespace VOD.Admin.Service.Services.Courses
         public Task<List<CourseDTO>> GetCoursesAsync();
         public Task<CourseDTO> GetCourseAsync(int courseId);
         public Task<int> DeleteCourseAsync(int courseId);
-        public Task<Course> UpdateCourseInfoAsync(int courseId, CourseDTO dto);
+        public Task<int> UpdateCourseInfoAsync(CourseDTO dto);
         public Task<int> AddCourseInfoAsync(CourseDTO course);
     }
 }

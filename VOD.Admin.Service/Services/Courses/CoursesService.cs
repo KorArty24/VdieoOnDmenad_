@@ -17,6 +17,7 @@ namespace VOD.Admin.Service.Services.Courses
     public class CoursesService : ICoursesService
     {
         private readonly VODContext _context;
+        private const int ROWS_SUCCESSFULLY_UPDATED = 1;
 
         [TempData] public string Alert { get; set; }
         public CoursesService(VODContext context)
@@ -71,7 +72,7 @@ namespace VOD.Admin.Service.Services.Courses
         /// <param name="dto"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<Course> UpdateCourseInfoAsync(int courseId, CourseDTO dto)
+        public async Task<int> UpdateCourseInfoAsync(CourseDTO dto)
         {
            var course = await _context.Courses.SingleOrDefaultAsync(
                 x=>x.Id== dto.Id);
@@ -82,7 +83,7 @@ namespace VOD.Admin.Service.Services.Courses
             UpdateCourseFields(ref course, ref dto);
             await _context.SaveChangesAsync();
 
-            return course;
+            return ROWS_SUCCESSFULLY_UPDATED;
            
             void UpdateCourseFields(ref Course course, ref CourseDTO dto)
             {
