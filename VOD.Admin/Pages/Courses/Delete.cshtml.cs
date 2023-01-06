@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VOD.Admin.Filters;
-using VOD.Admin.Service.Services.Instructors;
+using VOD.Admin.Service.Services.Courses;
 using VOD.Common.DTOModels;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
@@ -14,37 +14,44 @@ namespace VOD.Admin.Pages.Courses
     public class DeleteModel : PageModel
     {
         #region Properties
-        private readonly IInstructorService _instructorService;
-        [BindProperty] public InstructorDTO Input { get; set; } = new InstructorDTO();
+        private readonly ICoursesService _courseService;
+        [BindProperty] public CourseDTO Input { get; set; } = new CourseDTO();
         [TempData] public string Alert { get; set; }
         #endregion
 
         #region Constructor
-        public DeleteModel(IInstructorService instructorService)
+        public DeleteModel(ICoursesService courseService)
         {
-            _instructorService = instructorService;
+            _courseService = courseService;
         }
         #endregion
 
         #region Actions
-        public async Task OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Alert = string.Empty;
-            Input = await _instructorService.GetInstructorAsync(id);
+            try
+            {
+                Alert = string.Empty;
+                Input = await _courseService.GetCourseAsync(id);
+                return Page();
+            } catch
+            {
+                return RedirectToPage("/Index", new { alert = "You do not have access to this page" });
+            }
+
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            var id = Input.Id;
+            var result = await _courseService.DeleteCourseAsync(id);
+            if (result == 1)
             {
-                var result = await _instructorService.DeleteInstructorAsync(Input.Id);
-                if (result == 1)
-                {
-                    Alert = $"Instructor {Input.Name} was deleted.";
-                    return RedirectToPage("Index");
-                }
+                Alert = $"Course {Input.Title} was deleted.";
+                return RedirectToPage("Index");
             }
-
+            // Something failed, redisplay the form.
+            Input = await _courseService.GetCourseAsync(id);
             return Page();
         }
         #endregion
