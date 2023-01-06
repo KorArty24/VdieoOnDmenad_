@@ -107,14 +107,17 @@ namespace VOD.Admin.Service.Services.Instructors
             {
                 try
                 {
-                _context.Add(new Instructor
-                {
-                    Name = instructor.Name,
-                    Thumbnail = instructor.Thumbnail,
-                    Description = instructor.Description,
+                    var instructorToAdd = new Instructor
+                    {
+                        Name = instructor.Name,
+                        Thumbnail = instructor.Thumbnail,
+                        Description = instructor.Description,
 
-                });
-                return await _context.SaveChangesAsync();
+                    };  
+                _context.Add(instructorToAdd); 
+                await _context.SaveChangesAsync(); //starts tracking the added Entity 
+
+                return instructorToAdd.Id;
                 } catch
                 {
                     throw new DbUpdateException("Error while saving the data");
