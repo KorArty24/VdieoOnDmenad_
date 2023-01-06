@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VOD.Admin.Service.Services.Courses;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
-
+using VOD.Common.Extensions;
 namespace VOD.Admin.Pages.Courses
 {
     [Authorize("AdminOnly")]
     public class IndexModel : PageModel
     {
         #region Properties
-        private readonly IUserService _userService;
-        public IEnumerable<InstructorDTO> Users = new List<InstructorDTO>();
+        private readonly ICoursesService _courseService;
+        public IEnumerable<CourseDTO> Courses = new List<CourseDTO>();
         [TempData] public string Alert { get; set; }
 
         #endregion
@@ -24,15 +25,26 @@ namespace VOD.Admin.Pages.Courses
         /// Create instance of a <see cref="IndexModel"/>.
         /// </summary>
         /// <param name ="userservice"> Instance of <inheritdoc cref="IUserService"/>.</param>
-        public IndexModel(IUserService userservice)
+        public IndexModel(ICoursesService courseService)
         {
-            _userService = userservice;
+            _courseService = courseService;
         }
         #endregion
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-           // Users = await _userService.GetUsersAsync();
+           try
+            {
+                Courses = await _courseService.GetCoursesAsync();
+                return Page();
+            } catch
+            {
+                Alert = "You don't have access to this page.";
+                return RedirectToPage("/Index");
+            }
         }
     }
-
 }
+
+
+
+

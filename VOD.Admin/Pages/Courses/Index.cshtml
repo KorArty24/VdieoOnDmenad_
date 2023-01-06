@@ -1,44 +1,48 @@
-﻿@page
+﻿@using VOD.Common.Extensions
+@page
 @model IndexModel
 @inject SignInManager<VODUser> SignInManager
 @{
-    ViewData["Title"] = "Instructors";
+    ViewData["Title"] = "Courses";
 }
 @if (SignInManager.IsSignedIn(User) && User.HasClaim("Role", "Admin"))
 {
     <div class="row">
-        <div class="col-md-8 offset-md-2" style="padding-left:0; padding-right:0;">
+        <div class="col-md-10 offset-md-1" style="padding-left:0; padding-right:0;">
             <alert alert-type="success">@Model.Alert</alert>
+        </div>
+        <div class="col-md-1">
         </div>
     </div>
     <div class = "row">
-        <div class="col-md-8-offcet-md-2">
+        <div class="col-md-10-offcet-md-1">
             <h1>@ViewData["Title"]</h1>
             <partial name = "_PageButtonsPartial" />
             <table style="margin-top:20px;" class="table">
                 <thread>
                     <tr>
-                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Instructor</th>
+                        <th>Description</th>
                         <th></th>
                         </tr>
                 </thread>
                 <tbody>
-                    @foreach (var user in Model.Users){
+                    @foreach (var course in Model.Courses){
+                        var description = course.Description.Truncate(100);
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => user.Id)</td>
-                            <td style="min-width: 150px;">
-                                <partial name="_TableRowButtonsPartial"
-                                    model="@user.ButtonDTO"/>
-                                    <btn class="float-right"
-                                    style="margin-right:5px;"
-                                    asp-page ="Details" icon = "edit"
-                                    asp-route-id = "@user.Id">
-                                    </btn>
+                            <td> @Html.DisplayFor(modelItem => course.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => course.Instructor)</td>
+                            <td>@Html.DisplayFor(modelItem =>course.Description)</td>
+                            <td style = "min-width: 100px;">
+                                <partial name ="_TableRowButtonsPartial"
+                                    model="@course.ButtonDTO"/>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+        <div class="col-md-1"></div>
     </div>
 }
