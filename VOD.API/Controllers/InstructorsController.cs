@@ -94,5 +94,20 @@ namespace VOD.API.Controllers
             }
             return BadRequest("Unable to update the entity");
         }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var instructorExists = await _instructorService.CheckInstructorExists(id);
+                if (!instructorExists) return BadRequest("Could not find entity");
+
+                if (await _instructorService.DeleteInstructorAsync(id) == 1) return NoContent();
+            } catch 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete the entity");
+            }
+            return BadRequest("Failed to delete the instructor");
+        }
     }
 }

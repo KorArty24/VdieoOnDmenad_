@@ -127,5 +127,10 @@ namespace VOD.Admin.Service.Services.Instructors
                 return 0;
             }
         }
+
+        public async Task<bool> CheckInstructorExists(int instructorId)
+        {
+            return (await _context.Instructors.AnyAsync(t => t.Id == instructorId);
+        }
     }
 }
