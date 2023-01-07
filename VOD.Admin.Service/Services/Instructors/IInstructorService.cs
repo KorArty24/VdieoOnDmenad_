@@ -15,5 +15,6 @@ namespace VOD.Admin.Service.Services.Instructors
         public Task<int> DeleteInstructorAsync(int instructorId);
         public Task<int> UpdateInstructorsInfoAsync(InstructorDTO dto);
         public Task<int> AddInstructorsInfoAsync(InstructorDTO instructor);
+        public Task<bool> CheckInstructorExists(int instructorId);
     }
 }
