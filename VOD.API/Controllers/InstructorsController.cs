@@ -53,7 +53,7 @@ namespace VOD.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<InstructorDTO>> Post(InstructorDTO model) 
+        public async Task<ActionResult<InstructorDTO>> Post(InstructorDTO model)
         {
             try
             {
@@ -67,12 +67,32 @@ namespace VOD.API.Controllers
 
                 var uri = _linkGenerator.GetPathByAction("Get", "Instructors", new { id });
 
-            return Created(uri, dto);
-            } 
+                return Created(uri, dto);
+            }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add the entity");
             }
+        }
+
+        [HttpPut("{id: int}")]
+        public async Task<ActionResult<InstructorDTO>> Put(int id, InstructorDTO model) 
+        {
+            if (!id.Equals(model.Id)) return BadRequest("Differening ids");
+            try
+            {
+                var instructor = await _instructorService.GetInstructorAsync(id);
+                if (instructor.Equals(null)) return NotFound("Could not find entity");
+                if (await _instructorService.UpdateInstructorsInfoAsync(model) ==1)
+                {
+                    return NoContent();
+                } 
+            } 
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to update the entity");
+            }
+            return BadRequest("Unable to update the entity");
         }
     }
 }
