@@ -107,6 +107,7 @@ namespace VOD.Admin.Tests.ServiceTests
             var result = _instructorService.AddInstructorsInfoAsync(instructor);
             //Assert
             Assert.That(result.Result.Equals(1));
+
         }
         //Idempotency test
         [Test]
