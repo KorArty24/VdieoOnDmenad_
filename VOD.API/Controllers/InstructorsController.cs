@@ -94,6 +94,7 @@ namespace VOD.API.Controllers
             }
             return BadRequest("Unable to update the entity");
         }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
