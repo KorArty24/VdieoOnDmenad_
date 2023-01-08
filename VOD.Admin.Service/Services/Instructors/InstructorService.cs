@@ -8,20 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Admin.Service.Helper;
 using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 
 namespace VOD.Admin.Service.Services.Instructors
 {
-    public class InstructorService : IInstructorService
+    public class InstructorService : ServiceBase, IInstructorService
     {
-        private readonly VODContext _context;
-
         [TempData] public string Alert { get; set; }
-        public InstructorService(VODContext context)
+        public InstructorService(VODContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<int> DeleteInstructorAsync(int instructorId)
@@ -114,8 +112,8 @@ namespace VOD.Admin.Service.Services.Instructors
                         Description = instructor.Description,
 
                     };  
-                _context.Add(instructorToAdd); 
-                await _context.SaveChangesAsync(); //starts tracking the added Entity 
+                _context.Add(instructorToAdd);
+                 await SaveChanges(); //starts tracking the added Entity 
 
                 return instructorToAdd.Id;
                 } catch
@@ -130,7 +128,7 @@ namespace VOD.Admin.Service.Services.Instructors
 
         public async Task<bool> CheckInstructorExists(int instructorId)
         {
-            return (await _context.Instructors.AnyAsync(t => t.Id == instructorId);
+            return (await _context.Instructors.AnyAsync(t => t.Id == instructorId));
         }
     }
 }

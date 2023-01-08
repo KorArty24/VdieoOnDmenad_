@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
+using VOD.Database.Exceptions;
 
 namespace VOD.API.Filters
 {
