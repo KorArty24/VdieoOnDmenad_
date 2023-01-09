@@ -133,8 +133,6 @@ namespace VOD.Admin.Tests.ServiceTests
 
             //Assert
             Assert.That(_result.Equals(0));
-
-
         }
     }
 }

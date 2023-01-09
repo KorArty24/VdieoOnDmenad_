@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using VOD.Admin.Service.Services.Courses;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Admin.Service.Services.Videos;
+using VOD.API.Filters;
+using VOD.API.Services;
 using VOD.Common.Entities;
 using VOD.Database.Contexts;
 using VOD.Service.DatabaseServices;
@@ -32,7 +34,7 @@ namespace VOD.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment _env)
         {
             services.AddRazorPages();
             services.AddDbContext<VODContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -43,6 +45,14 @@ namespace VOD.API
             services.AddScoped<IVideoService, VideoService>();
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddControllers(config => config.Filters.Add(new VodApiExceptionFilter(_env)));
+            services.AddOpenApiDocument(settings =>
+            {
+                settings.Title = "Catalog API";
+                settings.DocumentName = "v3";
+                settings.Version = "v3";
+            });
+            services.AddTransient<ITokenService, TokenService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +77,7 @@ namespace VOD.API
             {
                 endpoints.MapRazorPages();
             });
+            app.UseOpenApi().UseSwaggerUi3();
         }
     }
 }
