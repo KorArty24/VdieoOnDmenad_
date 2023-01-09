@@ -8,5 +8,6 @@ Seeding user data is implement using rough EF instead of manager, which drastica
 DDD branch has been abandoned for the time being. 
 Added 20 tests to dest db layer. Added integration tests to test service layer, wrote the prototype for testing Authorisation (Razor Pages).
 Direct use of EF leads to substitution of Unit Tests for integration Tests against a productionDb as recomended by Microsoft and Jon Smith (EF Core in Action). 
+Added Swagger, made changes to API Controller to utilize it. 
 In progress... 
 

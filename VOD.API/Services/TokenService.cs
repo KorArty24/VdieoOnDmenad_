@@ -14,7 +14,7 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace VOD.API.Services
 {
-    public class TokenService : ItokenService
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
         private readonly IUserService _users;
@@ -27,7 +27,7 @@ namespace VOD.API.Services
         }
         #endregion
 
-        public async Task<TokenDTO> GenerageTokenAsync(LoginUserDTO loginUserDTO)
+        public async Task<TokenDTO> GenerateTokenAsync(LoginUserDTO loginUserDTO)
         {
             try 
             {
