@@ -10,6 +10,7 @@ using VOD.Common.DTOModels;
 using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
 using VOD.Service.UserService.Interfaces;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace VOD.API.Services
 {
@@ -26,14 +27,31 @@ namespace VOD.API.Services
         }
         #endregion
 
-        public Task<TokenDTO> GenerageTokenAsync(LoginUserDTO loginUserDTO)
+        public async Task<TokenDTO> GenerageTokenAsync(LoginUserDTO loginUserDTO)
         {
-            throw new System.NotImplementedException();
+            try 
+            {
+                var user = await _users.GetUserAsync(loginUserDTO, true);
+                if (user == null) throw new UnauthorizedAccessException();
+                var claims = GetClaims(user, true);
+                var token = CreateToken(claims);
+                var succeeded = await AddTokenToUserAsync(user.Id, token);
+                if (!succeeded) throw new SecurityTokenException("Could not add a token to the user");
+                return token;
+
+            } catch
+            {
+                throw;
+            }
         }
 
-        public Task<TokenDTO> GetTokenAsync(LoginUserDTO loginUserDTO, string userid)
+        public async Task<TokenDTO> GetTokenAsync(LoginUserDTO loginUserDTO, string userid)
         {
-            throw new System.NotImplementedException();
+            var user = await _users.GetUserAsync(loginUserDTO, true);
+            if (user == null) throw new UnauthorizedAccessException();
+            if (!userid.Equals(user.Id)) 
+                throw new UnauthorizedAccessException();
+            return new TokenDTO(user.Token, user.TokenExpires);
         }
 
         private IList<Claim> GetClaims(VODUser user, bool includeUserClaims) 
@@ -76,6 +94,15 @@ namespace VOD.API.Services
             {
                 throw;
             }
+        }
+
+        private async Task<bool> AddTokenToUserAsync(string userId, TokenDTO token)
+        {
+            var userDTO = await _users.GetUserAsync(userId);
+            userDTO.Token.Token = token.Token;
+            userDTO.Token.TokenExpires = token.TokenExpires;
+
+            return await _users.UpdateUserAsync(userDTO);
         }
     }
 }
