@@ -2,17 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Diagnostics;
 using VOD.Database.Exceptions;
 
 namespace VOD.API.Filters
 {
-    public class APIExceptionFilter : ExceptionFilterAttribute
+    public class VodApiExceptionFilter : ExceptionFilterAttribute
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public APIExceptionFilter(IHostingEnvironment environment)
+        public VodApiExceptionFilter(IWebHostEnvironment environment)
         {
             _hostingEnvironment = environment;
         }
@@ -58,7 +59,21 @@ namespace VOD.API.Filters
                         StackTrace = stackTrace
                     });
                     break;
-
+                case VODInvalidInstructorException ice:
+                    error = "Invalid courseId.";
+                    actionResult = new BadRequestObjectResult(new
+                    {
+                        Error = error,
+                        Message = message,
+                        StackTrace = stackTrace
+                    });
+                    break;
+                default:
+                error = "General Error.";
+                actionResult = new ObjectResult(new
+                { Error = error, Message = message, StackTrace = stackTrace })
+                { StatusCode = 500 };
+                break;
             }
         }
     }

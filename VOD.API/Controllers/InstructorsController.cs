@@ -28,7 +28,8 @@ namespace VOD.API.Controllers
         {
             try
             {
-                return await _instructorService.GetInstructorsAsync();
+                var instructors = await _instructorService.GetInstructorsAsync();
+                return Ok(instructors);
             } catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
