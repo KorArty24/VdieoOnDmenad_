@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Common.DTOModels;
 using VOD.Common.DTOModels.Admin;
 using VOD.Common.Entities;
 using VOD.Common.Extensions;
@@ -32,7 +33,9 @@ namespace VOD.Service.UserService
             {
                 Id = user.Id,
                 Email = user.Email,
-                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
+                IsAdmin = _db.UserClaims.Any(ur => ur.UserId.Equals(user.Id) && ur.ClaimValue.Equals("Admin")),
+                Token = new TokenDTO(user.Token, user.TokenExpires)
+
             }).FirstOrDefaultAsync();
         }
 
@@ -54,9 +57,10 @@ namespace VOD.Service.UserService
             {
                 Id = user.Id,
                 Email = user.Email,
-                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
-            }).FirstOrDefaultAsync(u => u.Id.Equals(userId));
+                IsAdmin = _db.UserClaims.Any(ur => ur.UserId.Equals(user.Id) && ur.ClaimValue.Equals("Admin")),
+                Token = new TokenDTO(user.Token, user.TokenExpires)
 
+            }).FirstOrDefaultAsync(u => u.Id.Equals(userId));
         }
 
         public async Task<IEnumerable<UserDTO>> GetUsersAsync()
@@ -65,26 +69,65 @@ namespace VOD.Service.UserService
             {
                 Id = user.Id,
                 Email = user.Email,
-                IsAdmin = _db.UserRoles.Any(ur => ur.UserId.Equals(user.Id) && ur.RoleId.Equals("Admin"))
+                IsAdmin = _db.UserClaims.Any(ur => ur.UserId.Equals(user.Id) && ur.ClaimValue.Equals("Admin")),
+                Token = new TokenDTO(user.Token, user.TokenExpires)
             }).ToListAsync();
         }
 
         public async Task<bool> UpdateUserAsync(UserDTO user)
         {
             //get user 
-            var dbuser = await _db.Users.FirstOrDefaultAsync(user => user.Id.Equals(user.Id));
+            var dbUser = await _db.Users.FirstOrDefaultAsync(user => user.Id.Equals(user.Id));
             //corner case
-            if (dbuser == null) return false;
+            if (dbUser == null) return false;
             if (string.IsNullOrEmpty(user.Email)) return false;
-            dbuser.Email = user.Email;
+            dbUser.Email = user.Email;
+            if (user.Token != null && user.Token.Token != null && user.Token.Token.Length > 0)
+            { 
+                dbUser.Token = user.Token.Token;
+                dbUser.TokenExpires = user.Token.TokenExpires;
+                //Add token claim to the user in the database
+                var newTokenClaim = new Claim("Token", user.Token.Token);
+                var newTokenExpires = new Claim("TokenExpires", user.Token.TokenExpires.ToString("yyy-MM-dd hh:mm:ss"));
+                //add or replace the claims for the token and expiration data
+                var userClaims = await _userManager.GetClaimsAsync(dbUser);
+                var currentTokenClaim = userClaims.SingleOrDefault(c => c.Type.Equals("Token"));
+                var currentTokenClaimExpires = userClaims.SingleOrDefault(c => c.Type.Equals("TokenExpires"));
+                #region Create new token here
+                if (currentTokenClaim == null)
+                {
+                    await _userManager.AddClaimAsync(dbUser, newTokenClaim);
+                }
+                else {
+                    await _userManager.ReplaceClaimAsync(dbUser, currentTokenClaim, newTokenClaim);
+                }
+                if (currentTokenClaimExpires == null)
+                    await _userManager.AddClaimAsync(dbUser, newTokenExpires);
+                else
+                    await _userManager.ReplaceClaimAsync(dbUser, currentTokenClaimExpires, newTokenExpires);
+            }
+            #endregion
             var admin = "Admin";
-            var isAdmin = await _userManager.IsInRoleAsync(dbuser, admin);
+            var isAdmin = await _userManager.IsInRoleAsync(dbUser, admin); //suspicious
+            var adminClaim = new Claim(admin, "true");
+            if(isAdmin && !user.IsAdmin)
+            {
+                await _userManager.RemoveFromRoleAsync(dbUser, admin);
+                await _userManager.RemoveClaimAsync(dbUser, adminClaim);
+            } else if (isAdmin && !user.IsAdmin)
+            {
+                // Add Admin Role
+                await _userManager.AddToRoleAsync(dbUser, admin);
+
+                // Add Admin Claim
+                await _userManager.AddClaimAsync(dbUser, adminClaim);
+            }
             IdentityRoleClaim<string> adminclaim = new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = "Admin" };
             if (isAdmin && !user.IsAdmin )
                 //modified to utilize claims, instead of Roles
-                await _userManager.RemoveClaimAsync(dbuser, new Claim(ClaimTypes.Role, "Admin")); 
+                await _userManager.RemoveClaimAsync(dbUser, new Claim(ClaimTypes.Role, "Admin")); 
             else if (isAdmin && user.IsAdmin)
-                await _userManager.AddClaimAsync(dbuser, new Claim(ClaimTypes.Role,"Admin"));
+                await _userManager.AddClaimAsync(dbUser, new Claim(ClaimTypes.Role,"Admin"));
             var result = await _db.SaveChangesAsync(); //Check out about that SaveChangesAsync staff
             return result >=0;
         }
