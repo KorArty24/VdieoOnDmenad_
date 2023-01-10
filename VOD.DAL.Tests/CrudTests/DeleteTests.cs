@@ -41,5 +41,32 @@ namespace VOD.Database.Tests.CrudTests
                 Assert.Throws<System.InvalidOperationException>(catchCascadeDeleteException);
             }
         }
+
+         [Test]
+        public void ShouldCascadeDelete()
+        {
+            ExecuteInATransaction(RunTheTest);
+
+            void RunTheTest()
+            {
+                SampleDataInitializer.ClearData(context);
+                var data = TestDataUnits.NewCourseWithInstructorAndModule();
+                context.Courses.Add(data);
+                context.SaveChanges();
+                var datatodelete = context.Courses.Include(m => m.Modules).
+                    First();
+
+                void catchCascadeDeleteException() 
+                {
+                    try { context.Courses.Remove(datatodelete); }
+                    catch (InvalidOperationException ex)
+                    //catch IOEx and rethrow as method output to check below.
+                    { throw; }
+                    
+                }
+                //Assert
+                Assert.Throws<System.InvalidOperationException>(catchCascadeDeleteException);
+            }
+        }
     }
 }

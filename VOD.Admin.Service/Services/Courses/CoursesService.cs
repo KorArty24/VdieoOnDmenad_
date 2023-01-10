@@ -114,14 +114,17 @@ namespace VOD.Admin.Service.Services.Courses
             {
                 try
                 {
-                _context.Add(new Course
-                {
-                    Title = course.Title,
-                    Description = course.Description,
-                    Instructor = _context.Instructors.SingleOrDefault(x =>x.Id == course.InstructorId),
-                    ImageUrl = course.ImageUrl
-                });
-                return await _context.SaveChangesAsync();
+                    Course courseToAdd = new Course
+                    {
+                        Title = course.Title,
+                        Description = course.Description,
+                        Instructor = _context.Instructors.SingleOrDefault(x => x.Id == course.InstructorId),
+                        ImageUrl = course.ImageUrl
+                    };
+                    _context.Add(courseToAdd);
+                    await _context.SaveChangesAsync();
+                    return courseToAdd.Id;
+
                 } catch
                 {
                     throw new DbUpdateException("Error while saving the data");

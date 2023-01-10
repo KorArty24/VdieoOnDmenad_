@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VOD.Common.DTOModels.Admin;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Admin.Tests.Base;
@@ -105,10 +104,12 @@ namespace VOD.Admin.Tests.ServiceTests
             };
             //Act
             var result = _instructorService.AddInstructorsInfoAsync(instructor);
-            //Assert
-            Assert.That(result.Result.Equals(1));
 
+            //Assert
+            Assert.That(result.Result, Is.GreaterThan(0));
+            Assert.That(result.Result, Is.InstanceOf<int>());
         }
+
         //Idempotency test
         [Test]
         public void ShouldIgnoreAlreadyExisting() 
