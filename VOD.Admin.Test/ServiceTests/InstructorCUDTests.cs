@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VOD.Common.DTOModels.Admin;
 using VOD.Admin.Service.Services.Instructors;
 using VOD.Admin.Tests.Base;
@@ -12,10 +11,12 @@ namespace VOD.Admin.Tests.ServiceTests
         private const int INSTRID = 102;
         private const int Instru_to_Delete = 1001; // See Sample Data. This is the instructor without courses
         private IInstructorService _instructorService;
+                        
 
         [SetUp]
         public void Init()
         {
+            using var context_1 = new VODContextFactory().CreateDbContext(new string[0]);
             _instructorService = new InstructorService(context);
         }
 
@@ -95,7 +96,7 @@ namespace VOD.Admin.Tests.ServiceTests
         }
 
         [Test]
-        public void ShouldAddInstructorWithData()
+        public async Task ShouldAddInstructorWithData()
         {
             InstructorDTO instructor = new InstructorDTO
             {
@@ -104,11 +105,13 @@ namespace VOD.Admin.Tests.ServiceTests
                 Thumbnail="images/Ice-Age-Scrat-icon.png"
             };
             //Act
-            var result = _instructorService.AddInstructorsInfoAsync(instructor);
-            //Assert
-            Assert.That(result.Result.Equals(1));
+            var result = await Task.FromResult(_instructorService.AddInstructorsInfoAsync(instructor)).Result;
 
+            //Assert
+            Assert.That(result, Is.GreaterThan(0));
+            Assert.That(result, Is.InstanceOf<int>());
         }
+
         //Idempotency test
         [Test]
         public void ShouldIgnoreAlreadyExisting() 

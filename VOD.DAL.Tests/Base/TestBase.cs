@@ -14,6 +14,7 @@ namespace VOD.Database.Tests.Base
     public class TestBase
     {
         protected VODContext context;
+       
 
         [SetUp]
         public void SetUp()

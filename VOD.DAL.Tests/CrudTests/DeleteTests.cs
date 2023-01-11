@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOD.Database.Contexts;
 using VOD.Database.Migrations.DbInitializer;
 using VOD.Database.Tests.Base;
 
@@ -14,9 +15,8 @@ namespace VOD.Database.Tests.CrudTests
     {
         public Action RunTheTest { get; private set; }
 
-
         [Test]
-        public void ShouldFailToCascadeDelete()
+        public void ShouldCascadeDelete()
         {
             ExecuteInATransaction(RunTheTest);
 
@@ -24,21 +24,34 @@ namespace VOD.Database.Tests.CrudTests
             {
                 SampleDataInitializer.ClearData(context);
                 var data = TestDataUnits.NewCourseWithInstructorAndModule();
-                context.Courses.Add(data);
-                context.SaveChanges();
-                var datatodelete = context.Courses.Include(m => m.Modules).
-                    First();
-
-                void catchCascadeDeleteException() 
+                var result = -1;
+                try 
                 {
-                    try { context.Courses.Remove(datatodelete); }
+                    context.Courses.Add(data);
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [VOD].[Courses] ON");
+                    context.SaveChanges();
+                } catch 
+                {
+                    throw;
+                }
+                var datatodelete = context.Courses.Include(m => m.Modules).ThenInclude(m => m.Videos).FirstOrDefault();
+
+                int catchCascadeDeleteException() 
+                {
+                    try
+                    { 
+                        context.Courses.Remove(datatodelete);
+                        result =  context.SaveChanges();
+                        return result;
+                    }
                     catch (InvalidOperationException ex)
                     //catch IOEx and rethrow as method output to check below.
-                    { throw; }
-                    
+                    { 
+                        throw; 
+                    }
                 }
                 //Assert
-                Assert.Throws<System.InvalidOperationException>(catchCascadeDeleteException);
+                Assert.That(catchCascadeDeleteException, Is.Not.EqualTo(-1));
             }
         }
     }
