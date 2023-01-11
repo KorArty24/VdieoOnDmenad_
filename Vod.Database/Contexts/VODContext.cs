@@ -39,7 +39,7 @@ namespace VOD.Database.Contexts
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) // Restrict cascade deletes
             {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+                relationship.DeleteBehavior = DeleteBehavior.ClientCascade;
             }
         }
     }

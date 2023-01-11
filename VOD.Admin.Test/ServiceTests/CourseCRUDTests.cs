@@ -12,10 +12,11 @@ namespace VOD.Admin.Tests.ServiceTests
         private const int CoursID = 10002;
         private const int Course_to_Delete = 1001; // See Sample Data. This is the course without courses
         private ICoursesService _courseService;
-
+        
         [SetUp]
         public void Init()
         {
+           using var context_1 = new VODContextFactory().CreateDbContext(new string[0]);
             _courseService = new CoursesService(context);
         }
 
@@ -118,15 +119,15 @@ namespace VOD.Admin.Tests.ServiceTests
             CourseDTO data = new CourseDTO
             {
                 Description = "Author of the bestselling book on Dotnet MVC",
-                Name = "Adam_ Freeman",
-                Thumbnail="images/Ice-Age-Scrat-icon.png"
+                Title = "Adam_ Freeman",
+                ImageUrl="images/Ice-Age-Scrat-icon.png"
             };
 
             CourseDTO _data = new CourseDTO
             {
                 Description = "Author of the bestselling book on Dotnet MVC",
-                Name = "Adam_ Freeman",
-                Thumbnail = "images/Ice-Age-Scrat-icon.png"
+                Title = "Adam_ Freeman",
+                ImageUrl = "images/Ice-Age-Scrat-icon.png"
             };
             //Act
            
