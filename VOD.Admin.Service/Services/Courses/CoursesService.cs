@@ -29,8 +29,10 @@ namespace VOD.Admin.Service.Services.Courses
         {
                 if (!_context.Courses.Any(c=>c.Id == courseId))
                 {
-                    Course course = await _context.Courses.Include(c=>c.Modules).Include(c=>c.Modules).
-                    SingleAsync(x => x.Id == courseId);
+                    Course course = await _context.Courses.Include(c=>c.Modules).ThenInclude(m=>m.Downloads).
+                    Include(m=>m.Modules).SingleAsync(c=>c.Id == courseId);
+                    var userCourses = _context.UserCourses.Where(uc => uc.CourseId == courseId);
+                    _context.RemoveRange(userCourses); // In real app usercourses should be placed into archive courses section. 
                     _context.Remove(course);
                     return await _context.SaveChangesAsync();
                 }
