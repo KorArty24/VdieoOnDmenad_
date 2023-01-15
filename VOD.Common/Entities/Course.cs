@@ -13,7 +13,6 @@ namespace VOD.Common.Entities
     public class Course: EntityBase
     {
         [Key]
-
         public int Id { get; set; }
 
         [DataType(DataType.Text),MaxLength(255)]

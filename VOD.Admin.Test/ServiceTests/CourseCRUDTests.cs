@@ -9,55 +9,65 @@ namespace VOD.Admin.Tests.ServiceTests
 {
     public class CourseCRUDTests : TestBase
     {
-        private const int CoursID = 10002;
-        private const int Course_to_Delete = 1001; // See Sample Data. This is the course without courses
+        private const int CoursID = 1001;
+        private const int Course_to_Delete = 103; // See Sample Data. This is the course without courses
         private ICoursesService _courseService;
         
         [SetUp]
         public void Init()
         {
-           using var context_1 = new VODContextFactory().CreateDbContext(new string[0]);
             _courseService = new CoursesService(context);
+        }
+
+        [Test]
+        [TestCase(101)]
+        public void ShouldGet(int id)
+        {
+
+            var result = _courseService.GetCourseAsync(id);
+           
+            //Assert 
+
+            Assert.That(result.Result.GetType, Is.EqualTo(typeof(CourseDTO)));
+            Assert.That(result.Result.Id == 101 && 
+                result.Result.Title.Contains("Foundations"));
         }
 
         [Test]
         [TestCase(CoursID)]
-        public void ShouldReturnErrorUponDeleteCourse(int courseId)
+        public async Task ShouldReturnErrorUponDeleteNonExistCourse(int courseId)
         {
             //Arrange 
-
             //Act 
-            var result = _courseService.DeleteCourseAsync(courseId);
-            
+            var result = await Task.FromResult(_courseService.DeleteCourseAsync(courseId)).Result;
             //Assert 
-            Assert.That(result.Result, Is.Zero);
+            Assert.That(result, Is.Zero);
         }
 
         [Test]
         [TestCase(Course_to_Delete)]
-        public void ShouldDeleteCourseWithID(int id)
+        public async Task ShouldDeleteCourseWithID(int id)
         {
             //Act 
-            var result = _courseService.DeleteCourseAsync(id);
+            var result = await Task.FromResult(_courseService.DeleteCourseAsync(id)).Result;
 
             //Assert 
-            Assert.That(result.Result, Is.EqualTo(1));
+            Assert.That(result, Is.GreaterThan(1));
         }
 
         [Test]
-        [TestCase(1001)]
+        [TestCase(102)]
         public void ShouldUpdateCourseWithId(int courseId)
         {
-            //Arrange
           
-            _courseService = new CoursesService(context);
-
             CourseDTO course = new CourseDTO
             {
                 Description = "Author of the bestselling book on Dotnet MVC",
                 Title = "Computer geometry with NumPy",
-                Id = courseId,
-                MarqueeImageUrl="images/Ice-Age-Scrat-icon.png"
+                Id = 101,
+                MarqueeImageUrl="images/Ice-Age-Scrat-icon.png",
+                InstructorId =102,
+                Instructor = "John Doe"
             };
 
             //Act
@@ -67,23 +77,6 @@ namespace VOD.Admin.Tests.ServiceTests
             Assert.That(result.Result, Is.EqualTo(1));
         }
 
-        [Test]
-        [TestCase(104)]
-        public void ShouldGet(int id)
-        {
-            //Arrange
-            var course = new CourseDTO
-            {
-                Id = 104,
-                Title = "Cercei Lannister",
-            };
-            //Act 
-            var result = _courseService.GetCourseAsync(id);
-            //Assert 
-            Assert.That(result.Result.GetType, Is.EqualTo(typeof(CourseDTO)));
-            Assert.That(result.Result.Id == 104 && 
-                result.Result.Title.Contains("Cercei"));
-        }
 
         [Test]
         public void ShouldGetCoursesList()
@@ -100,9 +93,10 @@ namespace VOD.Admin.Tests.ServiceTests
         {
             CourseDTO data = new CourseDTO
             {
-                Description = "Author of the bestselling book on Dotnet MVC",
-                Title = "Adam_ Freeman",
-                MarqueeImageUrl="images/Ice-Age-Scrat-icon.png"
+                Description = "WPF FOR CAD",
+                Title = "WPF IN ACTION",
+                MarqueeImageUrl="images/Ice-Age-Scrat-icon.png",
+                InstructorId=102
             };
             //Act
             var result = _courseService.AddCourseInfoAsync(data);
@@ -114,28 +108,23 @@ namespace VOD.Admin.Tests.ServiceTests
 
         //Idempotency test
         [Test]
-        public void ShouldIgnoreAlreadyExisting() 
+        public async Task ShouldIgnoreAlreadyExisting() 
         {
             CourseDTO data = new CourseDTO
             {
-                Description = "Author of the bestselling book on Dotnet MVC",
-                Title = "Adam_ Freeman",
-                ImageUrl="images/Ice-Age-Scrat-icon.png"
+                InstructorId=102,
+                Title="Course 1. Foundations of C#",
+                Description= "master the powerful programming language for only 100$ a month",
+                ImageUrl = "images/course1.jpg",
+                MarqueeImageUrl="/images/laptop.jpg",
             };
 
-            CourseDTO _data = new CourseDTO
-            {
-                Description = "Author of the bestselling book on Dotnet MVC",
-                Title = "Adam_ Freeman",
-                ImageUrl = "images/Ice-Age-Scrat-icon.png"
-            };
             //Act
            
-            var result = _courseService.AddCourseInfoAsync(data).Result;
-            var _result = _courseService.AddCourseInfoAsync(_data).Result;
+            var result = await Task.FromResult(_courseService.AddCourseInfoAsync(data)).Result;
 
             //Assert
-            Assert.That(_result.Equals(0));
+            Assert.That(result.Equals(0));
         }
     }
 }

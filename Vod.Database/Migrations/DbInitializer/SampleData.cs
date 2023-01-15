@@ -75,6 +75,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 //1st
                 new Course
                 {
+                    Id = 101,
                     InstructorId=listOfInstructors[0],
                     Title="Course 1. Foundations of C#",
                     Description= "master the powerful programming language for only 100$ a month",
@@ -84,6 +85,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 //2d
                 new Course
                 {
+                    Id = 102,
                     InstructorId=listOfInstructors[1],
                     Title="Concurency and Asynchronous programming in C#",
                     Description= "become an expert in multithreading and async programming",
@@ -93,6 +95,7 @@ namespace VOD.Database.Migrations.DbInitializer
                 //3d
                 new Course
                 {
+                    Id = 103,
                     InstructorId=listOfInstructors[2],
                     Title="Course 3. C# in depth",
                     Description= "master hidden depths of C#",
