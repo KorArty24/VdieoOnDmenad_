@@ -27,7 +27,7 @@ namespace VOD.Admin.Service.Services.Courses
 
         public async Task<int> DeleteCourseAsync(int courseId)
         {
-                if (!_context.Courses.Any(c=>c.Id == courseId))
+                if (_context.Courses.Any(c=>c.Id == courseId))
                 {
                     Course course = await _context.Courses.Include(c=>c.Modules).ThenInclude(m=>m.Downloads).
                     Include(m=>m.Modules).SingleAsync(c=>c.Id == courseId);
@@ -111,27 +111,38 @@ namespace VOD.Admin.Service.Services.Courses
 
         public async Task<int> AddCourseInfoAsync(CourseDTO course)
         {
-            if(! _context.Courses.AnyAsync(x=>x.Title == course.Title &&
+            if (!_context.Courses.AnyAsync(x => x.Title == course.Title &&
             x.Description == course.Description).Result)
             {
-                try
+                if (_context.Instructors.AnyAsync(x => x.Id == course.InstructorId).Result)
                 {
-                    Course courseToAdd = new Course
+                    try
                     {
-                        Title = course.Title,
-                        Description = course.Description,
-                        Instructor = _context.Instructors.SingleOrDefault(x => x.Id == course.InstructorId),
-                        ImageUrl = course.ImageUrl
-                    };
-                    _context.Add(courseToAdd);
-                    await _context.SaveChangesAsync();
-                    return courseToAdd.Id;
+                        Course courseToAdd = new Course
+                        {
+                            Title = course.Title,
+                            Description = course.Description,
+                            Instructor = _context.Instructors.SingleOrDefault(x => x.Id == course.InstructorId),
+                            InstructorId = course.InstructorId,
+                            ImageUrl = course.ImageUrl
+                        };
+                        _context.Add(courseToAdd);
+                        await _context.SaveChangesAsync();
+                        return courseToAdd.Id;
 
-                } catch
-                {
-                    throw new DbUpdateException("Error while saving the data");
+                    }
+                    catch
+                    {
+                        throw new DbUpdateException("Error while saving the data");
+                    }
                 }
-            } else 
+                else 
+                {
+                    Alert = $"No instructor in base";
+                    return 0;
+                }
+            }
+            else
             {
                 return 0;
             }
