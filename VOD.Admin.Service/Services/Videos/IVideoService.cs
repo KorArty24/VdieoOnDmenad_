@@ -13,7 +13,7 @@ namespace VOD.Admin.Service.Services.Videos
         public Task<List<VideoDTO>> GetVideosAsync();
         public Task<VideoDTO> GetVideoAsync(int videoId);
         public Task<int> DeleteVideoAsync(int videoId);
-        public Task<Video> UpdateVideosInfoAsync(int videoId, VideoDTO dto);
+        public Task<int> UpdateVideosInfoAsync(VideoDTO dto);
         public Task<int> AddVideosInfoAsync(VideoDTO video);
     }
 }

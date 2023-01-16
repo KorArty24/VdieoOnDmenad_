@@ -90,19 +90,17 @@ namespace VOD.Admin.Service.Services.Videos
             return video;
         }
 
-        public async Task<Video> UpdateVideosInfoAsync(int videoId, VideoDTO dto)
+        public async Task<int> UpdateVideosInfoAsync(VideoDTO dto)
         {
-           var video = await _context.Videos.SingleOrDefaultAsync(
+            var video = await _context.Videos.SingleOrDefaultAsync(
                 x=>x.Id== dto.Id);
             if (video == null)
             {
                 throw new ArgumentException("Video not found");
             }
             UpdateCourseFields(ref video, ref dto);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
 
-            return video;
-           
             void UpdateCourseFields(ref Video video, ref VideoDTO dto)
             {
                 video.Description = dto.Description;
