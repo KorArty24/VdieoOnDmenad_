@@ -21,6 +21,8 @@ namespace VOD.API.Controllers
 
         public InstructorsController(IInstructorService service, LinkGenerator generator)
         {
+            _instructorService = service;
+            _linkGenerator = generator;
         }
 
         [HttpGet()]
