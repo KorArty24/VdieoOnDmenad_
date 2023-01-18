@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VOD.API.Helpers;
 
 namespace VOD.API
 {
@@ -13,6 +14,8 @@ namespace VOD.API
     {
         public static void Main(string[] args)
         {
+            SampleDataSeeder seeder = new SampleDataSeeder();
+            seeder.SeedData();
             CreateHostBuilder(args).Build().Run();
         }
 
