@@ -10,7 +10,7 @@ using VOD.Common.DTOModels.Admin;
 
 namespace VOD.API.Controllers
 {
-    [Route("api/[instructors]")]
+    [Route("api/instructors")]
     [ApiController]
     public class InstructorsController : ControllerBase
     {
@@ -76,7 +76,7 @@ namespace VOD.API.Controllers
             }
         }
 
-        [HttpPut("{id: int}")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<InstructorDTO>> Put(int id, InstructorDTO model) 
         {
             if (!id.Equals(model.Id)) return BadRequest("Differening ids");
