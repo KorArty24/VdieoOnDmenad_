@@ -26,15 +26,18 @@ namespace VOD.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment _env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddDbContext<VODContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -46,6 +49,7 @@ namespace VOD.API
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
             services.AddControllers(config => config.Filters.Add(new VodApiExceptionFilter(_env)));
+            //services.AddSwaggerDocument();
             services.AddOpenApiDocument(settings =>
             {
                 settings.Title = "Catalog API";
@@ -61,10 +65,13 @@ namespace VOD.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseOpenApi();
+                app.UseSwaggerUi3();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
+
             }
 
             app.UseStaticFiles();
@@ -75,7 +82,7 @@ namespace VOD.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
             app.UseOpenApi().UseSwaggerUi3();
         }
