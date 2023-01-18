@@ -45,7 +45,7 @@ namespace VOD.Admin.Pages.Videos
                 var succeeded = await _videoService.UpdateVideosInfoAsync(Input);
                 if (succeeded == 1)
                 {
-                    Alert = $"Updated Video {Input.Name} was updated.";
+                    Alert = $"Updated Video {Input.Title} was updated.";
                     return RedirectToPage("Index");
                 }
             // redisplay the form if something failed.

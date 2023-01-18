@@ -40,7 +40,7 @@ namespace VOD.Admin.Pages.Videos
                 var result = await _videoService.DeleteVideoAsync(Input.Id);
                 if (result == 1)
                 {
-                    Alert = $"Video {Input.Name} was deleted.";
+                    Alert = $"Video {Input.Title} was deleted.";
                     return RedirectToPage("Index");
                 }
             }

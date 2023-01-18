@@ -13,8 +13,8 @@
             <partial name="_BackToIndexButtonsPartial" />
             <hr />
             <dl class="dl-horizontal">
-                <dt>@Html.DisplayNameFor(model => model.Input.Name)</dt>
-                <dd>@Html.DisplayFor(model => model.Input.Name)</dd>
+                <dt>@Html.DisplayNameFor(model => model.Input.Title)</dt>
+                <dd>@Html.DisplayFor(model => model.Input.Title)</dd>
                 <dt>@Html.DisplayNameFor(model => model.Input.Description)</dt>
                 <dd>@Html.DisplayFor(model => model.Input.Description)</dd>
                 <dt>@Html.DisplayNameFor(model => model.Input.Thumbnail)</dt>
@@ -24,7 +24,7 @@
             <form method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" asp-for="Input.Id" />
-                <input type="hidden" asp-for="Input.Name" />
+                <input type="hidden" asp-for="Input.Title" />
                 <input type="hidden" asp-for="Input.Thumbnail" />
 
                 <button type="submit" class="btn btn-danger">Delete </button>
