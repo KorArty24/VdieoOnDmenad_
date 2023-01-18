@@ -27,7 +27,6 @@ namespace VOD.Admin.Tests.ServiceTests
             var result = _courseService.GetCourseAsync(id);
            
             //Assert 
-
             Assert.That(result.Result.GetType, Is.EqualTo(typeof(CourseDTO)));
             Assert.That(result.Result.Id == 101 && 
                 result.Result.Title.Contains("Foundations"));
@@ -120,7 +119,6 @@ namespace VOD.Admin.Tests.ServiceTests
             };
 
             //Act
-           
             var result = await Task.FromResult(_courseService.AddCourseInfoAsync(data)).Result;
 
             //Assert
