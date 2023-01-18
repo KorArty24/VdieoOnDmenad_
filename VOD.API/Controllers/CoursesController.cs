@@ -21,6 +21,7 @@ namespace VOD.API.Controllers
         public CoursesController(ICoursesService service, LinkGenerator generator)
         {
             _courseService = service;
+            _linkGenerator = generator;
         }
         
         /// <summary>
