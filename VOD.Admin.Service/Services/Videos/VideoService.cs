@@ -23,8 +23,8 @@ namespace VOD.Admin.Service.Services.Videos
         }
         public async Task<int> AddVideosInfoAsync(VideoDTO video)
         {
-            if(! _context.Videos.AnyAsync(x=>x.Title == video.Title &&
-            x.Description == x.Description).Result)
+            if(! await _context.Videos.AnyAsync(x=>x.Title != video.Title &&
+            x.Description != x.Description))
             {
                 try
                 {
@@ -49,7 +49,7 @@ namespace VOD.Admin.Service.Services.Videos
 
         public async Task<int> DeleteVideoAsync(int videoId)
         {
-             if (!_context.Videos.Any(c=>c.Id == videoId))
+             if (await _context.Videos.AnyAsync(c=>c.Id != videoId))
                 {
                     Video video = await _context.Videos.SingleAsync(x => x.Id == videoId);
                     _context.Remove(video);

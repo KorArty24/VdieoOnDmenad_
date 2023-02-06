@@ -24,7 +24,7 @@ namespace VOD.Service.Tests.VideoServicesTests
             VideoSelectedService service = new VideoSelectedService(context);
 
             //Act
-            var result = service.SelectVideoAsync(userId, videoId).Result;
+            var result = service.SelectVideoAsync(userId, videoId);
 
             //Assert
             Assert.IsNotNull(result);
@@ -38,8 +38,6 @@ namespace VOD.Service.Tests.VideoServicesTests
             //Arrange
             var service = new VideoSelectedService(context);
 
-            //Act
-           // var result = service.SelectVideoAsync(userId, videoId).Result;
         }
     }
 

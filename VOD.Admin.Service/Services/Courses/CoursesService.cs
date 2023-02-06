@@ -111,10 +111,10 @@ namespace VOD.Admin.Service.Services.Courses
 
         public async Task<int> AddCourseInfoAsync(CourseDTO course)
         {
-            if (!_context.Courses.AnyAsync(x => x.Title == course.Title &&
-            x.Description == course.Description).Result)
+            if (await _context.Courses.AnyAsync(x => x.Title != course.Title &&
+            x.Description != course.Description))
             {
-                if (_context.Instructors.AnyAsync(x => x.Id == course.InstructorId).Result)
+                if (await _context.Instructors.AnyAsync(x => x.Id != course.InstructorId))
                 {
                     try
                     {
