@@ -100,8 +100,8 @@ namespace VOD.Admin.Service.Services.Instructors
 
         public async Task<int> AddInstructorsInfoAsync(InstructorDTO instructor)
         {
-            if(! _context.Instructors.AnyAsync(x=>x.Name == instructor.Name &&
-            x.Description == instructor.Description).Result)
+            if (await _context.Instructors.AnyAsync(x=>x.Name != instructor.Name &&
+            x.Description != instructor.Description))
             {
                 try
                 {

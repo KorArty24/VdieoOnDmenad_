@@ -23,8 +23,8 @@ namespace VOD.Admin.Service.Services.Modules
         }
         public async Task<int> AddModulesInfoAsync(ModuleDTO module)
         {
-            if(! _context.Modules.AnyAsync(x=>x.Title == module.Title &&
-            x.CourseId == module.CourseId).Result)
+            if(await _context.Modules.AnyAsync(x=>x.Title != module.Title &&
+            x.CourseId != module.CourseId))
             {
                 try
                 {

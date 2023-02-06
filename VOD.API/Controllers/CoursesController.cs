@@ -108,6 +108,8 @@ namespace VOD.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add the entity");
             }
         }
+
+       // public async Task<IActionResult> Put(int id, CourseDTO model)
         
     }
 }
