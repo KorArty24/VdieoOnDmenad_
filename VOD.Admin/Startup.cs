@@ -54,7 +54,7 @@ namespace VOD.Admin
             services.AddDbContext<VODContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IInstructorService, InstructorService>();
             services.AddScoped<ICoursesService, CoursesService>();
-            services.AddScoped<IVideoService, VideoService>();
+            services.AddScoped<IDownloadService, DownloadService>();
 
         }
 

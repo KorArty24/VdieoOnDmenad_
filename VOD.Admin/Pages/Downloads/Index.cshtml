@@ -1,0 +1,46 @@
+﻿@page
+@using VOD.Common.Extensions
+@model IndexModel
+@inject SignInManager<VODUser> SignInManager
+@{
+    ViewData["Title"] = "Downloads";
+}
+@if (SignInManager.IsSignedIn(User) && User.HasClaim("Role", "Admin"))
+{
+    <div class="row">
+        <div class="col-md-8 offset-md-2" style="padding-left:0; padding-right:0;">
+            <alert alert-type="success">@Model.Alert</alert>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col-md-8-offcet-md-1">
+            <h1>@ViewData["Title"]</h1>
+            <partial name = "_PageButtonsPartial" />
+            <table style="margin-top:20px;" class="table">
+                <thread>
+                    <tr>
+                        <th>Title</th>
+                        <th>Course</th>
+                        <th>Module</th>
+                        <th></th>
+                        </tr>
+                </thread>
+                <tbody>
+                    @foreach (var item in Model.Items){
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Course)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Module)</td>
+
+                            <td style="min-width: 100px;">
+                                <partial name="_TableRowButtonsPartial"
+                                    model="@item.ButtonDTO"/></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+}

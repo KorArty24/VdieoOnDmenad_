@@ -6,33 +6,33 @@ using System.Threading.Tasks;
 using VOD.Admin.Filters;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
-using VOD.Admin.Service.Services.Videos;
+using VOD.Admin.Service.Services.Downloads;
 using VOD.Admin.Helpers;
 using VOD.Admin.Service.Services.Modules;
 using VOD.Common.Entities;
 
-namespace VOD.Admin.Pages.Videos
+namespace VOD.Admin.Pages.Downloads
 {
     [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class CreateModel : PageModel
     {
-        private readonly IDownloadService _videoService;
+        private readonly IDownloadService _downloadService;
         private readonly IModuleService _moduleService;
-        [BindProperty] public VideoDTO Input { get; set; } =  new VideoDTO();
+        [BindProperty] public DownloadDTO Input { get; set; } =  new DownloadDTO();
         [TempData] public string Alert { get; set; }
         /// <summary>
         /// Create an instance of a  <see cref = EditModel/>
         /// </summary>
         /// <param name="userService"></param>
-        public CreateModel(IDownloadService videoService)
+        public CreateModel(IDownloadService downloadService)
         {
-           _videoService = videoService;
+           _downloadService = downloadService;
         }
-        public async Task<IActionResult> OnGetAsync(int videoId)
+        public async Task<IActionResult> OnGetAsync(int downloadId)
         {
             try
             {
-                 ViewData["Modules"] = (await _videoService.GetVideosAsync()).ToSelectList("Id", "CourseAndModule");
+                 ViewData["Modules"] = (await _downloadService.GetDownloadsAsync()).ToSelectList("Id", "CourseAndModule");
                  return Page();
             } catch
             {
@@ -45,11 +45,11 @@ namespace VOD.Admin.Pages.Videos
             var id = Input.ModuleId;
             int _id = (await _moduleService.GetModuleAsync(id)).CourseId;
             Input.CourseId = _id;
-            var result = await _videoService.AddVideosInfoAsync(Input);
+            var result = await _downloadService.AddDownloadInfoAsync(Input);
                 var succeeded = result > 0;
                 if (succeeded)
                 {
-                    Alert = $"Created a new Video for {Input.Title}.";
+                    Alert = $"Created a new Download for {Input.Title}.";
                     return RedirectToPage("Index");
                 }
             // Something failed, redisplay the form.
