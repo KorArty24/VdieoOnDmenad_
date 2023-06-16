@@ -45,7 +45,7 @@ namespace VOD.API
                 AddEntityFrameworkStores<VODContext>();
             services.AddScoped<IInstructorService, InstructorService>();
             services.AddScoped<ICoursesService, CoursesService>();
-            services.AddScoped<IVideoService, VideoService>();
+            services.AddScoped<IDownloadService, DownloadService>();
             services.AddScoped<IDbReadService, DbReadService>();
             services.AddScoped<IUserService, UserService>();
             services.AddControllers(config => config.Filters.Add(new VodApiExceptionFilter(_env)));

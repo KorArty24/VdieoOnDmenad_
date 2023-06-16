@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Vod.Database\VOD.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Downloads\" />
-  </ItemGroup>
-
 </Project>
