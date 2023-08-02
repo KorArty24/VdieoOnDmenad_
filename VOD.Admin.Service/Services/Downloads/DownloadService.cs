@@ -46,11 +46,11 @@ namespace VOD.Admin.Service.Services.Downloads
             }
         }
 
-        public async Task<int> DeleteDownloadAsync(int downloadId)
+        public async Task<int> DeleteDownloadAsync(int downloadId, int moduleId, int courseID)
         {
              if (await _context.Downloads.AnyAsync(c=>c.Id != downloadId))
                 {
-                    Download download = await _context.Downloads.SingleAsync(x => x.Id == downloadId).ConfigureAwait(false);
+                    Download download = await _context.Downloads.SingleAsync(x => x.Id == downloadId && x.ModuleId == moduleId && x.CourseId == courseID ).ConfigureAwait(false);
                     _context.Remove(download);
                     return await _context.SaveChangesAsync().ConfigureAwait(false);
                 }
@@ -93,21 +93,21 @@ namespace VOD.Admin.Service.Services.Downloads
 
         public async Task<int> UpdateDownloadInfoAsync(DownloadDTO dto)
         {
-            var video = await _context.Videos.SingleOrDefaultAsync(
+            var download = await _context.Downloads.SingleOrDefaultAsync(
                 x=>x.Id== dto.Id);
-            if (video == null)
+            if (download == null)
             {
                 throw new ArgumentException("Video not found");
             }
-            UpdateCourseFields(ref video, ref dto);
+            UpdateCourseFields(ref download, ref dto);
             return await _context.SaveChangesAsync();
 
-            void UpdateCourseFields(ref Video video, ref VideoDTO dto)
+            void UpdateCourseFields(ref Download download, ref DownloadDTO dto)
             {
-                video.Description = dto.Description;
-                video.Title = dto.Title;
-                video.Module.Title = dto.Module;
-                video.Url = dto.Url;
+                download.CourseId = dto.CourseId;
+                download.ModuleId = dto.ModuleId;
+                download.Title= dto.Title;
+                download.Url = dto.Url;
             } 
         }
     }

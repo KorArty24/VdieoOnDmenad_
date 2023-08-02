@@ -3,49 +3,62 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VOD.Admin.Filters;
+using VOD.Admin.Service.Services.Downloads;
 using VOD.Admin.Service.Services.Videos;
 using VOD.Common.DTOModels;
 using VOD.Common.DTOModels.Admin;
 using VOD.Service.UserService.Interfaces;
 
-namespace VOD.Admin.Pages.Videos
+namespace VOD.Admin.Pages.Downloads
 {
     [ValidateModel, Authorize(Policy = "AdminOnly")]
     public class DeleteModel : PageModel
     {
         #region Properties
-        private readonly IDownloadService _videoService;
-        [BindProperty] public VideoDTO Input { get; set; } = new VideoDTO();
+        private readonly IDownloadService _downloadService;
+        [BindProperty] public DownloadDTO Input { get; set; } = new DownloadDTO();
         [TempData] public string Alert { get; set; }
         #endregion
 
         #region Constructor
-        public DeleteModel(IDownloadService videoService)
+        public DeleteModel(IDownloadService downloadService)
         {
-            _videoService = videoService;
+            _downloadService = downloadService;
         }
         #endregion
 
         #region Actions
-        public async Task OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, int courseId, int moduleId)
         {
-            Alert = string.Empty;
-            Input = await _videoService.GetVideoAsync(id);
+            try
+            {
+                 Input = await _downloadService.GetDownloadAsync(id, courseId, moduleId);
+                return Page();
+            } catch
+            {
+                return RedirectToPage("/Index", new
+                {
+                    alert = "You do not have access to this page."
+                });
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            int id = Input.Id, moduleid = Input.ModuleId, courseid = Input.CourseId; 
+            
             if (ModelState.IsValid)
             {
-                var result = await _videoService.DeleteVideoAsync(Input.Id);
-                if (result == 1)
+                var succeeded = await _downloadService.DeleteDownloadAsync(id, moduleid, courseid);
+                if (succeeded==1)
                 {
-                    Alert = $"Video {Input.Title} was deleted.";
+                    Alert = $"Deleted Download: {Input.Title}.";
+
                     return RedirectToPage("Index");
                 }
             }
-
-            return Page();
+                Input = await _downloadService.GetDownloadAsync(moduleid, courseid, courseid);
+                return Page();
         }
         #endregion
     }

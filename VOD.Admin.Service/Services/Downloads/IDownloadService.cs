@@ -12,7 +12,7 @@ namespace VOD.Admin.Service.Services.Downloads
     {
         public Task<List<DownloadDTO>> GetDownloadsAsync();
         public Task<DownloadDTO> GetDownloadAsync(int downloadId, int courseId, int moduleId);
-        public Task<int> DeleteDownloadAsync(int downloadId);
+        public Task<int> DeleteDownloadAsync(int downloadId, int moduleId, int courseID);
         public Task<int> UpdateDownloadInfoAsync(DownloadDTO dto);
         public Task<int> AddDownloadInfoAsync(DownloadDTO dto);
     }
